@@ -1,0 +1,139 @@
+.main{
+    display: flex;
+}
+.header{
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0rem 1rem;
+}
+.header div{
+    display: flex;
+    gap: .5rem;
+}
+.header div select{
+    background-color: rgb(233, 236, 238);
+    outline: none;
+    border: none;
+    padding: 0rem .5rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.header div select option{
+    margin-top: .5rem;
+ font-size: 1rem;
+}
+.header div button{
+    display: flex;
+    gap: .4rem;
+    border-radius:5px;
+    padding: .3rem;
+    width: 6rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12rem;
+    height: 2rem;
+}
+.label input{
+    height: 2rem;
+    width: 9rem;
+    margin-top: 1.5rem;
+}
+.btn:hover{
+   background-color: blue;
+   color: white;
+}
+.body{
+    width: 100%;
+    height: 100vh;
+    overflow: scroll;
+    padding: 2rem ;
+    padding-top: 5rem; 
+}
+.imgbox{
+    height: 20rem;
+    width: 20rem;
+}
+.imgbox img{
+    height: 100%;
+    width: 100%;
+}
+.bannerContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+}
+.bannerImgBox{
+    height: 20rem;
+    width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem .5rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    flex-direction: column;
+}
+.bannerImgBox img{
+    height: 100%;
+    width: 100%;
+}
+.DeleteBanner{
+    position: relative;
+    z-index: 99;
+    top: -4%;
+    right: -45%;
+    height: max-content;
+    width: max-content;
+
+}
+.DeleteBanner:hover{
+       color: red;
+}
+.Bannerbtn{
+    display: flex;
+    gap: .5rem;
+}
+.Bannerbtn button{
+    height: 2rem;
+    background-color: rgb(0, 140, 255);
+    color: white;
+    border: none;
+    outline: none;
+    padding: .5rem 2rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    border-radius: 15px;
+}
+.Bannerbtn input{
+    height: 2rem;
+    border: none;
+    outline: none;
+    padding: .5rem 1rem;
+}
+.Bannerbtn button:hover{
+    background-color: rgb(3, 114, 204);
+}
+@media (max-width:500px){
+    .body{
+        flex-direction: column;
+    }
+    .header{
+        flex-direction: column;
+        gap: 2rem;
+    }
+    .innerbox{
+        display: grid!important;
+        grid-template-columns: 1fr 1fr !important;
+        height: 20rem;
+        width: 100vw;
+        place-items: center;
+    }
+    .infobox{
+        margin-top:5rem;
+    }
+}

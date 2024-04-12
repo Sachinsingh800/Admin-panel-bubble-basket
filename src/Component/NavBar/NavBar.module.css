@@ -1,0 +1,44 @@
+.header{
+    background-color: rgb(70, 145, 243);
+     width: 100vw;
+     display: flex;
+     height: 4rem;
+     align-items: center;
+     justify-content: space-between;
+     padding: 0rem 2rem;
+     position:fixed;
+     z-index: 1;
+     color: white;
+}
+.header div{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.icon{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.icon2{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.exiticon{
+font-size: 5px!important;
+}
+.hamburgerBtn{
+    display: none!important;
+}
+@media (max-width:700px){
+    .hamburgerBtn{
+   display: unset!important;
+    }
+    .title{
+        display: none;
+    }
+    .icon2{
+        display: none;
+    }
+}

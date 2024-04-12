@@ -1,0 +1,76 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.main{
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: rgb(240, 240, 240);
+   
+}
+
+.leftBar{
+    width: 15rem;
+    height: 100vh;
+}
+.leftBar ul{
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 1rem;
+    height: 100vh;
+    align-items: center; 
+    padding-top: 5rem;
+    padding-bottom: 40rem;
+}
+.leftBar ul li{
+    width: 90%;
+    text-align: center;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    gap: .5rem;
+    padding: .5rem;
+    padding-left:1rem;
+}
+
+.link{
+    color: black;
+    width: 90%;
+    text-align: center;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    gap: .5rem;
+    padding: .5rem;
+    text-decoration: none;
+  
+}
+.link:hover{
+    background-color: rgb(255, 255, 255);
+}
+@media (max-width:1011px){
+    .main{
+        display: none;
+    }
+}
+.main::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(225, 225, 225, 0.9);
+    border-radius: 10px;
+    background-color: rgba(226, 226, 226, 0.9);
+  }
+  
+  .main::-webkit-scrollbar {
+    width: .2rem;
+    background-color: #fff; /* Set background color to white */
+  }
+  
+  .main::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #d3d3d3; /* Set background color to black */
+  }
+  

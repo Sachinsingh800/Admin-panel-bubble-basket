@@ -1,0 +1,16 @@
+.header{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.headers{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    justify-content: space-between;
+}
+@media (max-width:500px){
+    .settingbtn{
+        display: none;
+    }
+}

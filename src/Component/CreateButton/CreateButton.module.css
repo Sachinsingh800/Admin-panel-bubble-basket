@@ -1,0 +1,46 @@
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.input[type=number] {
+  -moz-appearance: textfield;
+}
+.btn{
+    display: flex;
+    gap: .4rem;
+    border-radius:5px;
+    padding: .3rem;
+    width: 6rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    background-color: blue;
+    color: white;
+}
+.btn:hover{
+   background-color: white;
+   color: black;
+}
+
+.customTimePicker {
+    display: flex;
+    justify-content: space-between;
+}
+.time{
+    height: 3.1rem;
+    width: 3rem;
+ 
+}
+.categoriesContainer{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.categoriesContainer select{
+  padding: .5rem;
+  outline: none;
+}

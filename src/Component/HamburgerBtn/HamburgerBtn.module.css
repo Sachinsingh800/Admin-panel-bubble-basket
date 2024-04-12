@@ -1,0 +1,35 @@
+.link{
+    text-decoration: none;
+    color: white;
+}
+.opt h1{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 0rem 1.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: white;
+
+}
+.closeButton{
+    background: transparent;
+    border: none;
+    font-size: 2.5rem;
+    color:white;
+}
+
+.option{
+  color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  padding-left: 2rem;
+}
+.option li{
+    display: flex;
+    gap: 1rem;
+}
