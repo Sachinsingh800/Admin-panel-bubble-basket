@@ -36,7 +36,8 @@ function BeerAnimation() {
       <div className={`head ${headActive ? 'active' : ''}`}></div>
       <div className={`pour ${beerPouring ? 'pouring' : ''} ${beerPouring && !headActive ? 'end' : ''}`}></div>
     </div>
-    <h1>LOADING...</h1>
+    <br/>
+    <p>LOADING...</p>
     </div>
 
   );

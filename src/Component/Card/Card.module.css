@@ -7,8 +7,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: larger;
     gap: 1rem;
+    
 }
 .contain div{
     display: flex;
@@ -16,13 +16,17 @@
     justify-content: center;
 }
 .contain h1{
-    font-size: 4rem;
     margin-top: 1rem;
-    color: white;
 }
 .link{
     text-decoration: none;
     color: black;
+}
+.card{
+    border: 1px #F5E3E3 solid;
+}
+.card:hover{
+    background-color: #F5E3E3;
 }
 @media (max-width:1253px){
     .container{

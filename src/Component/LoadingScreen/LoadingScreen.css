@@ -6,11 +6,13 @@
   justify-content: center;
   flex-direction: column;
   position: fixed;
-  background-color: #68a0b7;
+  background-color: #7B0128;
   z-index: 9999;
   color: white;
 }
-
+.main p{
+  letter-spacing: .5cap;
+}
 #container {
   width: 100px;
   height: 200px;

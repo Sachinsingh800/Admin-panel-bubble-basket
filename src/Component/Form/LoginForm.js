@@ -23,6 +23,7 @@ const LoginForm = () => {
   const handleSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
+    window.location.href="/DashBoard"
     try {
       // const response = await loginAdmin(email, password);
       

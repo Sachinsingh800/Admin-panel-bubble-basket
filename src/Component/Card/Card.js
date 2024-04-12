@@ -89,7 +89,7 @@ const getAllProduct = async () => {
 
   return (
     <div className={style.container}>
-    <Card className={style.card} sx={{ height: 120 ,width:230,backgroundColor:"lightpink",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"left" }}>
+    <Card className={style.card} sx={{ height: 120 ,width:230,backgroundColor:"none",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"left" }}>
       <CardContent >
    <Link className={style.link} to={"/Orders"}>    
    <div className={style.contain}  onClick={()=>handlePageName("Total Orders")}>
@@ -103,7 +103,7 @@ const getAllProduct = async () => {
         </Link>  
       </CardContent>
     </Card>
-    <Card className={style.card}  sx={{ height: 120 ,width:230,backgroundColor:"lightgreen",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"left" }}>
+    <Card className={style.card}  sx={{ height: 120 ,width:230,display:"flex",alignItems:"center",justifyContent:"center",textAlign:"left" }}>
       <CardContent>
       <Link className={style.link}  to={"/Sales"}>    
     <div className={style.contain}  onClick={()=>handlePageName("Total Sales")}>
@@ -117,7 +117,7 @@ const getAllProduct = async () => {
     
       </CardContent>
     </Card>
-    <Card className={style.card}  sx={{ height: 120 ,width:230,backgroundColor:"#78C1F3",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"left" }}>
+    <Card className={style.card}  sx={{ height: 120 ,width:230,display:"flex",alignItems:"center",justifyContent:"center",textAlign:"left" }}>
       <CardContent>
       <Link className={style.link}  to={"/Customers"}>    
       <div className={style.contain} onClick={()=>handlePageName("Total Customers")}>
@@ -130,7 +130,7 @@ const getAllProduct = async () => {
         </Link>
       </CardContent>
     </Card>
-    <Card className={style.card}  sx={{ height: 120 ,width:230,backgroundColor:"#C3EDC0",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"left" }}>
+    <Card className={style.card}  sx={{ height: 120 ,width:230,display:"flex",alignItems:"center",justifyContent:"center",textAlign:"left" }}>
       <CardContent>
       <Link className={style.link}  to={"/Product"}>    
       <div className={style.contain}  onClick={()=>handlePageName("Total Product")}>
