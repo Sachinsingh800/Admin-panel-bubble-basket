@@ -26,7 +26,7 @@ function DashBoard() {
     datasets: [
       {
         label: "Sales",
-        data: [100, 600, 200, 800, 500, 100], // Example sales data for each month
+        data: [100, 400, 200, 600, 500, 100], // Example sales data for each month
         fill: true,
         borderColor: "#5ba6a2", // Line color
         tension: 0.4 // Smoothing of the line
@@ -43,14 +43,16 @@ function DashBoard() {
       <div className={style.body}>
       <Header/>
       <BasicCard/>
+      <div className={style.container}>
       <div className={style.chart}>
       <Line data={salesData} />
-        {/* <PieArcLabel/> */}
         </div>
  
       <br/>
       <h2 className={style.h2}><FaShoppingCart/>Latest Orders</h2>
       <OrderTable />
+      </div>
+
       </div>
     </div>
   )

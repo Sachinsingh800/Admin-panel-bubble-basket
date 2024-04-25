@@ -9,8 +9,6 @@ function Header() {
     <div className={style.headers}>
       <div className={style.header}>
         <h2>{PageName ? PageName : 'DashBoard'}</h2>
-        <h5>Home</h5>
-        {PageName && <h4 style={{ color: '#7B0128' }}>➤ {PageName}</h4>}
       </div>
       <div className={style.settingbtn}>
       <BasicPopover />

@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import style from './Product.module.css';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { AiFillEdit } from 'react-icons/ai';
-import { AiOutlineCloudUpload } from 'react-icons/ai';
-import { AiOutlinePlus } from 'react-icons/ai';
-import Header from '../../Component/Header/Header';
-import OptionBar from '../../Component/OptionBar/OptionBar';
-import NavBar from '../../Component/NavBar/NavBar';
-import { getAllProduct, deleteProduct } from '../../Api/Api';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { loadingStatus } from '../../Recoil';
-import LoadingScreen from '../../Component/LoadingScreen/LoadingScreen';
-import axios from 'axios';
-import Tooltip from '@mui/material/Tooltip';
+import React, { useEffect, useState } from "react";
+import style from "./Product.module.css";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { AiFillEdit } from "react-icons/ai";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
+import Header from "../../Component/Header/Header";
+import OptionBar from "../../Component/OptionBar/OptionBar";
+import NavBar from "../../Component/NavBar/NavBar";
+import { getAllProduct, deleteProduct } from "../../Api/Api";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loadingStatus } from "../../Recoil";
+import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
+import axios from "axios";
+import Tooltip from "@mui/material/Tooltip";
 
 function Product() {
   const [originalProducts, setOriginalProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const { id } = useParams();
   const [categories, setCategory] = useState([]);
   const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
-  console.log(categories,"cate")
+  console.log(categories, "cate");
 
   const authToken = JSON.parse(localStorage.getItem("token"));
 
@@ -41,12 +41,12 @@ function Product() {
     SetIsloading(true);
     try {
       const response = await getAllProduct();
-      console.log(response.data, 'response');
+      console.log(response.data, "response");
       setOriginalProducts(response.data);
       setFilteredProducts(response.data);
     } catch (error) {
-      console.error('Error getting products:', error.message);
-    }finally{
+      console.error("Error getting products:", error.message);
+    } finally {
       SetIsloading(false);
     }
   };
@@ -55,13 +55,13 @@ function Product() {
     SetIsloading(true);
     try {
       const response = await deleteProduct(productId);
-      console.log(response.data, 'response');
+      console.log(response.data, "response");
       // Refresh the products after successful deletion
       FetchProduct();
-      alert('Product deleted successfully');
+      alert("Product deleted successfully");
     } catch (error) {
-      console.error('Error deleting product:', error.message);
-    }finally{
+      console.error("Error deleting product:", error.message);
+    } finally {
       SetIsloading(false);
     }
   };
@@ -73,10 +73,12 @@ function Product() {
 
   const handleFilterData = (e) => {
     const category = e.target.value;
-    if (category === '') {
+    if (category === "") {
       setFilteredProducts(originalProducts);
     } else {
-      const filterData = originalProducts.filter((item) => item.category === category);
+      const filterData = originalProducts.filter(
+        (item) => item.category === category
+      );
       setFilteredProducts(filterData);
     }
   };
@@ -88,16 +90,20 @@ function Product() {
   const handleGetAllCategory = async () => {
     SetIsloading(true);
     try {
-      const response = await axios.get(`https://zuluresh.onrender.com/admin/categoryAndSubCategory/getAllCategory`);
+      const response = await axios.get(
+        `https://zuluresh.onrender.com/admin/categoryAndSubCategory/getAllCategory`
+      );
       setCategory(response.data.data);
     } catch (error) {
-      console.error('Error getting categories:', error.message);
+      console.error("Error getting categories:", error.message);
     } finally {
       SetIsloading(false);
     }
   };
   function convertToJSX(htmlString) {
-    return React.createElement('div', { dangerouslySetInnerHTML: { __html: htmlString } });
+    return React.createElement("div", {
+      dangerouslySetInnerHTML: { __html: htmlString },
+    });
   }
 
   return (
@@ -111,13 +117,14 @@ function Product() {
           <h2>Products</h2>
           <div>
             <Link to="/CreateProduct">
-              <button style={{ backgroundColor: 'blue', color: 'white' }}>
+              <button style={{ backgroundColor: "blue", color: "white" }}>
                 <AiOutlinePlus />
                 Create
               </button>
             </Link>
           </div>
         </div>
+        <div className={style.container_box}>
         <br />
         <br />
         <div className={style.header}>
@@ -125,11 +132,11 @@ function Product() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className={style.input}
-            placeholder='Search'
+            placeholder="Search"
           />
           <div>
             <select
-            className={style.category}
+              className={style.category}
               name="category"
               value={categories}
               onChange={handleFilterData}
@@ -141,7 +148,9 @@ function Product() {
                 </option>
               ))}
             </select>
-            <button onClick={handleReverse} className={style.btn}>⇆ Last Added</button>
+            <button onClick={handleReverse} className={style.btn}>
+              ⇆ Last Added
+            </button>
           </div>
         </div>
         <br />
@@ -158,7 +167,7 @@ function Product() {
                   </button>
                 </Link>
                 <button
-                  style={{ color: 'red' }}
+                  style={{ color: "red" }}
                   onClick={() => DeleteProduct(item._id)}
                 >
                   <RiDeleteBin6Fill />
@@ -166,32 +175,69 @@ function Product() {
               </div>
               <div className={style.imgbox}>
                 {/* Check if productImg is not empty */}
-                {item.productImg && item.productImg.length > 0 &&
+                {item.productImg && item.productImg.length > 0 && (
                   <img
                     className={style.img}
                     src={item.productImg[0].url}
                     alt="product"
                   />
-                }
+                )}
                 <p>next</p>
               </div>
               <ul className={style.list}>
-                <li><span>Title:</span>{item.title}</li>
-                <li><span>MRP:</span>{item.MRP}</li>
-                <li><span>Price:</span>{item.price}</li>
-                <li><span>Discount:</span>{item.discount}</li>
-                <li><span>Stock:</span>{item.Stock}</li>
-                <li><span>Category:</span>{item.category}</li>
-                <li><span>Sub_category:</span>{item.sub_category}</li>
-                <li><span>Unit:</span>{item.unit}</li>
-                <li><span>Measure Unit:</span>{item.measureUnit}</li>
-                <li><span>Pieces:</span>{item.unit}</li>
-                <li><span>Set As:</span>{item.setAs}</li>
-                <li><span>Description:</span></li>
-                <li>{convertToJSX (item.description)}</li>
+                <li>
+                  <span>Title:</span>
+                  {item.title}
+                </li>
+                <li>
+                  <span>MRP:</span>
+                  {item.MRP}
+                </li>
+                <li>
+                  <span>Price:</span>
+                  {item.price}
+                </li>
+                <li>
+                  <span>Discount:</span>
+                  {item.discount}
+                </li>
+                <li>
+                  <span>Stock:</span>
+                  {item.Stock}
+                </li>
+                <li>
+                  <span>Category:</span>
+                  {item.category}
+                </li>
+                <li>
+                  <span>Sub_category:</span>
+                  {item.sub_category}
+                </li>
+                <li>
+                  <span>Unit:</span>
+                  {item.unit}
+                </li>
+                <li>
+                  <span>Measure Unit:</span>
+                  {item.measureUnit}
+                </li>
+                <li>
+                  <span>Pieces:</span>
+                  {item.unit}
+                </li>
+                <li>
+                  <span>Set As:</span>
+                  {item.setAs}
+                </li>
+                <li>
+                  <span>Description:</span>
+                </li>
+                <li>{convertToJSX(item.description)}</li>
               </ul>
             </div>
           ))}
+        </div>
+        
       </div>
     </div>
   );

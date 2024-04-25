@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginAdmin } from "../../Api/Api";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import axios from 'axios';
+import  logo from "../Images/logo.jpg"
 
 const LoginForm = () => {
   const [email, setUsername] = useState("");
@@ -54,7 +55,7 @@ const LoginForm = () => {
     <div className={styles.main}>
       {loading && <LoadingScreen />}
       <div className={styles.head}>
-        <h1>Administration</h1>
+        <img src={logo} alt="logo" />
       </div>
       <form className={styles.loginForm} onSubmit={handleSubmit}>
         <h1 className={styles.heading}>Admin Login</h1>

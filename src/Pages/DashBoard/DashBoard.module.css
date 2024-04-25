@@ -4,6 +4,10 @@
     gap: .5rem;
     align-items: center;
 }
+.container{
+    height: 30rem;
+    overflow-y: scroll;
+}
 .chart{
     display: flex;
     justify-content: space-evenly;

@@ -32,6 +32,14 @@ font-size: 5px!important;
 .hamburgerBtn{
     display: none!important;
 }
+.title{
+    border: 1px red solid;
+    height: 2rem;
+}
+.title img{
+    height: 100%;
+    width: 100%;
+}
 @media (max-width:700px){
     .hamburgerBtn{
    display: unset!important;

@@ -4,6 +4,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HamburgerBtn from '../HamburgerBtn/HamburgerBtn';
+import logo from "../Images/logo.jpg"
 
 function NavBar() {
     const navigate=useNavigate()
@@ -15,7 +16,9 @@ function NavBar() {
         <HamburgerBtn/>
         </div>
       
-        <h2 className={style.title}>Administration</h2>
+        <div className={style.title}>
+              <img src={logo} alt='logo' />
+          </div>
         <div>
           <h4 className={style.icon}><AccountCircleIcon/>{userData?.email}</h4>
 
