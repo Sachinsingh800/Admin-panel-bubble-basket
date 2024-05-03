@@ -40,8 +40,11 @@ export default function BasicPopover() {
           horizontal: 'left',
         }}
       >
-        <Typography sx={{ p: 2 }} ><a style={{textDecoration:"none"}} href='/Profile'>Account</a></Typography>
-        <Typography sx={{ p: 2 }}><p onClick={handleLogout}>Logout </p></Typography>
+        <div style={{padding:"20px"}}>
+        <span ><a style={{textDecoration:"none"}} href='/RegisterPage'>Register</a></span>
+        <span ><p onClick={handleLogout}>Logout </p></span>
+        </div>
+        
       </Popover>
     </div>
   );

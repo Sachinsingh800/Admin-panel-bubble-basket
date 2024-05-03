@@ -29,6 +29,7 @@ import AddSubCategory from './Pages/AddSubCategory/AddSubCategory';
 import Invoice from './Component/Invoice/Invoice';
 import Access from './Pages/Access/Access';
 import UpdateProfile from './Component/UpdateProfile/UpdateProfile';
+import RegisterPage from './Component/RegisterPage/RegisterPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
   {
     path: "/Profile", // Corrected path with parameter
     element: <UpdateProfile />,
+  },
+  {
+    path: "/RegisterPage", // Corrected path with parameter
+    element: <RegisterPage/>,
   },
 ]);
 root.render(
