@@ -114,27 +114,13 @@ function Product() {
       <div className={style.body}>
         <Header />
         <div className={style.header}>
-          <h2>Products</h2>
-          <div>
-            <Link to="/CreateProduct">
-              <button style={{ backgroundColor: "blue", color: "white" }}>
-                <AiOutlinePlus />
-                Create
-              </button>
-            </Link>
-          </div>
-        </div>
-        <div className={style.container_box}>
-        <br />
-        <br />
-        <div className={style.header}>
+          <div className={style.input_conatiner}>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className={style.input}
             placeholder="Search"
           />
-          <div>
             <select
               className={style.category}
               name="category"
@@ -151,8 +137,19 @@ function Product() {
             <button onClick={handleReverse} className={style.btn}>
               ⇆ Last Added
             </button>
+        
+        </div>
+        <div>
+            <Link to="/CreateProduct">
+              <button style={{ backgroundColor: "blue", color: "white" }}>
+                <AiOutlinePlus />
+                Create
+              </button>
+            </Link>
           </div>
         </div>
+        <div className={style.container_box}>
+        <br />
         <br />
         {filteredProducts
           .filter((elem) => {
@@ -190,16 +187,8 @@ function Product() {
                   {item.title}
                 </li>
                 <li>
-                  <span>MRP:</span>
-                  {item.MRP}
-                </li>
-                <li>
                   <span>Price:</span>
                   {item.price}
-                </li>
-                <li>
-                  <span>Discount:</span>
-                  {item.discount}
                 </li>
                 <li>
                   <span>Stock:</span>
@@ -208,10 +197,6 @@ function Product() {
                 <li>
                   <span>Category:</span>
                   {item.category}
-                </li>
-                <li>
-                  <span>Sub_category:</span>
-                  {item.sub_category}
                 </li>
                 <li>
                   <span>Unit:</span>

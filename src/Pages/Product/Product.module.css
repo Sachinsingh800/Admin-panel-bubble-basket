@@ -32,7 +32,6 @@ display: flex;
     outline: none;
     border: 1px rgb(199, 193, 193) solid;
     padding: 0rem 1rem;
-    margin-top: 1.5rem;
 }
 .btnbox button{
     display: flex;
@@ -45,13 +44,19 @@ display: flex;
     margin-bottom: 1rem;
 }
 .imgbox{
-    height: 10rem;
+    height: 15rem;
     width: 100%;
     overflow: hidden;
 }
 .img{
     height: 100%;
     width: 100%;
+}
+.category{
+    height: 2rem;
+}
+.btn{
+    height: 2rem;
 }
 .list{
     list-style: none;
@@ -67,7 +72,11 @@ display: flex;
 .list li span{
     color: rgb(114, 116, 117);
 }
-
+.input_conatiner{
+    display: flex;
+    align-items: center;
+    height: 2rem;
+}
 .header{
     height: 3rem;
     display: flex;

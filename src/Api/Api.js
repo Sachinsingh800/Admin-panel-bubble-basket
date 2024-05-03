@@ -38,6 +38,9 @@ export const loginAdmin = async (email, password) => {
   }
 };
 
+
+
+
 // Update  profile
 
 
@@ -142,7 +145,7 @@ export const getAllProduct = async () => {
   };
   
   try {
-    const response = await axios.get(`${BASE_URL}/admin/product/getAllproduct`, {headers
+    const response = await axios.get(`${BASE_URL}/admin/product/getAll`, {headers
     });
     const { status, message, data } = response.data;
     return { status, message, data };
@@ -187,6 +190,8 @@ export const getAllCategory = async () => {
     }
   }
 };
+
+
 // getAllSubCategory 
 
 export const getAllSubCategory = async (categoriesId) => {
