@@ -15,7 +15,7 @@ function AddCategory() {
   const [category, setCategory] = useState([]);
   const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
   const authToken = JSON.parse(localStorage.getItem("token"));
-
+console.log(category,"category")
 //   useEffect(()=>{
 // if(!authToken){
 //  window.location.href="/"
@@ -68,6 +68,9 @@ function AddCategory() {
 
 
   const columns = [
+    { field: 'categoryImg', headerName: 'Image', width: 150, renderCell: (params) => (
+      <img src={params.value.url} alt={params.row.categoryName} style={{ width: '50px', height: "50px" }} />
+    )},
     { field: 'categoryName', headerName: 'Category', width: 150 },
     { field: '_id', headerName: 'Action', width: 150, renderCell: (params) => (
       <button className={style.btn} onClick={() => handleDeleteCategory(params.value)}>Delete</button>
