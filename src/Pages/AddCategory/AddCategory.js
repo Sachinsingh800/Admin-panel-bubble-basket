@@ -7,7 +7,7 @@ import { loadingStatus } from "../../Recoil";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 import axios from "axios";
 import { DataGrid } from '@mui/x-data-grid';
-import { AddCategoryButton } from "../../Component/CreateButton/CreateButton";
+import { AddCategoryButton, UpdateCategory } from "../../Component/CreateButton/CreateButton";
 import Header from "../../Component/Header/Header";
 import { DeleteCategory } from "../../Api/Api";
 
@@ -29,7 +29,7 @@ function AddCategory() {
   const handleGetAllCategory = async () => {
     SetIsloading(true);
     try {
-      const response = await axios.get(`https://zuluresh.onrender.com/admin/categoryAndSubCategory/getAllCategory`);
+      const response = await axios.get(`https://wine-rnlq.onrender.com/admin/category/getAll`);
       setCategory(response?.data?.data.map(item => ({...item, id: item._id})));
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -72,6 +72,12 @@ function AddCategory() {
     { field: '_id', headerName: 'Action', width: 150, renderCell: (params) => (
       <button className={style.btn} onClick={() => handleDeleteCategory(params.value)}>Delete</button>
     )},
+    {
+      field: "id", // Corrected field name to match the ID field
+      headerName: "Update",
+      width: 150,
+      renderCell: (params) => <UpdateCategory id={params.formattedValue} name={params.value} />,
+    },
   ];
 
   return (

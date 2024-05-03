@@ -24,9 +24,8 @@ const LoginForm = () => {
   const handleSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
-    window.location.href="/DashBoard"
     try {
-      // const response = await loginAdmin(email, password);
+      const response = await loginAdmin(email, password);
       
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -9,7 +9,9 @@ import { useState, useEffect } from "react";
 import {
   addAccess,
   addCategory,
+  addNotification,
   addPincode,
+  addShipping,
   addSubCategory,
   addTimeSlot,
   getAllCategory,
@@ -254,11 +256,12 @@ export const CreateButton2 = () => {
   );
 };
 
-export const AddCategoryButton = () => {
+
+export const AddNotificationButton = () => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const [open, setOpen] = useState(false);
-  const [categoryName, setCategoryName] = useState("");
-  const [categoryImg, setCategoryImg] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -269,16 +272,15 @@ export const AddCategoryButton = () => {
 
     try {
       const formData = new FormData();
-      formData.append("categoryName", categoryName);
-      categoryImg.forEach(file => {
-        formData.append("categoryImg", file);
-      });
+      formData.append("title", title);
+      formData.append("body", description);
 
-      const response = await addCategory(formData);
+      // const response = await addNotification(formData);
+      const response = "";
       const { status, message } = response;
       if (status) {
         console.log(message);
-        alert("Category created successfully");
+        alert("Notification created successfully");
       } else {
         console.error(message);
         setIsLoading(false);
@@ -288,8 +290,226 @@ export const AddCategoryButton = () => {
       console.error("Error creating category:", error.message);
       setIsLoading(false);
       alert("Error: " + error.message);
-    }finally{
-      window.location.reload()
+    } finally {
+      // window.location.reload();
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        <AiOutlinePlus />
+        Create
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 600,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Create Category
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <div className={style.main}>
+              <label>
+                title:
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </label>
+              <div className={styles.text_area}>
+                <label>Description:</label>
+                <textarea
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+
+              <br />
+              <button className={styles.btn} onClick={handleCreateClick}>
+                {isLoading ? "Create..." : "Create"}
+              </button>
+            </div>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
+export const UpdateCategory = ({ id}) => {
+  const authToken = JSON.parse(localStorage.getItem("token"));
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+  const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
+  const [categoryName, setCategoryName] = useState("");
+  const [categoryImg, setCategoryImg] = useState([]);
+
+  useEffect(() => {
+    handlegetSingleDataAccess();
+  }, [open]);
+
+  const handlegetSingleDataAccess = async () => {
+    SetIsloading(true);
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      "Content-Type": "application/json", // Set content type to JSON
+    };
+    try {
+      const response = await axios.get(
+        `https://wine-rnlq.onrender.com/admin/category/getSingle/${id}`,
+        { headers }
+      );
+      setCategoryName(response.data.data.categoryName);
+    } catch (error) {
+      console.error("Error getting services:", error.message);
+    } finally {
+      SetIsloading(false);
+    }
+  };
+
+  const handleUpdateAccessData = async () => {
+    SetIsloading(true);
+    setOpen(false);
+
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      "Content-Type": "multipart/form-data", // Set content type to JSON
+    };
+    try {
+      const formData = new FormData();
+      formData.append("categoryName", categoryName);
+      categoryImg.forEach((file) => {
+        formData.append("categoryImg", file);
+      });
+      const response = await axios.put(
+        `https://wine-rnlq.onrender.com/admin/category/update/${id}`,
+        formData,
+        { headers }
+      );
+      const { status, message, data, token } = response.data;
+      if (status) {
+        alert("Data update successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error getting services:", error.message);
+    } finally {
+      SetIsloading(false);
+    }
+  };
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        update
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Update Category
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label>
+              Category Name:
+              <input
+                type="text"
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Category Image:
+              <input
+                onChange={(e) => setCategoryImg(Array.from(e.target.files))}
+                type="file"
+                accept=".pdf, .png, .jpg, .jpeg"
+                multiple
+              />
+            </label>
+            <br />
+            <button className={styles.btn} onClick={handleUpdateAccessData}>
+              Update
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
+export const AddShppingButton = () => {
+  const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
+  const [open, setOpen] = useState(false);
+  const [shippingCharge, setshippingCharge] = useState("");
+  const [freeShipingLimit, setfreeShipingLimit] = useState("");
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleCreateClick = async () => {
+    setOpen(false);
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("shippingCharge", shippingCharge);
+      formData.append("freeShipingLimit", freeShipingLimit);
+
+      // const response = await addShipping(formData);
+      const response = "";
+      const { status, message } = response;
+      if (status) {
+        console.log(message);
+        alert("Shipping created successfully");
+      } else {
+        console.error(message);
+        setIsLoading(false);
+        alert("Error: " + message);
+      }
+    } catch (error) {
+      console.error("Error creating category:", error.message);
+      setIsLoading(false);
+      alert("Error: " + error.message);
+    } finally {
+      window.location.reload();
     }
   };
 
@@ -323,23 +543,23 @@ export const AddCategoryButton = () => {
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <label>
-              Category Name:
+              Shipping Charge:
               <input
-                type="text"
-                value={categoryName}
-                onChange={(e) => setCategoryName(e.target.value)}
+                type="number"
+                value={shippingCharge}
+                onChange={(e) => setshippingCharge(e.target.value)}
               />
             </label>
             <br />
             <label>
-              Category Image:
+              Free ShipingLimit
               <input
-                onChange={(e) => setCategoryImg(Array.from(e.target.files))}
-                type="file"
-                accept=".pdf, .png, .jpg, .jpeg"
-                multiple
+                type="number"
+                value={freeShipingLimit}
+                onChange={(e) => setfreeShipingLimit(e.target.value)}
               />
             </label>
+
             <br />
             <button className={styles.btn} onClick={handleCreateClick}>
               Create
@@ -351,19 +571,114 @@ export const AddCategoryButton = () => {
   );
 };
 
+export const UpdateShippingButton = ({ id }) => {
+  const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
+  const [open, setOpen] = useState(false);
+  const [shippingCharge, setShippingCharge] = useState("");
+  const [freeShippingLimit, setFreeShippingLimit] = useState("");
+  const authToken = JSON.parse(localStorage.getItem("token"));
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleUpdateClick = async () => {
+    setIsLoading(true);
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      "Content-Type": "multipart/form-data", // Set content type to JSON
+    };
+    try {
+      const response = await axios.put(
+        `https://wine-rnlq.onrender.com/admin/shipping/updateShippingCharge/${id}`,
+        {
+          shippingCharge: shippingCharge,
+          freeShipingLimit: freeShippingLimit,
+        },
+        { headers }
+      );
+      const { status, message, data, token } = response.data;
+      if (status) {
+        alert("Data update successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error getting services:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        Update
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Update Shipping
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label>
+              Shipping Charge:
+              <input
+                type="number"
+                value={shippingCharge}
+                onChange={(e) => setShippingCharge(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Free Shipping Limit:
+              <input
+                type="number"
+                value={freeShippingLimit}
+                onChange={(e) => setFreeShippingLimit(e.target.value)}
+              />
+            </label>
+
+            <br />
+            <button className={styles.btn} onClick={handleUpdateClick}>
+              Update
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
 export const AddSubCategoryButton = () => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
+
   const [open, setOpen] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [categoryImg, setCategoryImg] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    handleAllCategory()
+    handleAllCategory();
   }, []);
 
   const handleAllCategory = async () => {
@@ -394,12 +709,12 @@ export const AddSubCategoryButton = () => {
       if (status) {
         console.log(message);
         alert("Sub Category created successfully");
-        window.location.reload()
+        window.location.reload();
       } else {
         console.error(message);
         setIsLoading(false);
         alert("Sub Category created successfully");
-        window.location.reload()
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error creating category:", error.message);
@@ -409,7 +724,7 @@ export const AddSubCategoryButton = () => {
 
   return (
     <div>
-        <button className={styles.btn} onClick={handleOpen}>
+      <button className={styles.btn} onClick={handleOpen}>
         <AiOutlinePlus />
         Create
       </button>
@@ -436,22 +751,22 @@ export const AddSubCategoryButton = () => {
             Create Sub Category
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <div className={style.categoriesContainer}>
-          <span>Category:</span>
-          <select
-            name="category"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option value="">Select category</option>
-            {categories.map((category) => (
-              <option key={category._id} value={category._id}>
-                {category.categoryName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <br/>
+            <div className={style.categoriesContainer}>
+              <span>Category:</span>
+              <select
+                name="category"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">Select category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.categoryName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <br />
             <label>
               Category Name:
               <input
@@ -473,6 +788,138 @@ export const AddSubCategoryButton = () => {
             <br />
             <button className={styles.btn} onClick={handleCreateClick}>
               Create
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
+export const UpdateSubCategoryButton = ({ id }) => {
+  const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
+  const authToken = JSON.parse(localStorage.getItem("token"));
+  const [open, setOpen] = useState(false);
+  const [categoryName, setCategoryName] = useState("");
+  const [categoryImg, setCategoryImg] = useState([]); // Initialize as empty array
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    handleAllCategory();
+  }, []);
+
+  const handleAllCategory = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getAllCategory();
+      setCategories(response.data); // Set the categories data
+    } catch (error) {
+      console.error("Error getting categories:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdateSubCategory = async () => {
+    setIsLoading(true);
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      "Content-Type": "multipart/form-data", // Set content type to JSON
+    };
+    try {
+      const formData = new FormData();
+      formData.append("subCategoryName", categoryName);
+      categoryImg.forEach((file) => {
+        formData.append("subCategoryImg", file);
+      });
+      const response = await axios.put(
+        `https://wine-rnlq.onrender.com/admin/categoryAndSubCategory/updateSubCategory/${selectedCategory}/${id}`,
+        formData,
+        { headers }
+      );
+      const { status, message, data, token } = response.data;
+      if (status) {
+        alert("Data update successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error getting services:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        update
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Update Sub Category
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <div className={style.categoriesContainer}>
+              <span>Category:</span>
+              <select
+                name="category"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">Select category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.categoryName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <br />
+            <label>
+              Sub Category Name:
+              <input
+                type="text"
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Sub Category Image:
+              <input
+                onChange={(e) => {
+                  console.log("Selected files:", e.target.files);
+                  setCategoryImg(Array.from(e.target.files)); // Convert FileList to array
+                }}
+                type="file"
+                accept=".pdf, .png, .jpg, .jpeg"
+                multiple
+              />
+            </label>
+            <br />
+            <button className={styles.btn} onClick={handleUpdateSubCategory}>
+              Update Sub Category
             </button>
           </Typography>
         </Box>
@@ -587,7 +1034,7 @@ export const UpdateAccess = ({ id }) => {
     };
     try {
       const response = await axios.get(
-        `https://zuluresh.onrender.com/admin/adminAuth/getSingle/${id}`,
+        `https://wine-rnlq.onrender.com/admin/adminAuth/getSingle/${id}`,
         { headers }
       );
       setEmail(response.data.data.grantAccessEmail);
@@ -602,14 +1049,14 @@ export const UpdateAccess = ({ id }) => {
   const handleUpdateAccessData = async () => {
     SetIsloading(true);
     setOpen(false);
-  
+
     const headers = {
       "x-admin-token": authToken, // Ensure authToken is defined
-      'Content-Type': 'multipart/form-data', // Set content type to JSON
+      "Content-Type": "multipart/form-data", // Set content type to JSON
     };
     try {
       const response = await axios.put(
-        `https://zuluresh.onrender.com/admin/adminAuth/updateSingle/${id}`,
+        `https://wine-rnlq.onrender.com/admin/adminAuth/updateSingle/${id}`,
         {
           grantAccessEmail: email,
           password: password,
@@ -673,3 +1120,102 @@ export const UpdateAccess = ({ id }) => {
     </div>
   );
 };
+
+
+export const AddCategoryButton = () => {
+  const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
+  const [open, setOpen] = useState(false);
+  const [categoryName, setCategoryName] = useState("");
+  const [categoryImg, setCategoryImg] = useState([]);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleCreateClick = async () => {
+    setOpen(false);
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("categoryName", categoryName);
+      categoryImg.forEach(file => {
+        formData.append("categoryImg", file);
+      });
+
+      const response = await addCategory(formData);
+      const { status, message } = response;
+      if (status) {
+        console.log(message);
+        alert("Category created successfully");
+      } else {
+        console.error(message);
+        setIsLoading(false);
+        alert("Error: " + message);
+      }
+    } catch (error) {
+      console.error("Error creating category:", error.message);
+      setIsLoading(false);
+      alert("Error: " + error.message);
+    }finally{
+      window.location.reload()
+    }
+  };
+
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        <AiOutlinePlus />
+        Create
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Create Category
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label>
+              Category Name:
+              <input
+                type="text"
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Category Image:
+              <input
+                onChange={(e) => setCategoryImg(Array.from(e.target.files))}
+                type="file"
+                accept=".pdf, .png, .jpg, .jpeg"
+                multiple
+              />
+            </label>
+            <br />
+            <button className={styles.btn} onClick={handleCreateClick}>
+              Create
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+

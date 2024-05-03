@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 
-const BASE_URL = 'https://zuluresh.onrender.com';
+const BASE_URL = 'https://wine-rnlq.onrender.com';
 const authToken = JSON.parse(localStorage.getItem("token"));
 
 
@@ -12,12 +12,11 @@ const authToken = JSON.parse(localStorage.getItem("token"));
 
 export const loginAdmin = async (email, password) => {
   try {
-    const response = await axios.post(`${BASE_URL}/admin/adminAuth/logIn`, {
+    const response = await axios.post(`${BASE_URL}/admin/auth/logIn`, {
       email,
       password,
     });
     const { status, message, data, token } = response.data;
-    console.log(response)
     if(status){
       localStorage.setItem('token',JSON.stringify(token) );
       localStorage.setItem("userData",(response.config.data))
@@ -421,7 +420,7 @@ export const DeleteCategory = async (id) => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.delete(`${BASE_URL}/admin/categoryAndSubCategory/deleteSingleCategory/${id}`,{headers});
+    const response = await axios.delete(`${BASE_URL}/admin/category/delete/${id}`,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {
@@ -502,7 +501,7 @@ export const addCategory = async ( formData) => {
     'Content-Type': 'multipart/form-data', // Set content type to JSON
   };
   try {
-    const response = await axios.post(`${BASE_URL}/admin/categoryAndSubCategory/addCategory`, formData,{headers});
+    const response = await axios.post(`${BASE_URL}/admin/category/create`, formData,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {
