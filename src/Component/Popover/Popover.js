@@ -40,7 +40,8 @@ export default function BasicPopover() {
           horizontal: 'left',
         }}
       >
-        <div style={{padding:"20px"}}>
+        <div style={{padding:"20px" , display:"flex",flexDirection:"column",gap:"10px"}}>
+        <span ><a style={{textDecoration:"none"}} href='/Profile'>Profile</a></span>
         <span ><a style={{textDecoration:"none"}} href='/RegisterPage'>Register</a></span>
         <span ><p onClick={handleLogout}>Logout </p></span>
         </div>

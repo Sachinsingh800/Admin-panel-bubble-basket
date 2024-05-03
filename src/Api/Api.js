@@ -47,7 +47,7 @@ export const UpdateAdminProfile= async (name,email, password) => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.put(`${BASE_URL}/admin/adminAuth/updateAdminProfile`, {
+    const response = await axios.put(`${BASE_URL}/admin/auth/update`, {
       name,
       email,
       password,
