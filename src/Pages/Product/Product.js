@@ -91,7 +91,7 @@ function Product() {
     SetIsloading(true);
     try {
       const response = await axios.get(
-        `https://zuluresh.onrender.com/admin/categoryAndSubCategory/getAllCategory`
+        `https://wine-rnlq.onrender.com/admin/category/getAll`
       );
       setCategory(response.data.data);
     } catch (error) {

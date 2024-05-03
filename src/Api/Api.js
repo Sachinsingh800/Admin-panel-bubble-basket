@@ -164,6 +164,8 @@ export const getAllProduct = async () => {
     }
   }
 };
+
+
 // getAllCategory 
 
 export const getAllCategory = async () => {
@@ -172,7 +174,7 @@ export const getAllCategory = async () => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.get(`${BASE_URL}/admin/categoryAndSubCategory/getAllCategory`,{headers});
+    const response = await axios.get(`${BASE_URL}/admin/product/getAll`,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {

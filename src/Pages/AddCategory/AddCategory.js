@@ -15,7 +15,7 @@ function AddCategory() {
   const [category, setCategory] = useState([]);
   const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
   const authToken = JSON.parse(localStorage.getItem("token"));
-console.log(category,"category")
+
 //   useEffect(()=>{
 // if(!authToken){
 //  window.location.href="/"
