@@ -43,9 +43,12 @@ function RegisterPage() {
   return (
     <div className={style.main}>
       {loading && <LoadingScreen />}
+      <a href="/DashBoard">
       <div className={style.head}>
         <img src={logo} alt="logo" />
       </div>
+      </a>
+  
       <form onSubmit={handleSubmit} className={style.form}>
         <h2>Register</h2>
         <div>
