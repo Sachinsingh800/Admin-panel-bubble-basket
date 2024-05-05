@@ -174,7 +174,7 @@ export const getAllCategory = async () => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.get(`${BASE_URL}/admin/product/getAll`,{headers});
+    const response = await axios.get(`${BASE_URL}/admin/category/getAll`,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {
@@ -291,7 +291,7 @@ export const updateProduct = async (id, formdata) => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.put(`${BASE_URL}/admin/product/updateProduct/${id}`, formdata,{headers});
+    const response = await axios.put(`${BASE_URL}/admin/product/update/${id}`, formdata,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {
@@ -318,7 +318,7 @@ export const deleteProduct = async (id) => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.delete(`${BASE_URL}/admin/product/deleteProduct/${id}`,{headers});
+    const response = await axios.delete(`${BASE_URL}/admin/product/delete/${id}`,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {
@@ -399,7 +399,7 @@ export const DeleteBanner = async (id) => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.delete(`${BASE_URL}/admin/banner/deleteSingleBanner/${id}`,{headers});
+    const response = await axios.delete(`${BASE_URL}/admin/banner/delete/${id}`,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {
@@ -480,7 +480,7 @@ export const addProduct = async ( formData) => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.post(`${BASE_URL}/admin/product/addProduct`, formData,{headers});
+    const response = await axios.post(`${BASE_URL}/admin/product/create`, formData,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {
@@ -563,7 +563,7 @@ export const addBanner = async ( formData) => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.post(`${BASE_URL}/admin/banner/createBanner`, formData,{headers});
+    const response = await axios.post(`${BASE_URL}/admin/banner/create`, formData,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {
@@ -727,7 +727,7 @@ export const getAllBanner = async () => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.get(`${BASE_URL}/public/getAllBanner`,{headers });
+    const response = await axios.get(`${BASE_URL}/admin/banner/getAll`,{headers });
    console.log(response,"response")
     const { status, message, data } = response.data;
 

@@ -2,19 +2,17 @@ import React, { useEffect, useState } from "react";
 import style from "./CreateProduct.module.css"; // Replace with your actual styles
 import NavBar from "../../Component/NavBar/NavBar";
 import OptionBar from "../../Component/OptionBar/OptionBar";
-import {
-  addProduct,
-  getAllCategory,
-  getAllSubCategory,
-} from "../../Api/Api";
+import { addProduct, getAllCategory, getAllSubCategory } from "../../Api/Api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { loadingStatus } from "../../Recoil";
 import { useRecoilState } from "recoil";
-import { AddCategoryButton, AddSubCategoryButton } from "../../Component/CreateButton/CreateButton";
+import {
+  AddCategoryButton,
+} from "../../Component/CreateButton/CreateButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 
 function CreateProduct() {
@@ -27,7 +25,6 @@ function CreateProduct() {
   const [categoriesId, setCategoriesId] = useState("");
   const [singleProduct, setSingleProduct] = useState({
     title: "",
-    MRP: "",
     Stock: "",
     measureUnit: "",
     category: "",
@@ -35,16 +32,19 @@ function CreateProduct() {
     price: "",
     sub_category: "",
     description: "",
-    setAs: "",
+    sku: "",
+    productStatus: "",
+    tag: "",
+    dimension: "",
   });
 
   const authToken = JSON.parse(localStorage.getItem("token"));
 
-//   useEffect(()=>{
-// if(!authToken){
-//  window.location.href="/"
-// }
-//   },[])
+  //   useEffect(()=>{
+  // if(!authToken){
+  //  window.location.href="/"
+  // }
+  //   },[])
 
   useEffect(() => {
     handleAllCategory();
@@ -64,19 +64,6 @@ function CreateProduct() {
 
   const handleSelectCategory = (e) => {
     setCategoriesId(e.target.value);
-    handleAllSubCategory(e.target.value);
-  };
-
-  const handleAllSubCategory = async (categoryId) => {
-    SetIsloading(true);
-    try {
-      const response = await getAllSubCategory(categoryId);
-      setSubCategories(response.data);
-    } catch (error) {
-      console.error("Error getting products:", error.message);
-    } finally {
-      SetIsloading(false);
-    }
   };
 
   const handleInputChange = (event) => {
@@ -101,10 +88,9 @@ function CreateProduct() {
   const handleUpdateClick = async () => {
     const formdata = new FormData();
     formdata.append("title", singleProduct.title);
-    formdata.append("MRP", singleProduct.MRP);
     formdata.append("Stock", singleProduct.Stock);
     formdata.append("measureUnit", singleProduct.measureUnit);
-  
+
     // Get the category name based on the selected ID
     const selectedCategory = categories.find(
       (category) => category._id === categoriesId
@@ -115,27 +101,18 @@ function CreateProduct() {
       console.error("Selected category not found.");
       return;
     }
-  
-    // Get the subcategory name based on the selected ID
-    const selectedSubcategory = subcategories.find(
-      (subcategory) => subcategory._id === singleProduct.sub_category
-    );
-    if (selectedSubcategory) {
-      formdata.append("sub_category", selectedSubcategory.subCategoryName);
-    } else {
-      console.error("Selected subcategory not found.");
-      return;
-    }
     formdata.append("unit", singleProduct.unit);
     formdata.append("price", singleProduct.price);
     formdata.append("description", singleProduct.description);
-    formdata.append("setAs", singleProduct.setAs);
-  
+    formdata.append("sku", singleProduct.sku);
+    formdata.append("productStatus", singleProduct.productStatus);
+    formdata.append("tag", singleProduct.tag);
+    formdata.append("dimension", singleProduct.dimension);
     // Append each image with the key "productImgs[]"
     productImgs.forEach((img, index) => {
       formdata.append(`productImg`, img);
     });
-  
+
     try {
       const response = await addProduct(formdata);
       const { status, message } = response;
@@ -165,7 +142,6 @@ function CreateProduct() {
       }
     }
   };
-  
 
   return (
     <div className={style.main}>
@@ -215,71 +191,38 @@ function CreateProduct() {
           <li>
             <span>Description:</span>
             <div className={style.quillContainer}>
-            <ReactQuill
-              theme="snow"
-              value={singleProduct.description}
-              onChange={(value) =>
-                setSingleProduct((prev) => ({
-                  ...prev,
-                  description: value,
-                }))
-              }
-            />
+              <ReactQuill
+                theme="snow"
+                value={singleProduct.description}
+                onChange={(value) =>
+                  setSingleProduct((prev) => ({
+                    ...prev,
+                    description: value,
+                  }))
+                }
+              />
             </div>
-    
           </li>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
           <li>
             <span>Category:</span>
             <div className={style.categoryBox}>
-            <select
-            className={style.category}
-              name="category"
-              value={categoriesId}
-              onChange={handleSelectCategory}
-            >
-              <option value="">Select category</option>
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.categoryName}
-                </option>
-              ))}
-            </select>
-            <AddCategoryButton />
+              <select
+                className={style.category}
+                name="category"
+                value={categoriesId}
+                onChange={handleSelectCategory}
+              >
+                <option value="">Select category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.categoryName}
+                  </option>
+                ))}
+              </select>
+              <AddCategoryButton />
             </div>
-          
-          </li>
-          <li>
-            <span>Sub Category:</span>
-            <div className={style.categoryBox}>
-            <select
-               className={style.category}
-              name="sub_category"
-              value={singleProduct.sub_category}
-              onChange={handleInputChange}
-            >
-              <option value="">Select sub category</option>
-              {subcategories.map((subcategory) => (
-                <option key={subcategory._id} value={subcategory._id}>
-                  {subcategory.subCategoryName}
-                </option>
-              ))}
-            </select>
-            <AddSubCategoryButton />
-            </div>
-          </li>
-          <li>
-            <span>MRP:</span>
-            <input
-              type="text"
-              name="MRP"
-              value={singleProduct.MRP}
-              onChange={handleInputChange}
-            />
           </li>
           <li>
             <span>Price:</span>
@@ -309,6 +252,33 @@ function CreateProduct() {
             />
           </li>
           <li>
+            <span>sku:</span>
+            <input
+              type="sku"
+              name="sku"
+              value={singleProduct.sku}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Tag:</span>
+            <input
+              type="tag"
+              name="tag"
+              value={singleProduct.tag}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Dimension:</span>
+            <input
+              type="dimension"
+              name="dimension"
+              value={singleProduct.dimension}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
             <span htmlFor="measureUnit">Select a Measurement Unit:</span>
             <select
               id="measureUnit"
@@ -330,19 +300,17 @@ function CreateProduct() {
             </select>
           </li>
           <li>
-            <span>Set As:</span>
+            <span htmlFor="productStatus">product Status:</span>
             <select
+              id="productStatus"
+              name="productStatust"
               type="text"
-              name="setAs"
-              value={singleProduct.setAs}
+              value={singleProduct.productStatus}
               onChange={handleInputChange}
             >
               <option value="">Select...</option>
-              <option value="None">None</option>
-              <option value="Best Seller">Best Seller</option>
-              <option value="Best Deals">Best Deals</option>
-              <option value="Combos">Combos</option>
-              <option value="offers">offers</option>
+              <option value="Available">Available</option>
+              <option value="Not Available">Not Available</option>
             </select>
           </li>
         </ul>
