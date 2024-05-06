@@ -310,6 +310,7 @@ export const updateProduct = async (id, formdata) => {
   }
 };
 
+
 //DeleteShipping
 
 export const DeleteShipping = async (id) => {
