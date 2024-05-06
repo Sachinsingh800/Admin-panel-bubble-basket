@@ -16,25 +16,20 @@ const OrderTable = () => {
 
   const columns = [
     { field: 'orderId', headerName: 'Order ID', width: 150 },
-    { field: 'deliverySlot', headerName: 'Delivery Slot', width: 150 },
-    { field: 'customerName', headerName: 'Customer Name', width: 150 },
-    { field: 'phoneNo', headerName: 'Phone No', width: 150 },
-    { field: 'houseFlatNo', headerName: 'House Flat No', width: 150 },
-    { field: 'blockName', headerName: 'Block Name', width: 150 },
-    { field: 'street', headerName: 'Street', width: 150 },
-    { field: 'landMark', headerName: 'LandMark', width: 150 },
-    { field: 'pinCode', headerName: 'PinCode', width: 150 },
-    { field: 'locality', headerName: 'Locality', width: 150 },
-    { field: 'shippingPrice', headerName: 'Shipping Price', width: 150 },
+    { field: 'orderDate', headerName: 'Order Date', width: 150 },
+    { field: 'totalItems', headerName: 'Total Items', width: 150 },
     { field: 'totalPrice', headerName: 'Total Price', width: 150 },
-    { field: 'orderStatus', headerName: 'Order Status', width: 150 },
-    { field: 'paymentMethod', headerName: 'Payment Method', width: 150 },
-    { field: 'productId', headerName: 'Product ID', width: 150 },
-    { field: 'productTitle', headerName: 'Product Title', width: 150 },
-    { field: 'productDescription', headerName: 'Product Description', width: 150 },
-    { field: 'productPrice', headerName: 'Product Price', width: 150 },
-    { field: 'productImage', headerName: 'Product Image', width: 150, renderCell: (params) => <img src={params.value} alt="Product" style={{ width: '100px' }} /> },
-    { field: '_id', headerName: 'Actions', width: 150, renderCell: (params) => <p style={{ color: 'blue', cursor: 'pointer' }}     onClick={() => handleParticularData(params.row._id)}>View Invoice</p> },
+    { field: 'firstName', headerName: 'First Name', width: 150 },
+    { field: 'lastName', headerName: 'Last Name', width: 150 },
+    { field: 'email', headerName: 'Email', width: 150 },
+    { field: 'phone', headerName: 'Phone', width: 150 },
+    { field: 'country', headerName: 'Country', width: 150 },
+    { field: 'townCity', headerName: 'Town/City', width: 150 },
+    { field: 'stateCounty', headerName: 'State/County', width: 150 },
+    { field: 'postcodeZIP', headerName: 'Postcode/ZIP', width: 150 },
+    { field: 'orderNotes', headerName: 'Order Notes', width: 150 },
+    { field: 'trackingStatus', headerName: 'Tracking Status', width: 150 },
+    { field: 'trackingDate', headerName: 'Tracking Date', width: 150 },
   ];
 
   useEffect(() => {
@@ -48,21 +43,19 @@ const OrderTable = () => {
     };
     setIsLoading(true);
     try {
-      let apiUrl = 'https://zuluresh.onrender.com/admin/order/getAllOrders';
+      let apiUrl = 'https://wine-rnlq.onrender.com/admin/order/dateWiseOrder';
       if (applyFilters) {
         apiUrl += `?date=${filterDate}`;
       }
-      const response = await axios.get(apiUrl,{headers});
+      const response = await axios.get(apiUrl, { headers });
       setOrders(response.data.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         // Axios error (HTTP error)
         const { response } = error;
         // Set the error message
-        const errorMessage = response.data.message
-  
-           alert(errorMessage)
-        // Log the error message as a string
+        const errorMessage = response.data.message;
+        alert(errorMessage);
       } else {
         // Network error (e.g., no internet connection)
         alert("Something went wrong");
@@ -88,40 +81,28 @@ const OrderTable = () => {
     <div className={styles.orderTable}>
       <Box sx={{ height: 400, width: '100%' }}>
         <DataGrid
-          rows={orders.map((order, index) => ({
-            id: index + 1, // Ensure each row has a unique identifier
+          rows={orders.map((order) => ({
+            id: order._id,
             orderId: order.orderId,
-            deliverySlot: order.shippingInfo?.deliverySlot?.day,
-            customerName: order.shippingInfo?.name,
-            phoneNo: order.shippingInfo?.phoneNo,
-            houseFlatNo: order.shippingInfo?.houseFlatNo,
-            blockName: order.shippingInfo?.blockName,
-            street: order.shippingInfo?.street,
-            landMark: order.shippingInfo?.landMark,
-            pinCode: order.shippingInfo?.pinCode,
-            locality: order.shippingInfo?.locality,
-            shippingPrice: order.shippingPrice,
+            orderDate: new Date(order.orderDate).toLocaleDateString(),
+            totalItems: order.totalItems,
             totalPrice: order.totalPrice,
-            orderStatus: order.orderStatus,
-            paymentMethod: order.paymentMethod.cod ? "COD" : "Online",
-            productId: order.items[0]?.productId?._id,
-            productTitle: order.items[0]?.productId?.title,
-            productDescription: order.items[0]?.productId?.description,
-            productPrice: order.items[0]?.productId?.price,
-            productImage: order.items[0]?.productId?.productImg[0]?.url,
-            _id:order._id
+            firstName: order.shippingInfo.firstName,
+            lastName: order.shippingInfo.lastName,
+            email: order.shippingInfo.email,
+            phone: order.shippingInfo.phone,
+            country: order.shippingInfo.country,
+            townCity: order.shippingInfo.townCity,
+            stateCounty: order.shippingInfo.stateCounty,
+            postcodeZIP: order.shippingInfo.postcodeZIP,
+            orderNotes: order.shippingInfo.orderNotes,
+            trackingStatus: order.trackingDetails.trackingStatus,
+            trackingDate: new Date(order.trackingDetails.trackingDate).toLocaleDateString(),
           }))}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
+          pageSize={5}
           checkboxSelection
-          disableRowSelectionOnClick
+          disableSelectionOnClick
         />
       </Box>
     </div>
