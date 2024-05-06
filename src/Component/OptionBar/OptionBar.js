@@ -39,6 +39,7 @@ function OptionBar() {
         <Link  className={style.link}  to={"/AddCategory"}><li onClick={()=>handleListItemClick("Category")}><CategoryIcon />Add Category</li></Link>   
         <Link  className={style.link}  to={"/AddSubCategory"}><li onClick={()=>handleListItemClick("Sub Category")}><CategoryIcon />Sub Category</li></Link>   
         <Link  className={style.link}  to={"/Access"}><li onClick={()=>handleListItemClick("Access")}><KeyIcon />Access</li></Link>   
+        <Link  className={style.link}  to={"/Review"}><li onClick={()=>handleListItemClick("Review")}><KeyIcon />Review</li></Link>   
        </ul>
       </div>
     </div>

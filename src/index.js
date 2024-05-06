@@ -32,6 +32,8 @@ import UpdateProfile from './Component/UpdateProfile/UpdateProfile';
 import RegisterPage from './Component/RegisterPage/RegisterPage';
 import AddShpping from './Pages/AddShpping/AddShipping';
 import AddShipping from './Pages/AddShpping/AddShipping';
+import Review from './Pages/Review/Review';
+import Approval from './Pages/Approval/Approval';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -76,6 +78,10 @@ const router = createBrowserRouter([
     element: <UpdateProduct />,
   },
   {
+    path: "/Approval/:id", // Corrected path with parameter
+    element: <Approval />,
+  },
+  {
     path: "/CreateProduct", // Corrected path with parameter
     element: <CreateProduct />,
   },
@@ -114,6 +120,10 @@ const router = createBrowserRouter([
   {
     path: "/RegisterPage", // Corrected path with parameter
     element: <RegisterPage/>,
+  },
+  {
+    path: "/Review", // Corrected path with parameter
+    element: <Review/>,
   },
 ]);
 root.render(
