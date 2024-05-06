@@ -31,7 +31,7 @@ function OptionBar() {
         <Link  className={style.link}  to={"/Orders"}> <li onClick={()=>handleListItemClick("Orders")}><BorderAllIcon  />Orders</li></Link>  
         <Link  className={style.link}  to={"/Payment"}><li onClick={()=>handleListItemClick("Payments")}><PaymentIcon  />Payments</li></Link>   
         <Link  className={style.link}  to={"/Sales"}><li onClick={()=>handleListItemClick("Sales")}><MonetizationOnIcon />Sales</li></Link>   
-        <Link  className={style.link}  to={"/Customers"}><li onClick={()=>handleListItemClick("Customers")}><AccountBoxIcon  />Customers</li></Link>   
+        <Link  className={style.link}  to={"/AddShipping"}><li onClick={()=>handleListItemClick("Shpping")}><AccountBoxIcon  />Shpping</li></Link>   
         <Link  className={style.link}  to={"/PeopleOnline"}><li onClick={()=>handleListItemClick("People Online")}><PeopleIcon  />People Online</li></Link>   
         <Link  className={style.link}  to={"/Pincode"}><li onClick={()=>handleListItemClick("Pincode")}><FmdGoodIcon  />Pincode</li></Link>   
         <Link  className={style.link}  to={"/TimeSlot"}><li onClick={()=>handleListItemClick("TimeSlot")}><MoreTimeIcon />TimeSlot</li></Link>   

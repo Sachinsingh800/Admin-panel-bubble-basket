@@ -1,69 +1,59 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../Component/NavBar/NavBar";
 import OptionBar from "../../Component/OptionBar/OptionBar";
-import style from "./AddShpping.module.css";
+import style from "./AddShipping.module.css";
 import { useRecoilState } from "recoil";
 import { loadingStatus } from "../../Recoil";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import { AddShppingButton, UpdateShippingButton } from "../../Component/CreateButton/CreateButton";
+import { AddShippingButton, UpdateShippingButton } from "../../Component/CreateButton/CreateButton";
 import Header from "../../Component/Header/Header";
 import { DeleteShipping } from "../../Api/Api";
 
-function AddShpping() {
-  const [category, setCategory] = useState([]);
+function AddShipping() {
+  const [shippingData, setShippingData] = useState([]);
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const authToken = JSON.parse(localStorage.getItem("token"));
 
+  console.log(shippingData,"data")
   useEffect(() => {
     // Redirect to login if authToken is not available
     if (!authToken) {
       window.location.href = "/";
     } else {
-      handleGetAllCategory();
+      handleGetAllShipping();
     }
   }, [authToken]);
 
-  const handleGetAllCategory = async () => {
+  const handleGetAllShipping = async () => {
     setIsLoading(true);
     try {
+      const headers = {
+        "x-admin-token": authToken,
+      };
       const response = await axios.get(
-        `https://www.zuluresh.com/admin/shipping/getShipping`
+        "https://wine-rnlq.onrender.com/admin/shipping/get",
+        { headers }
       );
-      // Assuming your API returns an array of shipping objects
-      //   setCategory(response?.data?.message); // Update state with response data
-      setCategory(
-        response.data.message.map((item) => ({ ...item, id: item._id }))
-      );
-      console.log(
-        response.data.message,
-
-        "response"
-      );
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Axios error (HTTP error)
-        const { response } = error;
-        // Set the error message
-        const errorMessage = response.data.message;
-        alert(errorMessage);
-        // Log the error message as a string
+      if (response.data.status) {
+        setShippingData([response.data.data].map((item) => ({ ...item, id: item._id })));
       } else {
-        // Network error (e.g., no internet connection)
-        alert("Something went wrong");
+        console.error("Error fetching shipping:", response.data.message);
       }
+    } catch (error) {
+      console.error("Error fetching shipping:", error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleDeleteCategory = async (id) => {
+  const handleDeleteShipping = async (id) => {
     setIsLoading(true);
     try {
       await DeleteShipping(id);
-      // Refresh the categories after successful deletion
-      handleGetAllCategory();
+      // Refresh the shipping after successful deletion
+      handleGetAllShipping();
       alert("Shipping deleted successfully");
     } catch (error) {
       console.error("Error deleting shipping:", error.message);
@@ -74,31 +64,29 @@ function AddShpping() {
 
   const columns = [
     {
-      field: "freeShipingLimit",
-      headerName: "Free Shipping Limit",
+      field: "shippingCharge",
+      headerName: "Shipping Charge",
       width: 200,
     },
-    { field: "shippingCharge", headerName: "Shipping Charge", width: 200 },
     { field: "createdAt", headerName: "Created At", width: 200 },
     {
-      field: "Action",
+      field: "action",
       headerName: "Action",
       width: 150,
       renderCell: (params) => (
         <button
           className={style.btn}
-          onClick={() => handleDeleteCategory(params.row._id)}
+          onClick={() => handleDeleteShipping(params.row._id)}
         >
           Delete
         </button>
       ),
     },
     {
-      field: "_id", // Corrected field name to match the ID field
+      field: "_id",
       headerName: "Update",
       width: 150,
-      renderCell: (params) => <UpdateShippingButton id={params.formattedValue} />,
-      
+      renderCell: (params) => <UpdateShippingButton id={params.row._id} />,
     },
   ];
 
@@ -112,21 +100,14 @@ function AddShpping() {
         <div className={style.header}>
           <h2>All Shipping</h2>
           <div>
-            <AddShppingButton />
+            <AddShippingButton />
           </div>
         </div>
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
-            rows={category}
+            rows={shippingData}
             columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 5,
-                },
-              },
-            }}
-            pageSizeOptions={[5]}
+            pageSize={5}
             checkboxSelection
             disableRowSelectionOnClick
           />
@@ -136,4 +117,4 @@ function AddShpping() {
   );
 }
 
-export default AddShpping;
+export default AddShipping;

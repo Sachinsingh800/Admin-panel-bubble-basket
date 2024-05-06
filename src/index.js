@@ -30,6 +30,8 @@ import Invoice from './Component/Invoice/Invoice';
 import Access from './Pages/Access/Access';
 import UpdateProfile from './Component/UpdateProfile/UpdateProfile';
 import RegisterPage from './Component/RegisterPage/RegisterPage';
+import AddShpping from './Pages/AddShpping/AddShipping';
+import AddShipping from './Pages/AddShpping/AddShipping';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -58,8 +60,8 @@ const router = createBrowserRouter([
     element: <Payment />,
   },
   {
-    path: "/Customers",
-    element: <Customers />,
+    path: "/AddShipping",
+    element: <AddShipping />,
   },
   {
     path: "/Sales",

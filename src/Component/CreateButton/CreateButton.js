@@ -475,7 +475,7 @@ export const UpdateCategory = ({ id}) => {
   );
 };
 
-export const AddShppingButton = () => {
+export const AddShippingButton = () => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const [open, setOpen] = useState(false);
   const [shippingCharge, setshippingCharge] = useState("");
@@ -493,8 +493,7 @@ export const AddShppingButton = () => {
       formData.append("shippingCharge", shippingCharge);
       formData.append("freeShipingLimit", freeShipingLimit);
 
-      // const response = await addShipping(formData);
-      const response = "";
+      const response = await addShipping(formData);
       const { status, message } = response;
       if (status) {
         console.log(message);
@@ -589,7 +588,7 @@ export const UpdateShippingButton = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/shipping/updateShippingCharge/${id}`,
+        `https://wine-rnlq.onrender.com/admin/shipping/update/${id}`,
         {
           shippingCharge: shippingCharge,
           freeShipingLimit: freeShippingLimit,
