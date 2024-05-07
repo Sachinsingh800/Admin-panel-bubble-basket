@@ -15,6 +15,9 @@ import CategoryIcon from '@mui/icons-material/Category';
 import KeyIcon from '@mui/icons-material/Key';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import RedeemIcon from '@mui/icons-material/Redeem';
 
 function OptionBar() {
   const handleListItemClick = (text) => {
@@ -41,9 +44,9 @@ function OptionBar() {
         <Link  className={style.link}  to={"/AddCategory"}><li onClick={()=>handleListItemClick("Category")}><CategoryIcon />Add Category</li></Link>   
         {/* <Link  className={style.link}  to={"/AddSubCategory"}><li onClick={()=>handleListItemClick("Sub Category")}><CategoryIcon />Sub Category</li></Link>    */}
         {/* <Link  className={style.link}  to={"/Access"}><li onClick={()=>handleListItemClick("Access")}><KeyIcon />Access</li></Link>    */}
-        <Link  className={style.link}  to={"/Review"}><li onClick={()=>handleListItemClick("Review")}><KeyIcon />Review</li></Link>   
-        <Link  className={style.link}  to={"/AddTax"}><li onClick={()=>handleListItemClick("Tax")}><KeyIcon />Tax</li></Link>   
-        <Link  className={style.link}  to={"/AddCoupon"}><li onClick={()=>handleListItemClick("Coupon")}><KeyIcon />Coupon</li></Link>   
+        <Link  className={style.link}  to={"/Review"}><li onClick={()=>handleListItemClick("Review")}><ReviewsIcon />Review</li></Link>   
+        <Link  className={style.link}  to={"/AddTax"}><li onClick={()=>handleListItemClick("Tax")}><AttachMoneyIcon />Tax</li></Link>   
+        <Link  className={style.link}  to={"/AddCoupon"}><li onClick={()=>handleListItemClick("Coupon")}><RedeemIcon />Coupon</li></Link>   
        </ul>
       </div>
     </div>
