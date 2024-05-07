@@ -100,7 +100,7 @@ function AddTax() {
       <div className={style.body}>
         <Header />
         <div className={style.header}>
-          <h2>All Shipping</h2>
+          <h2>All Tax</h2>
           <div>
             <AddShippingButton />
           </div>

@@ -729,7 +729,7 @@ export const UpdateTaxButton = ({ id }) => {
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <label>
-              Shipping Charge:
+              Tax Charge:
               <input
                 type="number"
                 value={shippingCharge}
