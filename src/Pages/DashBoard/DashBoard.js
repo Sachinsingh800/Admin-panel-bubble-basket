@@ -50,6 +50,7 @@ function DashBoard() {
  
       <br/>
       <h2 className={style.h2}><FaShoppingCart/>Latest Orders</h2>
+      <br/>
       <OrderTable />
       </div>
 

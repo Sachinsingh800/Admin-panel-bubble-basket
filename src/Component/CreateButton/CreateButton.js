@@ -664,6 +664,89 @@ export const UpdateShippingButton = ({ id }) => {
   );
 };
 
+
+export const UpdateTaxButton = ({ id }) => {
+  const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
+  const [open, setOpen] = useState(false);
+  const [shippingCharge, setShippingCharge] = useState("");
+  const authToken = JSON.parse(localStorage.getItem("token"));
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleUpdateClick = async () => {
+    setIsLoading(true);
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      "Content-Type": "multipart/form-data", // Set content type to JSON
+    };
+    try {
+      const response = await axios.put(
+        `https://wine-rnlq.onrender.com/admin/tax/update/${id}`,
+        {
+          taxPercent: shippingCharge,
+        },
+        { headers }
+      );
+      const { status, message, data, token } = response.data;
+      if (status) {
+        alert("Data update successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error getting services:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        Update
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Update Shipping
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label>
+              Shipping Charge:
+              <input
+                type="number"
+                value={shippingCharge}
+                onChange={(e) => setShippingCharge(e.target.value)}
+              />
+            </label>
+            <br />
+            <button className={styles.btn} onClick={handleUpdateClick}>
+              Update
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
 export const AddSubCategoryButton = () => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
 
