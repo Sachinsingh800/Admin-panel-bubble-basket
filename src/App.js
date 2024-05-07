@@ -9,11 +9,11 @@ function App() {
   const  [isLoading, SetIsloading] = useRecoilState(loadingStatus)
   const authToken = JSON.parse(localStorage.getItem("token"));
 
-//   useEffect(()=>{
-// if(!authToken){
-//  window.location.href="/"
-// }
-//   },[])
+  useEffect(()=>{
+if(!authToken){
+ window.location.href="/"
+}
+  },[])
 
   return (
     <div className="App">
