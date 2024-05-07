@@ -338,6 +338,33 @@ export const DeleteShipping = async (id) => {
   }
 };
 
+//DeleteCoupon
+
+export const DeleteCoupon = async (id) => {
+  const headers = {
+    "x-admin-token": authToken, // Ensure authToken is defined
+    'Content-Type': 'multipart/form-data',// Set content type to JSON
+  };
+  try {
+    const response = await axios.delete(`${BASE_URL}/admin/coupon/delete/${id}`,{headers});
+    const { status, message, data } = response.data;
+    return { status, message, data };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // Axios error (HTTP error)
+      const { response } = error;
+      // Set the error message
+      const errorMessage = response.data.message
+
+         alert(errorMessage)
+      // Log the error message as a string
+    } else {
+      // Network error (e.g., no internet connection)
+      alert("Something went wrong");
+    }
+  }
+};
+
 
 
 //DeleteTax

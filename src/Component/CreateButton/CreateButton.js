@@ -665,6 +665,215 @@ export const UpdateShippingButton = ({ id }) => {
 };
 
 
+export const UpdateCouponsButton = ({ id }) => {
+  const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
+  const [open, setOpen] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const authToken = JSON.parse(localStorage.getItem("token"));
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleUpdateClick = async () => {
+    setIsLoading(true);
+    const headers = {
+      "x-admin-token": authToken,
+      "Content-Type": "application/json",
+    };
+    try {
+      const response = await axios.put(
+        `https://wine-rnlq.onrender.com/admin/coupon/update/${id}`,
+        {
+          promoCode,
+          discount,
+          expiry,
+        },
+        { headers }
+      );
+      const { status, message, data, token } = response.data;
+      if (status) {
+        alert("Data updated successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error updating data:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        Update
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Update Coupon
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label>
+              Promo Code:
+              <input
+                type="text"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Discount:
+              <input
+                type="number"
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Expiry:
+              <input
+                type="date"
+                value={expiry}
+                onChange={(e) => setExpiry(e.target.value)}
+              />
+            </label>
+            <br />
+            <button className={styles.btn} onClick={handleUpdateClick}>
+              Update
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
+
+export const CreateCouponsButton = ({ id }) => {
+  const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
+  const [open, setOpen] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const authToken = JSON.parse(localStorage.getItem("token"));
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleUpdateClick = async () => {
+    setIsLoading(true);
+    const headers = {
+      "x-admin-token": authToken,
+      "Content-Type": "application/json",
+    };
+    try {
+      const response = await axios.post(
+        `https://wine-rnlq.onrender.com/admin/coupon/create`,
+        {
+          promoCode,
+          discount,
+          expiry,
+        },
+        { headers }
+      );
+      const { status, message, data, token } = response.data;
+      if (status) {
+        alert("Data Create successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error updating data:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        create
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Update Coupon
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label>
+              Promo Code:
+              <input
+                type="text"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Discount:
+              <input
+                type="number"
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Expiry:
+              <input
+                type="date"
+                value={expiry}
+                onChange={(e) => setExpiry(e.target.value)}
+              />
+            </label>
+            <br />
+            <button className={styles.btn} onClick={handleUpdateClick}>
+              Create 
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
 export const UpdateTaxButton = ({ id }) => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const [open, setOpen] = useState(false);
