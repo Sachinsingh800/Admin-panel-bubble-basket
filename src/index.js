@@ -36,6 +36,7 @@ import Review from './Pages/Review/Review';
 import Approval from './Pages/Approval/Approval';
 import AddTax from './Pages/AddTax/AddTax';
 import AddCoupon from './Pages/AddCoupon/AddCoupon';
+import Blog from './Pages/Blog/Blog';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -134,6 +135,10 @@ const router = createBrowserRouter([
   {
     path: "/AddCoupon", // Corrected path with parameter
     element: <AddCoupon />,
+  },
+  {
+    path: "/Blog", // Corrected path with parameter
+    element: <Blog />,
   },
 ]);
 root.render(
