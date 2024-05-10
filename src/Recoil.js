@@ -27,3 +27,8 @@ export const getSingleAccessId = atom({
   key: 'getSingleAccessId',
   default:null,
 });
+
+export const blogDescription = atom({
+  key: 'blogDescription',
+  default:"",
+})
