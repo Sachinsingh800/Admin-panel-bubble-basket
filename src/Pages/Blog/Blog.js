@@ -16,6 +16,7 @@ function Blog() {
   const [posterImage, setPosterImage] = useState([]);
   const [blogImage, setBlogImage] = useState([]);
 
+
   const handleDescriptionChange = (content) => {
     setDescription(content);
   };
@@ -70,6 +71,7 @@ function Blog() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    console.log(formData)
     formData.append("authorName", authorName);
     formData.append("authorTitle", authorTitle);
     formData.append("description", description);
@@ -83,18 +85,20 @@ function Blog() {
       formData.append(`blogImage`, img);
     });
 
-    try {
-      const response = await axios.post("your_api_url", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(response.data);
-      // Handle successful submission
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error
-    }
+    console.log(formData)
+
+    // try {
+    //   const response = await axios.post("your_api_url", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
+    //   console.log(response.data);
+    //   // Handle successful submission
+    // } catch (error) {
+    //   console.error("Error:", error);
+    //   // Handle error
+    // }
   };
 
   const modules = {
