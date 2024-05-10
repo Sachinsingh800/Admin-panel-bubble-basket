@@ -17,7 +17,7 @@ function Blog() {
   const [posterImage, setPosterImage] = useState([]);
   const [blogImage, setBlogImage] = useState([]);
   const [description, setDescription] = useRecoilState(blogDescription);
-
+  const authToken = JSON.parse(localStorage.getItem("token"));
 
 
   const handleAuthorImageChange = (e) => {
@@ -33,38 +33,6 @@ function Blog() {
   const handlePosterImageChange = (e) => {
     const files = Array.from(e.target.files);
     setBlogImage(files);
-  };
-
-  const handleImageInsert = () => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
-
-    input.onchange = async () => {
-      const file = input.files[0];
-      const formData = new FormData();
-      formData.append("image", file);
-
-      try {
-        const response = await axios.post(
-          "your_image_upload_api_url",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        const imageUrl = response.data.url;
-
-        const quill = ReactQuillRef.current.getEditor();
-        const range = quill.getSelection();
-        quill.insertEmbed(range.index, "image", imageUrl);
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
-    };
   };
 
   const handleSubmit = async (e) => {
@@ -84,33 +52,18 @@ function Blog() {
     });
 
     try {
-      const response = await axios.post("your_api_url", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+        const headers = {
+            "x-admin-token": authToken, // Ensure authToken is defined
+            'Content-Type': 'multipart/form-data',// Set content type to JSON
+          };
+      const response = await axios.post("https://wine-rnlq.onrender.com/admin/blog/create", formData, {headers},
+      );
       console.log(response.data);
       // Handle successful submission
     } catch (error) {
       console.error("Error:", error);
       // Handle error
     }
-  };
-
-  const modules = {
-    toolbar: {
-      container: [
-        [{ header: "1" }, { header: "2" }, { font: [] }],
-        [{ size: [] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image"],
-        ["clean"],
-      ],
-      handlers: {
-        image: handleImageInsert,
-      },
-    },
   };
 
   return (
