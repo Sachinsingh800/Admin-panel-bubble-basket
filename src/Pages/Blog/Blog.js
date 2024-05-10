@@ -122,9 +122,9 @@ function Blog() {
         <br />
 
         <div className={style.infobox}>
-          <div>
-            <form onSubmit={handleSubmit}>
-              <div>
+   
+            <form onSubmit={handleSubmit} className={style.form}>
+              <div className={style.input_box}>
                 <label htmlFor="authorName">Author Name:</label>
                 <input
                   type="text"
@@ -134,7 +134,7 @@ function Blog() {
                   required
                 />
               </div>
-              <div>
+              <div className={style.input_box}>
                 <label htmlFor="authorTitle">Author Title:</label>
                 <input
                   type="text"
@@ -144,7 +144,7 @@ function Blog() {
                   required
                 />
               </div>
-              <div>
+              <div className={style.input_box}>
                 <label htmlFor="authorTitle">Author Image:</label>
                 <input
                   type="file"
@@ -153,7 +153,7 @@ function Blog() {
                   accept="image/*"
                 />
               </div>
-              <div>
+              <div className={style.input_box}>
                 <label htmlFor="authorTitle">Poster Image:</label>
                 <input
                   type="file"
@@ -162,7 +162,7 @@ function Blog() {
                   accept="image/*"
                 />
               </div>
-              <div>
+              <div className={style.input_box}>
                 <label htmlFor="authorTitle">Blog Image:</label>
                 <input
                   type="file"
@@ -173,11 +173,13 @@ function Blog() {
               </div>
               <div>
                 <label>Description:</label>
-                    <Editor placeholder={'Write something...'} />
+                <br/>
+                <br/>
+                <Editor placeholder={'Write something...'} />
               </div>
-              <button type="submit">Submit</button>
+              <button className={style.btn} type="submit">Submit</button>
             </form>
-          </div>
+    
         </div>
       </div>
     </div>
