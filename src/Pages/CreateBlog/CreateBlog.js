@@ -12,11 +12,13 @@ import { blogDescription } from "../../Recoil";
 function CreateBlog() {
   const [authorName, setAuthorName] = useState("");
   const [authorTitle, setAuthorTitle] = useState("");
+  const [blogTitle, setBlogTitle] = useState("");
   const ReactQuillRef = useRef(null); // Initialize with null
   const [authorImage, setAuthorImage] = useState([]);
   const [posterImage, setPosterImage] = useState([]);
   const [blogImage, setBlogImage] = useState([]);
   const [description, setDescription] = useRecoilState(blogDescription);
+  const [shortDescription, setShortDescription] = useState("");
   const authToken = JSON.parse(localStorage.getItem("token"));
 
 
@@ -41,6 +43,8 @@ function CreateBlog() {
     formData.append("authorName", authorName);
     formData.append("authorTitle", authorTitle);
     formData.append("description", description);
+    formData.append("blogTitle",blogTitle);
+    formData.append("shortDescription", shortDescription);
     authorImage.forEach((img, index) => {
       formData.append(`authorImage`, img);
     });
@@ -64,6 +68,8 @@ function CreateBlog() {
         setAuthorName("");
         setAuthorTitle("");
         setDescription("");
+        setShortDescription("")
+        setBlogTitle("")
         setAuthorImage([])
         setPosterImage([])
         setBlogImage([])
@@ -86,6 +92,37 @@ function CreateBlog() {
         <div className={style.infobox}>
    
             <form onSubmit={handleSubmit} className={style.form}>
+            <div className={style.input_box}>
+                <label htmlFor="BlogTitle">Blog Title:</label>
+                <input
+                  type="text"
+                  id="BlogTitle"
+                  value={blogTitle}
+                  onChange={(e) => setBlogTitle(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={style.input_box}>
+                <label htmlFor="ShortDescription">Short Description:</label>
+                <textarea
+                className={style.textarea}
+                  type="text"
+                  id="ShortDescription"
+                  value={shortDescription}
+                  onChange={(e) => setShortDescription(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={style.input_box}>
+                <label htmlFor="BlogImage">Blog Image:</label>
+                <input
+                  id="BlogImage"
+                  type="file"
+                  multiple
+                  onChange={handleBlogImageChange}
+                  accept="image/*"
+                />
+              </div>
               <div className={style.input_box}>
                 <label htmlFor="authorName">Author Name:</label>
                 <input
@@ -106,9 +143,11 @@ function CreateBlog() {
                   required
                 />
               </div>
+
               <div className={style.input_box}>
-                <label htmlFor="authorTitle">Author Image:</label>
+                <label htmlFor="AuthorImage">Author Image:</label>
                 <input
+                id="AuthorImage"
                   type="file"
                   multiple
                   onChange={handleAuthorImageChange}
@@ -116,23 +155,16 @@ function CreateBlog() {
                 />
               </div>
               <div className={style.input_box}>
-                <label htmlFor="authorTitle">Poster Image:</label>
+                <label htmlFor="PosterImage">Poster Image:</label>
                 <input
+                  id="PosterImage"
                   type="file"
                   multiple
                   onChange={handlePosterImageChange}
                   accept="image/*"
                 />
               </div>
-              <div className={style.input_box}>
-                <label htmlFor="authorTitle">Blog Image:</label>
-                <input
-                  type="file"
-                  multiple
-                  onChange={handleBlogImageChange}
-                  accept="image/*"
-                />
-              </div>
+       
               <div>
                 <label>Description:</label>
                 <br/>

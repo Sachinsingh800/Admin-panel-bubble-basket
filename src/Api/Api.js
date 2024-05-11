@@ -166,6 +166,32 @@ export const getAllProduct = async () => {
 };
 
 
+// getAllBlog
+
+export const getAllBlog= async () => {
+
+  
+  try {
+    const response = await axios.get(`${BASE_URL}/admin/blog/getAll`);
+    const { status, message, data } = response.data;
+    return { status, message, data };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // Axios error (HTTP error)
+      const { response } = error;
+      // Set the error message
+      const errorMessage = response.data.message
+
+         alert(errorMessage)
+      // Log the error message as a string
+    } else {
+      // Network error (e.g., no internet connection)
+      alert("Something went wrong");
+    }
+  }
+};
+
+
 // getAllCategory 
 
 export const getAllCategory = async () => {
@@ -403,6 +429,33 @@ export const deleteProduct = async (id) => {
   };
   try {
     const response = await axios.delete(`${BASE_URL}/admin/product/delete/${id}`,{headers});
+    const { status, message, data } = response.data;
+    return { status, message, data };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // Axios error (HTTP error)
+      const { response } = error;
+      // Set the error message
+      const errorMessage = response.data.message
+
+         alert(errorMessage)
+      // Log the error message as a string
+    } else {
+      // Network error (e.g., no internet connection)
+      alert("Something went wrong");
+    }
+  }
+};
+
+//DeleteBlog
+
+export const deleteBlog = async (id) => {
+  const headers = {
+    "x-admin-token": authToken, // Ensure authToken is defined
+    'Content-Type': 'multipart/form-data',// Set content type to JSON
+  };
+  try {
+    const response = await axios.delete(`${BASE_URL}/admin/blog/delete/${id}`,{headers});
     const { status, message, data } = response.data;
     return { status, message, data };
   } catch (error) {

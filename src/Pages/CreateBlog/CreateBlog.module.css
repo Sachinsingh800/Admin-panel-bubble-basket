@@ -65,10 +65,19 @@
   gap: 1rem;
 }
 .form div input {
-  width: 30rem;
+  width: 35rem;
   padding: 0.5rem 1rem;
   border: 1px gray solid;
   outline: none;
+}
+.textarea{
+  width: 35rem;
+  padding: 0.5rem 1rem;
+  border: 1px gray solid;
+  outline: none;
+  height: 15rem;
+  font-family: Arial, Helvetica, sans-serif;
+  resize: none;
 }
 .btn{
     width: 12rem;
