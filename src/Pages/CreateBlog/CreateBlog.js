@@ -5,9 +5,10 @@ import NavBar from "../../Component/NavBar/NavBar";
 import OptionBar from "../../Component/OptionBar/OptionBar";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import Editor from './EditorWithUseQuill';
+import Editor from "./EditorWithUseQuill";
 import { useRecoilState } from "recoil";
 import { blogDescription } from "../../Recoil";
+import PreviewBlog from "../PreviewBlog/PreviewBlog";
 
 function CreateBlog() {
   const [authorName, setAuthorName] = useState("");
@@ -18,9 +19,10 @@ function CreateBlog() {
   const [posterImage, setPosterImage] = useState([]);
   const [blogImage, setBlogImage] = useState([]);
   const [description, setDescription] = useRecoilState(blogDescription);
-  const [authorDescription, setAuthorDescription] = useRecoilState("");
+  const [authorDescription, setAuthorDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const authToken = JSON.parse(localStorage.getItem("token"));
+
 
 
   const handleAuthorImageChange = (e) => {
@@ -44,7 +46,7 @@ function CreateBlog() {
     formData.append("authorName", authorName);
     formData.append("authorTitle", authorTitle);
     formData.append("description", description);
-    formData.append("blogTitle",blogTitle);
+    formData.append("blogTitle", blogTitle);
     formData.append("shortDescription", shortDescription);
     formData.append("authorDescription", authorDescription);
     authorImage.forEach((img, index) => {
@@ -58,24 +60,27 @@ function CreateBlog() {
     });
 
     try {
-        const headers = {
-            "x-admin-token": authToken, // Ensure authToken is defined
-            'Content-Type': 'multipart/form-data',// Set content type to JSON
-          };
-      const response = await axios.post("https://wine-rnlq.onrender.com/admin/blog/create", formData, {headers},
+      const headers = {
+        "x-admin-token": authToken, // Ensure authToken is defined
+        "Content-Type": "multipart/form-data", // Set content type to JSON
+      };
+      const response = await axios.post(
+        "https://wine-rnlq.onrender.com/admin/blog/create",
+        formData,
+        { headers }
       );
       console.log(response.data.status);
-      if (response.data.status){
-        alert("Blog Created Successfull")
+      if (response.data.status) {
+        alert("Blog Created Successfull");
         setAuthorName("");
         setAuthorTitle("");
         setDescription("");
-        setShortDescription("")
-        setBlogTitle("")
-        setAuthorDescription("")
-        setAuthorImage([])
-        setPosterImage([])
-        setBlogImage([])
+        setShortDescription("");
+        setBlogTitle("");
+        setAuthorDescription("");
+        setAuthorImage([]);
+        setPosterImage([]);
+        setBlogImage([]);
       }
       // Handle successful submission
     } catch (error) {
@@ -93,100 +98,113 @@ function CreateBlog() {
         <br />
 
         <div className={style.infobox}>
-   
-            <form onSubmit={handleSubmit} className={style.form}>
+          <form onSubmit={handleSubmit} className={style.form}>
             <div className={style.input_box}>
-                <label htmlFor="BlogTitle">Blog Title:</label>
-                <input
-                  type="text"
-                  id="BlogTitle"
-                  value={blogTitle}
-                  onChange={(e) => setBlogTitle(e.target.value)}
-                  required
-                />
-              </div>
-              <div className={style.input_box}>
-                <label htmlFor="ShortDescription">Short Description:</label>
-                <textarea
+              <label htmlFor="BlogTitle">Blog Title:</label>
+              <input
+                type="text"
+                id="BlogTitle"
+                value={blogTitle}
+                onChange={(e) => setBlogTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="ShortDescription">Short Description:</label>
+              <textarea
                 className={style.textarea}
-                  type="text"
-                  id="ShortDescription"
-                  value={shortDescription}
-                  onChange={(e) => setShortDescription(e.target.value)}
-                  required
-                />
-              </div>
-              <div className={style.input_box}>
-                <label htmlFor="BlogImage">Blog Image:</label>
-                <input
-                  id="BlogImage"
-                  type="file"
-                  multiple
-                  onChange={handleBlogImageChange}
-                  accept="image/*"
-                />
-              </div>
-              <div className={style.input_box}>
-                <label htmlFor="authorName">Author Name:</label>
-                <input
-                  type="text"
-                  id="authorName"
-                  value={authorName}
-                  onChange={(e) => setAuthorName(e.target.value)}
-                  required
-                />
-              </div>
-              <div className={style.input_box}>
-                <label htmlFor="authorTitle">Author Title:</label>
-                <input
-                  type="text"
-                  id="authorTitle"
-                  value={authorTitle}
-                  onChange={(e) => setAuthorTitle(e.target.value)}
-                  required
-                />
-              </div>
-              <div className={style.input_box}>
-                <label htmlFor="authorDescription">Author Description:</label>
-                <input
-                  type="text"
-                  id="authorDescription"
-                  value={authorDescription}
-                  onChange={(e) => setAuthorDescription(e.target.value)}
-                  required
-                />
-              </div>
+                type="text"
+                id="ShortDescription"
+                value={shortDescription}
+                onChange={(e) => setShortDescription(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="BlogImage">Blog Image:</label>
+              <input
+                id="BlogImage"
+                type="file"
+                multiple
+                onChange={handleBlogImageChange}
+                accept="image/*"
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="authorName">Author Name:</label>
+              <input
+                type="text"
+                id="authorName"
+                value={authorName}
+                onChange={(e) => setAuthorName(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="authorTitle">Author Title:</label>
+              <input
+                type="text"
+                id="authorTitle"
+                value={authorTitle}
+                onChange={(e) => setAuthorTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="authorDescription">Author Description:</label>
+              <textarea
+                className={style.textarea}
+                type="text"
+                id="authorDescription"
+                value={authorDescription}
+                onChange={(e) => setAuthorDescription(e.target.value)}
+                required
+              />
+            </div>
 
-              <div className={style.input_box}>
-                <label htmlFor="AuthorImage">Author Image:</label>
-                <input
+            <div className={style.input_box}>
+              <label htmlFor="AuthorImage">Author Image:</label>
+              <input
                 id="AuthorImage"
-                  type="file"
-                  multiple
-                  onChange={handleAuthorImageChange}
-                  accept="image/*"
-                />
-              </div>
-              <div className={style.input_box}>
-                <label htmlFor="PosterImage">Poster Image:</label>
-                <input
-                  id="PosterImage"
-                  type="file"
-                  multiple
-                  onChange={handlePosterImageChange}
-                  accept="image/*"
-                />
-              </div>
-       
-              <div>
-                <label>Description:</label>
-                <br/>
-                <br/>
-                <Editor placeholder={'Write something...'} />
-              </div>
-              <button className={style.btn} type="submit">Submit</button>
-            </form>
-    
+                type="file"
+                multiple
+                onChange={handleAuthorImageChange}
+                accept="image/*"
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="PosterImage">Poster Image:</label>
+              <input
+                id="PosterImage"
+                type="file"
+                multiple
+                onChange={handlePosterImageChange}
+                accept="image/*"
+              />
+            </div>
+
+            <div>
+              <label>Description:</label>
+              <br />
+              <br />
+              <Editor placeholder={"Write something..."} />
+            </div>
+            <PreviewBlog
+              authorName={authorName}
+              authorTitle={authorTitle}
+              authorDescription={authorDescription}
+              blogTitle={blogTitle}
+              shortDescription={shortDescription}
+              blogImage={blogImage}
+              authorImage={authorImage}
+              posterImage={posterImage}
+              description={description}
+            />
+
+            <button className={style.btn} type="submit">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
     </div>

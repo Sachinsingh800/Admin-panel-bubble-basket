@@ -1,0 +1,245 @@
+.main {
+    height: 99vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 3rem;
+    overflow-y: scroll;
+    border: 1px rgb(233, 233, 233) solid;
+  }
+  .title_box{
+
+  }
+  .title_box h6{
+    padding: 0rem!important;
+  }
+  .blog_img_box {
+    width: 100%;
+    height: 30rem;
+  }
+  .blog_img_box img {
+    height: 100%;
+    width: 100%;
+  }
+  .blog_box{
+    width: 100%;
+    height: 30rem;
+  }
+  .blog_box img{
+    height: 100%;
+    width: 100%;
+  }
+  .container {
+    height: 100%;
+    width: 90%;
+  }
+  .container p {
+    font-weight: 500;
+  }
+  .container h6 {
+    font-weight: 600;
+    color: #7b0128;
+  }
+  .author_box {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .bottom_box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bottom_box p {
+    color: #7b0128;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  .bottom_box p:hover {
+    color: #54011b;
+  }
+  .bottom_box ul {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    list-style: none;
+  }
+  .bottom_box ul li {
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7b0128;
+  }
+  .icon {
+    font-size: 0.8rem !important;
+    color: white;
+  }
+  .bottom_box ul li:hover {
+    background-color: #9c0333;
+  }
+  .author_info_box {
+    height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+  }
+  .inner_container {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    gap: 0.5rem;
+  }
+  .des_box {
+    border: 1px #7b0128 solid;
+    height: 10rem;
+    width: max-content;
+    padding: 1rem;
+  }
+  .des_box h5 {
+    font-weight: 600;
+    color: #7b0128;
+    letter-spacing: 0.1cap;
+  }
+  .button_box {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .button_box button {
+    border: none;
+    background-color: none;
+    background: transparent;
+    outline: none;
+    font-weight: 600;
+    letter-spacing: 0.1cap;
+    font-family: "Jost", sans-serif;
+  }
+  .username {
+    font-weight: 600;
+    color: #7b0128;
+    letter-spacing: 0.1cap;
+  }
+  .comment_box {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+  }
+  .comment_box h6 {
+    font-family: "Jost", sans-serif;
+    letter-spacing: 0.1cap;
+  
+  }
+  
+  .user_review_container {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    padding: 0rem 4rem;
+  }
+  .user_dp {
+    height: 3.5rem;
+    width: 3.5rem !important;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+  .user_dp img {
+    height: 100%;
+    width: 100%;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .form textarea {
+    height: 15rem;
+    padding: 0.5rem;
+    outline: none;
+    border: 1px #7b0128 solid;
+    resize: none;
+  }
+  .user_input_box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .user_input_box input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px #7b0128 solid;
+  }
+  .input_website {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px #7b0128 solid;
+  }
+  .form button {
+    display: flex;
+    align-items: center;
+    border: none;
+    border: 1px #7b0128 solid;
+    padding: 0.5rem 1rem;
+    font-size: small;
+    letter-spacing: 0.3cap;
+    background-color: white;
+    width: max-content;
+  }
+  .form button:hover {
+    background-color: #7b0128;
+    color: white;
+  }
+  .add_box_img {
+    height: 12rem;
+  }
+  .add_box_img img {
+    height: 100%;
+    width: 100%;
+  }
+  .additional_box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  
+  .demotext {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 15rem;
+    font-style: italic;
+  }
+  @media screen and (max-width: 500px) {
+    .demotext {
+      padding: 1rem 0rem;
+    }
+    .user_review_container {
+      padding: 0rem ;
+    }
+    .user_dp{
+      height: 3rem;
+      width: 8rem!important;
+    }
+    .user_box_img {
+      height: 10rem;
+      width: 10rem;
+    }
+    .user_box_img img {
+      height: 100%;
+      width: 100%;
+    }
+    .inner_container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 0.5rem;
+    }
+    .des_box {
+      width: 100%;
+      font-size: 0.8rem;
+    }
+  }
+  
