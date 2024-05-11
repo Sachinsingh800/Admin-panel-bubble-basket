@@ -23,8 +23,6 @@ function CreateBlog() {
   const [shortDescription, setShortDescription] = useState("");
   const authToken = JSON.parse(localStorage.getItem("token"));
 
-
-
   const handleAuthorImageChange = (e) => {
     const files = Array.from(e.target.files);
     setAuthorImage(files);
@@ -32,12 +30,12 @@ function CreateBlog() {
 
   const handleBlogImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setPosterImage(files);
+    setBlogImage(files);
   };
 
   const handlePosterImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setBlogImage(files);
+    setPosterImage(files);
   };
 
   const handleSubmit = async (e) => {
@@ -61,8 +59,8 @@ function CreateBlog() {
 
     try {
       const headers = {
-        "x-admin-token": authToken, // Ensure authToken is defined
-        "Content-Type": "multipart/form-data", // Set content type to JSON
+        "x-admin-token": authToken,
+        "Content-Type": "multipart/form-data",
       };
       const response = await axios.post(
         "https://wine-rnlq.onrender.com/admin/blog/create",
@@ -71,7 +69,7 @@ function CreateBlog() {
       );
       console.log(response.data.status);
       if (response.data.status) {
-        alert("Blog Created Successfull");
+        alert("Blog Created Successfully");
         setAuthorName("");
         setAuthorTitle("");
         setDescription("");
@@ -82,10 +80,8 @@ function CreateBlog() {
         setPosterImage([]);
         setBlogImage([]);
       }
-      // Handle successful submission
     } catch (error) {
       console.error("Error:", error);
-      // Handle error
     }
   };
 
@@ -197,7 +193,6 @@ function CreateBlog() {
               shortDescription={shortDescription}
               blogImage={blogImage}
               authorImage={authorImage}
-              posterImage={posterImage}
               description={description}
             />
 
