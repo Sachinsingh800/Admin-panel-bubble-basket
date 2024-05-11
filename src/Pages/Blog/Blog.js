@@ -58,7 +58,16 @@ function Blog() {
           };
       const response = await axios.post("https://wine-rnlq.onrender.com/admin/blog/create", formData, {headers},
       );
-      console.log(response.data);
+      console.log(response.data.status);
+      if (response.data.status){
+        alert("Blog Created Successfull")
+        setAuthorName("");
+        setAuthorTitle("");
+        setDescription("");
+        setAuthorImage([])
+        setPosterImage([])
+        setBlogImage([])
+      }
       // Handle successful submission
     } catch (error) {
       console.error("Error:", error);
