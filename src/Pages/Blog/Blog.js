@@ -14,6 +14,9 @@ import { useRecoilState } from "recoil";
 import { loadingStatus } from "../../Recoil";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 import Tooltip from "@mui/material/Tooltip";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 function Blog() {
@@ -104,14 +107,18 @@ const  convertDate=(dateString)=>{
               <div className={style.btnbox}>
                 <Link to={`/FullBlog/${item._id}`}>
                   <button>
-                    <AiFillEdit />
+                    <VisibilityIcon />
                   </button>
                 </Link>
                 <button
-                  style={{ color: "red" }}
                   onClick={() => DeleteProduct(item._id)}
                 >
-                  <RiDeleteBin6Fill />
+                  <DeleteIcon />
+                </button>
+                <button
+                  // onClick={() => DeleteProduct(item._id)}
+                >
+                  <EditIcon />
                 </button>
               </div>
               <div className={style.imgbox}>
