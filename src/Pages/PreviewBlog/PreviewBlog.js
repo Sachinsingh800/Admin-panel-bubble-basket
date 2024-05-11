@@ -57,6 +57,7 @@ export default function PreviewBlog({
         aria-describedby="modal-modal-description"
       >
         <Box sx={styles}>
+            <button className={style.close_btn}  onClick={handleClose }>X</button>
           <div className={style.main}>
             <div className={style.container}>
               <div className={style.blog_box}>
