@@ -68,14 +68,14 @@ function Blog() {
 
 
 
+const  convertDate=(dateString)=>{
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
 
 
 
-  function convertToJSX(htmlString) {
-    return React.createElement("div", {
-      dangerouslySetInnerHTML: { __html: htmlString },
-    });
-  }
 
   return (
     <div className={style.main}>
@@ -125,15 +125,19 @@ function Blog() {
                 </button>
               </div>
               <div className={style.imgbox}>
-                {item.blogImage && (
+                {item?.blogImage && (
                   <img
                     className={style.img}
-                    src={item.blogImage.url}
+                    src={item?.blogImage?.url}
                     alt="product"
                   />
                 )}
               </div>
-              <p>{convertToJSX(item.description)}</p>
+              <div >
+              <span >{item?.authorName}</span>  -  <span>{convertDate(item?.createdAt) }</span>
+              </div>
+               <h2>{item?.blogTitle}</h2>
+               <p>{item?.shortDescription}</p>
             </div>
           ))}
         </div>
