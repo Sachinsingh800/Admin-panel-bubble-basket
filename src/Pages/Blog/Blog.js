@@ -7,17 +7,21 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Header from "../../Component/Header/Header";
 import OptionBar from "../../Component/OptionBar/OptionBar";
 import NavBar from "../../Component/NavBar/NavBar";
-import { getAllProduct, deleteProduct, getAllBlog, deleteBlog } from "../../Api/Api";
+import {
+  getAllProduct,
+  deleteProduct,
+  getAllBlog,
+  deleteBlog,
+} from "../../Api/Api";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loadingStatus } from "../../Recoil";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 import Tooltip from "@mui/material/Tooltip";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 function Blog() {
   const [originalProducts, setOriginalProducts] = useState([]);
@@ -25,13 +29,11 @@ function Blog() {
   const { id } = useParams();
   const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
 
-
-
   useEffect(() => {
     handleAllBlog();
   }, []);
 
-  const handleAllBlog= async () => {
+  const handleAllBlog = async () => {
     SetIsloading(true);
     try {
       const response = await getAllBlog();
@@ -59,16 +61,11 @@ function Blog() {
     }
   };
 
-
-
-const  convertDate=(dateString)=>{
+  const convertDate = (dateString) => {
     const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-}
-
-
-
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
 
   return (
     <div className={style.main}>
@@ -79,14 +76,14 @@ const  convertDate=(dateString)=>{
         <Header />
         <div className={style.header}>
           <div className={style.input_conatiner}>
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className={style.input}
-            placeholder="Search"
-          />
-        </div>
-        <div>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className={style.input}
+              placeholder="Search"
+            />
+          </div>
+          <div>
             <Link to="/CreateBlog">
               <button style={{ backgroundColor: "blue", color: "white" }}>
                 <AiOutlinePlus />
@@ -96,49 +93,49 @@ const  convertDate=(dateString)=>{
           </div>
         </div>
         <div className={style.container_box}>
-        <br />
-        <br />
-        {originalProducts
-          .filter((elem) => {
-            return elem?.description.toLowerCase().includes(input.toLowerCase());
-          })
-          .map((item, id) => (
-            <div key={id} className={style.container}>
-              <div className={style.btnbox}>
-                <Link to={`/FullBlog/${item._id}`}>
-                  <button>
-                    <VisibilityIcon />
+          <br />
+          <br />
+          {originalProducts
+            .filter((elem) => {
+              return elem?.description
+                .toLowerCase()
+                .includes(input.toLowerCase());
+            })
+            .map((item, id) => (
+              <div key={id} className={style.container}>
+                <div className={style.btnbox}>
+                  <Link to={`/FullBlog/${item._id}`}>
+                    <button>
+                      <VisibilityIcon />
+                    </button>
+                  </Link>
+                  <button onClick={() => DeleteProduct(item._id)}>
+                    <DeleteIcon />
                   </button>
-                </Link>
-                <button
-                  onClick={() => DeleteProduct(item._id)}
-                >
-                  <DeleteIcon />
-                </button>
-                <button
+                  <button
                   // onClick={() => DeleteProduct(item._id)}
-                >
-                  <EditIcon />
-                </button>
+                  >
+                    <EditIcon />
+                  </button>
+                </div>
+                <div className={style.imgbox}>
+                  {item?.blogImage && (
+                    <img
+                      className={style.img}
+                      src={item?.blogImage?.url}
+                      alt="product"
+                    />
+                  )}
+                </div>
+                <div>
+                  <span>{item?.authorName}</span> -{" "}
+                  <span>{convertDate(item?.createdAt)}</span>
+                </div>
+                <h2>{item?.blogTitle}</h2>
+                <p>{item?.shortDescription}</p>
               </div>
-              <div className={style.imgbox}>
-                {item?.blogImage && (
-                  <img
-                    className={style.img}
-                    src={item?.blogImage?.url}
-                    alt="product"
-                  />
-                )}
-              </div>
-              <div >
-              <span >{item?.authorName}</span>  -  <span>{convertDate(item?.createdAt) }</span>
-              </div>
-               <h2>{item?.blogTitle}</h2>
-               <p>{item?.shortDescription}</p>
-            </div>
-          ))}
+            ))}
         </div>
-        
       </div>
     </div>
   );

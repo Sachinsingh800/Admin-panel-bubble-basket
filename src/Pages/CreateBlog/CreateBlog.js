@@ -186,22 +186,21 @@ function CreateBlog() {
               <Editor placeholder={"Write something..."} />
             </div>
             <div className={style.btn_box}>
-            <PreviewBlog
-              authorName={authorName}
-              authorTitle={authorTitle}
-              authorDescription={authorDescription}
-              blogTitle={blogTitle}
-              shortDescription={shortDescription}
-              blogImage={blogImage}
-              authorImage={authorImage}
-              description={description}
-            />
+              <PreviewBlog
+                authorName={authorName}
+                authorTitle={authorTitle}
+                authorDescription={authorDescription}
+                blogTitle={blogTitle}
+                shortDescription={shortDescription}
+                blogImage={blogImage}
+                authorImage={authorImage}
+                description={description}
+              />
 
-            <button className={style.btn} type="submit">
-              Submit
-            </button>
+              <button className={style.btn} type="submit">
+                Submit
+              </button>
             </div>
-
           </form>
         </div>
       </div>
