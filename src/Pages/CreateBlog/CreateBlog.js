@@ -18,6 +18,7 @@ function CreateBlog() {
   const [posterImage, setPosterImage] = useState([]);
   const [blogImage, setBlogImage] = useState([]);
   const [description, setDescription] = useRecoilState(blogDescription);
+  const [authorDescription, setAuthorDescription] = useRecoilState("");
   const [shortDescription, setShortDescription] = useState("");
   const authToken = JSON.parse(localStorage.getItem("token"));
 
@@ -45,6 +46,7 @@ function CreateBlog() {
     formData.append("description", description);
     formData.append("blogTitle",blogTitle);
     formData.append("shortDescription", shortDescription);
+    formData.append("authorDescription", authorDescription);
     authorImage.forEach((img, index) => {
       formData.append(`authorImage`, img);
     });
@@ -70,6 +72,7 @@ function CreateBlog() {
         setDescription("");
         setShortDescription("")
         setBlogTitle("")
+        setAuthorDescription("")
         setAuthorImage([])
         setPosterImage([])
         setBlogImage([])
@@ -140,6 +143,16 @@ function CreateBlog() {
                   id="authorTitle"
                   value={authorTitle}
                   onChange={(e) => setAuthorTitle(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={style.input_box}>
+                <label htmlFor="authorDescription">Author Description:</label>
+                <input
+                  type="text"
+                  id="authorDescription"
+                  value={authorDescription}
+                  onChange={(e) => setAuthorDescription(e.target.value)}
                   required
                 />
               </div>

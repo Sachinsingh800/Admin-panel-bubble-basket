@@ -18,7 +18,7 @@ import Tooltip from "@mui/material/Tooltip";
 
 function Blog() {
   const [originalProducts, setOriginalProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+
   const [input, setInput] = useState("");
   const { id } = useParams();
   const [categories, setCategory] = useState([]);
@@ -34,16 +34,15 @@ function Blog() {
   // },[])
 
   useEffect(() => {
-    FetchProduct();
+    handleAllBlog();
   }, []);
 
-  const FetchProduct = async () => {
+  const handleAllBlog= async () => {
     SetIsloading(true);
     try {
       const response = await getAllBlog();
       console.log(response.data, "response");
       setOriginalProducts(response.data);
-      setFilteredProducts(response.data);
     } catch (error) {
       console.error("Error getting products:", error.message);
     } finally {
@@ -57,7 +56,7 @@ function Blog() {
       const response = await deleteBlog(productId);
       console.log(response.data, "response");
       // Refresh the products after successful deletion
-      FetchProduct();
+      handleAllBlog();
       alert("Product deleted successfully");
     } catch (error) {
       console.error("Error deleting product:", error.message);
@@ -105,7 +104,7 @@ const  convertDate=(dateString)=>{
         <div className={style.container_box}>
         <br />
         <br />
-        {filteredProducts
+        {originalProducts
           .filter((elem) => {
             return elem?.description.toLowerCase().includes(input.toLowerCase());
           })
