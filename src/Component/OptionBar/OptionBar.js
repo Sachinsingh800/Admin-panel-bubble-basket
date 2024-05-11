@@ -18,6 +18,7 @@ import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import RedeemIcon from '@mui/icons-material/Redeem';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 
 
 function OptionBar() {
@@ -48,7 +49,7 @@ function OptionBar() {
         <Link  className={style.link}  to={"/Review"}><li onClick={()=>handleListItemClick("Review")}><ReviewsIcon />Review</li></Link>   
         <Link  className={style.link}  to={"/AddTax"}><li onClick={()=>handleListItemClick("Tax")}><AttachMoneyIcon />Tax</li></Link>   
         <Link  className={style.link}  to={"/AddCoupon"}><li onClick={()=>handleListItemClick("Coupon")}><RedeemIcon />Coupon</li></Link>   
-        <Link  className={style.link}  to={"/Blog"}><li onClick={()=>handleListItemClick("Blog")}><RedeemIcon />Blog</li></Link>   
+        <Link  className={style.link}  to={"/Blog"}><li onClick={()=>handleListItemClick("Blog")}><NewspaperIcon />Blog</li></Link>   
        </ul>
       </div>
     </div>

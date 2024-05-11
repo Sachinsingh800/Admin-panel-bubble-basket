@@ -38,6 +38,7 @@ import AddTax from './Pages/AddTax/AddTax';
 import AddCoupon from './Pages/AddCoupon/AddCoupon';
 import Blog from './Pages/Blog/Blog';
 import CreateBlog from './Pages/CreateBlog/CreateBlog';
+import FullBlog from './Pages/FullBlog/FullBlog';
 
 
 
@@ -146,6 +147,10 @@ const router = createBrowserRouter([
   {
     path: "/CreateBlog", // Corrected path with parameter
     element: <CreateBlog />,
+  },
+  {
+    path: "/FullBlog/:id", // Corrected path with parameter
+    element: <FullBlog />,
   },
 ]);
 root.render(

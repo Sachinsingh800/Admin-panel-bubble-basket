@@ -13,25 +13,16 @@ import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loadingStatus } from "../../Recoil";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
-import axios from "axios";
 import Tooltip from "@mui/material/Tooltip";
+
 
 function Blog() {
   const [originalProducts, setOriginalProducts] = useState([]);
-
   const [input, setInput] = useState("");
   const { id } = useParams();
-  const [categories, setCategory] = useState([]);
   const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
-  console.log(categories, "cate");
 
-  const authToken = JSON.parse(localStorage.getItem("token"));
 
-  // useEffect(()=>{
-  //   if(!authToken){
-  //     window.location.href="/"
-  //   }
-  // },[])
 
   useEffect(() => {
     handleAllBlog();
@@ -111,7 +102,7 @@ const  convertDate=(dateString)=>{
           .map((item, id) => (
             <div key={id} className={style.container}>
               <div className={style.btnbox}>
-                <Link to={`/UpdateProduct/${item._id}`}>
+                <Link to={`/FullBlog/${item._id}`}>
                   <button>
                     <AiFillEdit />
                   </button>
