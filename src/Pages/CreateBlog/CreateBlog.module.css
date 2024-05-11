@@ -48,10 +48,7 @@
   width: 9rem;
   margin-top: 1.5rem;
 }
-.btn:hover {
-  background-color: blue;
-  color: white;
-}
+
 .body {
   width: 100%;
   height: 100vh;
@@ -78,6 +75,10 @@
   height: 15rem;
   font-family: Arial, Helvetica, sans-serif;
   resize: none;
+}
+.btn_box{
+  display: flex;
+  gap: 1rem;
 }
 .btn{
     width: 12rem;

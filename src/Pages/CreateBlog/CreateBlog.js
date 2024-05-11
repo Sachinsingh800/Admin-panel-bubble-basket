@@ -185,6 +185,7 @@ function CreateBlog() {
               <br />
               <Editor placeholder={"Write something..."} />
             </div>
+            <div className={style.btn_box}>
             <PreviewBlog
               authorName={authorName}
               authorTitle={authorTitle}
@@ -199,6 +200,8 @@ function CreateBlog() {
             <button className={style.btn} type="submit">
               Submit
             </button>
+            </div>
+
           </form>
         </div>
       </div>

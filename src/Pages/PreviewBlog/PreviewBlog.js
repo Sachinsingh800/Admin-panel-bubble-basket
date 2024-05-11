@@ -49,7 +49,7 @@ export default function PreviewBlog({
 
   return (
     <div>
-      <Button onClick={handleOpen}>Preview</Button>
+      <button className={style.btn} onClick={handleOpen}>Preview</button>
       <Modal
         open={open}
         onClose={handleClose}

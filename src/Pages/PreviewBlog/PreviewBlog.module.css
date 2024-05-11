@@ -20,6 +20,18 @@
     color: white;
     border: none;
   }
+  .btn{
+    width: 12rem;
+    padding: .5rem;
+    background-color: rgb(173, 0, 49);
+    color: white;
+    border: none;
+    border-radius: 15px;
+}
+.btn:hover{
+    background-color: rgb(241, 23, 85);
+}
+
   .title_box{
 
   }
