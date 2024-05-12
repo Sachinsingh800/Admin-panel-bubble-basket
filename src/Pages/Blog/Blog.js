@@ -53,7 +53,7 @@ function Blog() {
       console.log(response.data, "response");
       // Refresh the products after successful deletion
       handleAllBlog();
-      alert("Product deleted successfully");
+      alert("Blog deleted successfully");
     } catch (error) {
       console.error("Error deleting product:", error.message);
     } finally {
