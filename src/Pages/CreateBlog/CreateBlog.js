@@ -47,7 +47,7 @@ function CreateBlog() {
     formData.append("blogTitle", blogTitle);
     formData.append("shortDescription", shortDescription);
     formData.append("authorDescription", authorDescription);
-    formData.append("isPublic", false);
+    formData.append("isPublic", true);
     authorImage.forEach((img, index) => {
       formData.append(`authorImage`, img);
     });
