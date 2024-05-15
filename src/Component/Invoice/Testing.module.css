@@ -1,7 +1,7 @@
 .invoice_container {
   font-family: Arial, sans-serif;
   max-width: 842px;
-  height: 2351px;
+  height: 2220px;
   padding: 40px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -9,6 +9,19 @@
   flex-direction: column;
   gap: 1rem;
   position: relative;
+}
+
+.main{
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+.print_button {
+  width: 15rem;
+  padding: .5rem;
 }
 .qrCode{
   height: 14rem;
@@ -21,9 +34,10 @@
   padding: 0;
 }
 .block {
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
   width: 100%;
-  height: 2px;
+  letter-spacing: .5cap;
+  font-weight: 700;
+  overflow: hidden;
 }
 .invoice_details {
   display: flex;
