@@ -114,7 +114,10 @@ function Blog() {
                     <DeleteIcon />
                   </button>
                   <Link to={`/UpdateBlog/${item._id}`}>
+                    <button>
                     <EditIcon />
+                    </button>
+                  
                    </Link>
                 </div>
                 <div className={style.imgbox}>

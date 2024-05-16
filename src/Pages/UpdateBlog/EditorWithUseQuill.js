@@ -5,7 +5,7 @@ import 'quill/dist/quill.snow.css';
 import { useRecoilState } from 'recoil';
 import { blogDescription } from '../../Recoil';
 
-const Editor = () => {
+const Editor = ({descriptionData}) => {
     const [description, setDescription] = useRecoilState(blogDescription);
     const { quill, quillRef, Quill } = useQuill({
         modules: { blotFormatter: {} }
@@ -17,7 +17,7 @@ const Editor = () => {
 
     useEffect(() => {
         if (quill) {
-            quill.root.innerHTML = description; // Set initial content
+            quill.root.innerHTML = descriptionData; // Set initial content
             quill.on('text-change', (delta, oldContents) => {
                 console.log('Text change!');
                 console.log(delta);

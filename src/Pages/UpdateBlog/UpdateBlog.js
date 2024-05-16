@@ -46,10 +46,6 @@ function UpdateBlog() {
       setDescription(data.description);
       setShortDescription(data.shortDescription);
       setAuthorDescription(data.authorDescription);
-      // Assuming these properties will be arrays of files
-    //   setAuthorImage([data.authorImage]);
-    //   setPosterImage([data.posterImage]);
-    //   setBlogImage([data.blogImage]);
     } catch (error) {
       console.error("Error getting products:", error.message);
     } finally {
@@ -74,6 +70,7 @@ function UpdateBlog() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation()
     const formData = new FormData();
     formData.append("authorName", authorName);
     formData.append("authorTitle", authorTitle);
@@ -102,18 +99,8 @@ function UpdateBlog() {
         formData,
         { headers }
       );
-      console.log(response.data.status);
       if (response.data.status) {
         alert("Blog Updated Successfully");
-        setAuthorName("");
-        setAuthorTitle("");
-        setDescription("");
-        setShortDescription("");
-        setBlogTitle("");
-        setAuthorDescription("");
-        setAuthorImage([]);
-        setPosterImage([]);
-        setBlogImage([]);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -218,7 +205,7 @@ function UpdateBlog() {
               <label>Description:</label>
               <br />
               <br />
-              <Editor placeholder={"Write something..."} />
+              <Editor descriptionData={description} />
             </div>
             <div className={style.btn_box}>
               <PreviewBlog
