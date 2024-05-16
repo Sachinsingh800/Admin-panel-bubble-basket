@@ -38,6 +38,7 @@
   letter-spacing: .5cap;
   font-weight: 700;
   overflow: hidden;
+  height: 1rem!important;
 }
 .invoice_details {
   display: flex;
