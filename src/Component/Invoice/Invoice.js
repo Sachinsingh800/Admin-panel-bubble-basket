@@ -7,7 +7,19 @@ import qrCode from "./qr code.png";
 const Testing = () => {
   const [printed, setPrinted] = useState(false);
   const order = JSON.parse(localStorage.getItem("orderInfo"));
-console.log(order,"order")
+  console.log(order, "order");
+  console.log(order.orderDate, "testing");
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // months are zero-based
+    const year = date.getUTCFullYear();
+
+    return `${day < 10 ? "0" + day : day}/${
+      month < 10 ? "0" + month : month
+    }/${year}`;
+  };
   return (
     <div className={style.main}>
       {!printed && (
@@ -24,39 +36,48 @@ console.log(order,"order")
       )}
 
       <div className={style.invoice_container}>
-        <div className={style.header} >
+        <div className={style.header}>
           <div>
-
             <img
               className={style.logo}
               src="https://res.cloudinary.com/dscgsptzy/image/upload/v1715670590/zun4zqqt9cwuj7kvv3ux.jpg"
             />
             <div className={style.billing}>
               <p>
-                <span>Billing State</span>: {invoiceData?.billingState}
+                <span>Billing State</span>: {order?.shippingInfo?.stateCounty}
               </p>
 
               <p>
-                <span>Place Of Supply:</span>: {invoiceData?.placeOfSupply}
+                <span>Place Of Supply:</span>: {order?.shippingInfo?.townCity}
               </p>
             </div>
           </div>
 
           <div className={style.address}>
             <strong>SHIPPING & BILLING ADDRESS:</strong>
-            <p>{invoiceData?.shippingAddress}</p>
+            <p style={{ fontWeight: 700 }}>{order.shippingInfo.firstName}</p>
+
+            <p>
+              {order?.shippingInfo?.streetAddress?.apartment}{" "}
+              {order?.shippingInfo?.streetAddress?.houseNoAndStreetName}{" "}
+              {order?.shippingInfo?.townCity},{order?.shippingInfo?.stateCounty}
+              ,{order?.shippingInfo?.country}-{order?.shippingInfo?.postcodeZIP}
+            </p>
+
             <strong>Buyer UID/GSTIN #: </strong>
             <strong>Delivery#: {invoiceData?.buyerUID}</strong>
             <img className={style.barCode} src={barCode} />
           </div>
           <div>
             <h3>RETAIL / TAX INVOICE</h3>
-            <strong>Order#: {invoiceData?.orderNumber}</strong>
-            <p>Date: {invoiceData?.orderDate}</p>
+            <strong>Order#: {order?.orderId}</strong>
+            <p>Date: {formatDate(order?.orderDate)}</p>
             <img className={style.qrCode} src={qrCode} />
           </div>
         </div>
-            <div className={style.block}>-----------------------------------------------------------------------</div>
+        <div className={style.block}>
+          -----------------------------------------------------------------------
+        </div>
         <div className={style.shipping_billing}>
           <div className={style.shipping}>
             <strong>
@@ -65,19 +86,17 @@ console.log(order,"order")
             <div>
               <strong>{invoiceData?.invoiceNumber}</strong>
             </div>
-            <strong>
-              29/04/2024
-            </strong>
+            <strong>29/04/2024</strong>
             <div>
-              <strong>Item(s) In The Box : 1</strong>
+              <strong>Item(s) In The Box : {order?.totalItems}</strong>
             </div>
           </div>
           <div className={style.shipping}>
             <strong> SOLD BY:</strong>
             <div className={style.shipp_ad}>
               <strong>
-                luxury bubble basket E-RETAIL LIMITED | GSTIN # : 07AAFCN5072P1ZX| FSSAI
-                License No # : 10021011000081
+                luxury bubble basket E-RETAIL LIMITED | GSTIN # :
+                07AAFCN5072P1ZX| FSSAI License No # : 10021011000081
               </strong>
 
               <p>
@@ -291,7 +310,9 @@ console.log(order,"order")
             </tbody>
           </table>
         </div>
-          <div className={style.block}>-----------------------------------------------------------------------</div>
+        <div className={style.block}>
+          -----------------------------------------------------------------------
+        </div>
 
         <div className={style.footer}>
           <p> Registered Address for luxury bubble basket E-Retail Limited</p>
@@ -350,7 +371,7 @@ console.log(order,"order")
                 <span> 0.00</span>
               </p>
             </div>
-          <div className={style.block}>----------------------------</div>
+            <div className={style.block}>----------------------------</div>
             <div>
               <strong>GRAND TOTAL </strong>{" "}
               <p>
@@ -368,7 +389,9 @@ console.log(order,"order")
           Refund amount due to difference between order MRP and shipment MRP INR
           0
         </p>
-          <div className={style.block}>-----------------------------------------------------------------------</div>
+        <div className={style.block}>
+          -----------------------------------------------------------------------
+        </div>
         <div>
           <p>Declaration I : Tax is not payable on reverse charge basis.</p>
           <p>
@@ -378,9 +401,13 @@ console.log(order,"order")
             to luxury bubble basket's Terms and Conditions.
           </p>
         </div>
-          <div className={style.block}>-----------------------------------------------------------------------</div>
+        <div className={style.block}>
+          -----------------------------------------------------------------------
+        </div>
         <div className={style.outer_box}>
-            <div className={style.block}>-----------------------------------------------------------------------</div>
+          <div className={style.block}>
+            -----------------------------------------------------------------------
+          </div>
           <div className={style.footer}>
             <p> Registered Address for luxury bubble basket E-Retail Limited</p>
             <p>{invoiceData?.registeredAddress}</p>
