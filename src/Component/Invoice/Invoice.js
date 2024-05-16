@@ -56,7 +56,7 @@ console.log(order,"order")
             <img className={style.qrCode} src={qrCode} />
           </div>
         </div>
-            <div className={style.block}>----------------------------------------------------------------</div>
+            <div className={style.block}>-----------------------------------------------------------------------</div>
         <div className={style.shipping_billing}>
           <div className={style.shipping}>
             <strong>
@@ -291,7 +291,7 @@ console.log(order,"order")
             </tbody>
           </table>
         </div>
-          <div className={style.block}>----------------------------------------------------------------</div>
+          <div className={style.block}>-----------------------------------------------------------------------</div>
 
         <div className={style.footer}>
           <p> Registered Address for luxury bubble basket E-Retail Limited</p>
@@ -368,7 +368,7 @@ console.log(order,"order")
           Refund amount due to difference between order MRP and shipment MRP INR
           0
         </p>
-          <div className={style.block}>----------------------------------------------------------------</div>
+          <div className={style.block}>-----------------------------------------------------------------------</div>
         <div>
           <p>Declaration I : Tax is not payable on reverse charge basis.</p>
           <p>
@@ -378,9 +378,9 @@ console.log(order,"order")
             to luxury bubble basket's Terms and Conditions.
           </p>
         </div>
-          <div className={style.block}>----------------------------------------------------------------</div>
+          <div className={style.block}>-----------------------------------------------------------------------</div>
         <div className={style.outer_box}>
-            <div className={style.block}>----------------------------------------------------------------</div>
+            <div className={style.block}>-----------------------------------------------------------------------</div>
           <div className={style.footer}>
             <p> Registered Address for luxury bubble basket E-Retail Limited</p>
             <p>{invoiceData?.registeredAddress}</p>
