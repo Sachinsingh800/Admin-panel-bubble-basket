@@ -30,7 +30,22 @@ const OrderTable = () => {
     { field: 'orderNotes', headerName: 'Order Notes', width: 150 },
     { field: 'trackingStatus', headerName: 'Tracking Status', width: 150 },
     { field: 'trackingDate', headerName: 'Tracking Date', width: 150 },
+    {
+      field: "_id",
+      headerName: "INVOICE",
+      width: 150,
+      renderCell: (params) => (
+        <p
+        style={{ color: "blue", cursor: "pointer" }}
+        onClick={() => handleParticularData(params.id)}
+      >
+        View Invoice
+      </p>
+      ),
+    },
   ];
+
+
 
   useEffect(() => {
     getAlldata();
@@ -65,6 +80,7 @@ const OrderTable = () => {
     }
   };
 
+
   const handleParticularData = async (id) => {
     setIsLoading(true);
     try {
@@ -73,7 +89,7 @@ const OrderTable = () => {
       console.error("Error fetching order details:", error);
     } finally {
       setIsLoading(false);
-      window.location.href = "/Invoice";
+      
     }
   };
 

@@ -869,10 +869,13 @@ export const getParticularOrders = async (id) => {
     'Content-Type': 'multipart/form-data',// Set content type to JSON
   };
   try {
-    const response = await axios.get(`${BASE_URL}/admin/order/getSingleOrder/${id}`,{headers});
-   console.log(response,"response")
-   localStorage.setItem("orderInfo",JSON.stringify(response.data.orderData))
+    const response = await axios.get(`${BASE_URL}/admin/order/singleOrder/${id}`,{headers});
+ 
     const { status, message, data } = response.data;
+    if(status){
+      localStorage.setItem("orderInfo",JSON.stringify(data))
+      window.location.href = "/Invoice";
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       // Axios error (HTTP error)
