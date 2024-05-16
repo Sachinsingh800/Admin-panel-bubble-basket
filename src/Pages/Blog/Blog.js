@@ -105,6 +105,7 @@ function Blog() {
               <div key={id} className={style.container}>
                 <div className={style.btnbox}>
                   <Link to={`/FullBlog/${item._id}`}>
+               
                     <button>
                       <VisibilityIcon />
                     </button>
@@ -112,11 +113,9 @@ function Blog() {
                   <button onClick={() => DeleteProduct(item._id)}>
                     <DeleteIcon />
                   </button>
-                  <button
-                  // onClick={() => DeleteProduct(item._id)}
-                  >
+                  <Link to={`/UpdateBlog/${item._id}`}>
                     <EditIcon />
-                  </button>
+                   </Link>
                 </div>
                 <div className={style.imgbox}>
                   {item?.blogImage && (

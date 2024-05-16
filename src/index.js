@@ -39,6 +39,7 @@ import AddCoupon from './Pages/AddCoupon/AddCoupon';
 import Blog from './Pages/Blog/Blog';
 import CreateBlog from './Pages/CreateBlog/CreateBlog';
 import FullBlog from './Pages/FullBlog/FullBlog';
+import UpdateBlog from './Pages/UpdateBlog/UpdateBlog';
 
 
 
@@ -152,6 +153,10 @@ const router = createBrowserRouter([
   {
     path: "/FullBlog/:id", // Corrected path with parameter
     element: <FullBlog />,
+  },
+  {
+    path: "/UpdateBlog/:id", // Corrected path with parameter
+    element: <UpdateBlog />,
   },
 ]);
 root.render(

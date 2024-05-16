@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import style from "./CreateBlog.module.css";
+import React, { useState, useRef, useEffect } from "react";
+import style from "./UpdateBlog.module.css";
 import Header from "../../Component/Header/Header";
 import NavBar from "../../Component/NavBar/NavBar";
 import OptionBar from "../../Component/OptionBar/OptionBar";
@@ -9,12 +9,14 @@ import Editor from "./EditorWithUseQuill";
 import { useRecoilState } from "recoil";
 import { blogDescription } from "../../Recoil";
 import PreviewBlog from "../PreviewBlog/PreviewBlog";
+import { useParams } from "react-router-dom";
+import { getSingleBlog } from "../../Api/Api";
 
-function CreateBlog() {
+function UpdateBlog() {
   const [authorName, setAuthorName] = useState("");
   const [authorTitle, setAuthorTitle] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
-  const ReactQuillRef = useRef(null); // Initialize with null
+  const ReactQuillRef = useRef(null);
   const [authorImage, setAuthorImage] = useState([]);
   const [posterImage, setPosterImage] = useState([]);
   const [blogImage, setBlogImage] = useState([]);
@@ -22,6 +24,38 @@ function CreateBlog() {
   const [authorDescription, setAuthorDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const authToken = JSON.parse(localStorage.getItem("token"));
+
+  const [singleBlog, setSingleBlog] = useState([]);
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    handleSingleBlog();
+  }, []);
+
+  const handleSingleBlog = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getSingleBlog(id);
+      console.log(response.data, "response");
+      const data = response.data;
+      setSingleBlog(data);
+      setAuthorName(data.authorName);
+      setAuthorTitle(data.authorTitle);
+      setBlogTitle(data.blogTitle);
+      setDescription(data.description);
+      setShortDescription(data.shortDescription);
+      setAuthorDescription(data.authorDescription);
+      // Assuming these properties will be arrays of files
+    //   setAuthorImage([data.authorImage]);
+    //   setPosterImage([data.posterImage]);
+    //   setBlogImage([data.blogImage]);
+    } catch (error) {
+      console.error("Error getting products:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleAuthorImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -63,14 +97,14 @@ function CreateBlog() {
         "x-admin-token": authToken,
         "Content-Type": "multipart/form-data",
       };
-      const response = await axios.post(
-        "https://wine-rnlq.onrender.com/admin/blog/create",
+      const response = await axios.put(
+        `https://wine-rnlq.onrender.com/admin/blog/update/${id}`,
         formData,
         { headers }
       );
       console.log(response.data.status);
       if (response.data.status) {
-        alert("Blog Created Successfully");
+        alert("Blog Updated Successfully");
         setAuthorName("");
         setAuthorTitle("");
         setDescription("");
@@ -209,4 +243,4 @@ function CreateBlog() {
   );
 }
 
-export default CreateBlog;
+export default UpdateBlog;
