@@ -29,7 +29,7 @@ function AddCategory() {
   const handleGetAllCategory = async () => {
     SetIsloading(true);
     try {
-      const response = await axios.get(`https://wine-rnlq.onrender.com/admin/category/getAll`);
+      const response = await axios.get(`https://www.backend.luxurybubblebasket.com/admin/category/getAll`);
       setCategory(response?.data?.data.map(item => ({...item, id: item._id})));
     } catch (error) {
       if (axios.isAxiosError(error)) {

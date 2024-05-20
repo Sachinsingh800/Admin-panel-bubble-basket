@@ -50,7 +50,7 @@ function UpdateProduct() {
   const getUpdatedProduct = async () => {
     try {
       const response = await axios.get(
-        `https://wine-rnlq.onrender.com/admin/product/getSingle/${id}`
+        `https://www.backend.luxurybubblebasket.com/admin/product/getSingle/${id}`
       );
       setSingleProduct(response.data.data); // Set the product data received from the API
     } catch (error) {

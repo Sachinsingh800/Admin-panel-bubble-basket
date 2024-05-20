@@ -33,7 +33,7 @@ function AddShipping() {
         "x-admin-token": authToken,
       };
       const response = await axios.get(
-        "https://wine-rnlq.onrender.com/admin/shipping/get",
+        "https://www.backend.luxurybubblebasket.com/admin/shipping/get",
         { headers }
       );
       if (response.data.status) {

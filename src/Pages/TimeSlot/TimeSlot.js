@@ -29,7 +29,7 @@ function TimeSlot() {
     SetIsloading(true);
     try {
       const response = await axios.get(
-        `https://zuluresh.onrender.com/admin/timeSlot/allSlots`
+        `https://www.backend.luxurybubblebasket.com/admin/timeSlot/allSlots`
       );
       setTimeslot(response.data.timeSlots.map(item => ({...item, id: item._id})));
     } catch (error) {

@@ -24,6 +24,7 @@ import "react-time-picker/dist/TimePicker.css";
 import { useRecoilState } from "recoil";
 import { loadingStatus, pinCodeStatus } from "../../Recoil";
 import axios from "axios";
+import { Input } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -256,7 +257,6 @@ export const CreateButton2 = () => {
   );
 };
 
-
 export const AddNotificationButton = () => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const [open, setOpen] = useState(false);
@@ -355,7 +355,7 @@ export const AddNotificationButton = () => {
   );
 };
 
-export const UpdateCategory = ({ id}) => {
+export const UpdateCategory = ({ id }) => {
   const authToken = JSON.parse(localStorage.getItem("token"));
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -377,7 +377,7 @@ export const UpdateCategory = ({ id}) => {
     };
     try {
       const response = await axios.get(
-        `https://wine-rnlq.onrender.com/admin/category/getSingle/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/category/getSingle/${id}`,
         { headers }
       );
       setCategoryName(response.data.data.categoryName);
@@ -403,7 +403,7 @@ export const UpdateCategory = ({ id}) => {
         formData.append("categoryImg", file);
       });
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/category/update/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/category/update/${id}`,
         formData,
         { headers }
       );
@@ -588,7 +588,7 @@ export const UpdateShippingButton = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/shipping/update/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/shipping/update/${id}`,
         {
           shippingCharge: shippingCharge,
           freeShipingLimit: freeShippingLimit,
@@ -664,7 +664,6 @@ export const UpdateShippingButton = ({ id }) => {
   );
 };
 
-
 export const UpdateCouponsButton = ({ id }) => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const [open, setOpen] = useState(false);
@@ -684,7 +683,7 @@ export const UpdateCouponsButton = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/coupon/update/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/coupon/update/${id}`,
         {
           promoCode,
           discount,
@@ -769,7 +768,6 @@ export const UpdateCouponsButton = ({ id }) => {
   );
 };
 
-
 export const CreateCouponsButton = ({ id }) => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const [open, setOpen] = useState(false);
@@ -789,7 +787,7 @@ export const CreateCouponsButton = ({ id }) => {
     };
     try {
       const response = await axios.post(
-        `https://wine-rnlq.onrender.com/admin/coupon/create`,
+        `https://www.backend.luxurybubblebasket.com/admin/coupon/create`,
         {
           promoCode,
           discount,
@@ -865,7 +863,7 @@ export const CreateCouponsButton = ({ id }) => {
             </label>
             <br />
             <button className={styles.btn} onClick={handleUpdateClick}>
-              Create 
+              Create
             </button>
           </Typography>
         </Box>
@@ -891,7 +889,7 @@ export const UpdateTaxButton = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/tax/update/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/tax/update/${id}`,
         {
           taxPercent: shippingCharge,
         },
@@ -1127,7 +1125,7 @@ export const UpdateSubCategoryButton = ({ id }) => {
         formData.append("subCategoryImg", file);
       });
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/categoryAndSubCategory/updateSubCategory/${selectedCategory}/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/categoryAndSubCategory/updateSubCategory/${selectedCategory}/${id}`,
         formData,
         { headers }
       );
@@ -1325,7 +1323,7 @@ export const UpdateAccess = ({ id }) => {
     };
     try {
       const response = await axios.get(
-        `https://wine-rnlq.onrender.com/admin/adminAuth/getSingle/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/adminAuth/getSingle/${id}`,
         { headers }
       );
       setEmail(response.data.data.grantAccessEmail);
@@ -1347,7 +1345,7 @@ export const UpdateAccess = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/adminAuth/updateSingle/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/adminAuth/updateSingle/${id}`,
         {
           grantAccessEmail: email,
           password: password,
@@ -1412,7 +1410,6 @@ export const UpdateAccess = ({ id }) => {
   );
 };
 
-
 export const AddCategoryButton = () => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const [open, setOpen] = useState(false);
@@ -1429,7 +1426,7 @@ export const AddCategoryButton = () => {
     try {
       const formData = new FormData();
       formData.append("categoryName", categoryName);
-      categoryImg.forEach(file => {
+      categoryImg.forEach((file) => {
         formData.append("categoryImg", file);
       });
 
@@ -1447,8 +1444,8 @@ export const AddCategoryButton = () => {
       console.error("Error creating category:", error.message);
       setIsLoading(false);
       alert("Error: " + error.message);
-    }finally{
-      window.location.reload()
+    } finally {
+      window.location.reload();
     }
   };
 
@@ -1483,30 +1480,35 @@ export const AddCategoryButton = () => {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <label>
               Category Name:
-              <input
+              <Input
                 type="text"
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
               />
             </label>
-            <br />
+          </Typography>
+          <br />
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <label>
               Category Image:
-              <input
+              <Input
                 onChange={(e) => setCategoryImg(Array.from(e.target.files))}
                 type="file"
                 accept=".pdf, .png, .jpg, .jpeg"
                 multiple
               />
             </label>
+
             <br />
-            <button className={styles.btn} onClick={handleCreateClick}>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Button className={styles.btn} onClick={handleCreateClick}>
               Create
-            </button>
+            </Button>
+            </Typography>
+      
           </Typography>
         </Box>
       </Modal>
     </div>
   );
 };
-

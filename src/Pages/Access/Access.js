@@ -39,7 +39,7 @@ function Access() {
     };
     try {
       const response = await axios.get(
-        `https://zuluresh.onrender.com/admin/adminAuth/getAllProvidedAccess`,
+        `https://www.backend.luxurybubblebasket.com/admin/adminAuth/getAllProvidedAccess`,
         { headers }
       );
       setAccess(
@@ -72,7 +72,7 @@ function Access() {
         "Content-Type": "application/json", // Set content type to JSON
       };
       const response = await axios.delete(
-        `https://zuluresh.onrender.com/admin/adminAuth/deleteSingle/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/adminAuth/deleteSingle/${id}`,
         { headers }
       );
   

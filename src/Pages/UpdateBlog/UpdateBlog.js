@@ -95,7 +95,7 @@ function UpdateBlog() {
         "Content-Type": "multipart/form-data",
       };
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/blog/update/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/blog/update/${id}`,
         formData,
         { headers }
       );

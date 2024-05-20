@@ -38,7 +38,7 @@ const getAlldata = async () => {
   };
   setIsLoading(true);
   try {
-    const response = await axios.get("https://wine-rnlq.onrender.com/admin/order/dateWiseOrder",{headers});
+    const response = await axios.get("https://www.backend.luxurybubblebasket.com/admin/order/dateWiseOrder",{headers});
     setOrders(response?.data?.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -65,7 +65,7 @@ const getAllProduct = async () => {
     "Content-Type": "application/json", // Set content type to JSON
   };
   try {
-    const response = await axios.get("https://wine-rnlq.onrender.com/admin/product/getAll",{headers});
+    const response = await axios.get("https://www.backend.luxurybubblebasket.com/admin/product/getAll",{headers});
     setProducts(response?.data?.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {

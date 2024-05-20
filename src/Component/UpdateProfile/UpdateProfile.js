@@ -29,7 +29,7 @@ const UpdateProfile = () => {
     };
     try {
       const response = await axios.get(
-        `https://wine-rnlq.onrender.com/admin/auth/profile`,
+        `https://www.backend.luxurybubblebasket.com/admin/auth/profile`,
         { headers }
       );
       const { name, email, password } = response?.data?.data;

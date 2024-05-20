@@ -33,7 +33,7 @@ function AddTax() {
         "x-admin-token": authToken,
       };
       const response = await axios.get(
-        "https://wine-rnlq.onrender.com/admin/tax/get",
+        "https://www.backend.luxurybubblebasket.com/admin/tax/get",
         { headers }
       );
       if (response.data.status) {

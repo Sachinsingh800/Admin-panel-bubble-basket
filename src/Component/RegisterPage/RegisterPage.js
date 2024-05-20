@@ -25,7 +25,7 @@ function RegisterPage() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://wine-rnlq.onrender.com/admin/auth/register",
+        "https://www.backend.luxurybubblebasket.com/admin/auth/register",
         formData
       );
       setSuccessMessage("Registration successful!");

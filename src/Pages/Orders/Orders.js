@@ -52,7 +52,7 @@ function Orders() {
       "date": filterDate
     };
     try {
-      const response = await axios.post(`https://zuluresh.onrender.com/admin/order/excel`, formData, {
+      const response = await axios.post(`https://www.backend.luxurybubblebasket.com/admin/order/excel`, formData, {
         responseType: 'blob',
         headers: headers // Corrected placement of headers
       });

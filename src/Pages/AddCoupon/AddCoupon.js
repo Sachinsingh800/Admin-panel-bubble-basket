@@ -33,7 +33,7 @@ function AddCoupon() {
         "x-admin-token": authToken,
       };
       const response = await axios.get(
-        "https://wine-rnlq.onrender.com/admin/coupon/getAll",
+        "https://www.backend.luxurybubblebasket.com/admin/coupon/getAll",
         { headers }
       );
       if (response.data.status) {

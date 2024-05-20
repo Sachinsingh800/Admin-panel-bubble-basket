@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 
-const BASE_URL = 'https://wine-rnlq.onrender.com';
+const BASE_URL = 'https://www.backend.luxurybubblebasket.com';
 const authToken = JSON.parse(localStorage.getItem("token"));
 
 

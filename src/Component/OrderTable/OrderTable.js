@@ -58,7 +58,7 @@ const OrderTable = () => {
     };
     setIsLoading(true);
     try {
-      let apiUrl = 'https://wine-rnlq.onrender.com/admin/order/dateWiseOrder';
+      let apiUrl = 'https://www.backend.luxurybubblebasket.com/admin/order/dateWiseOrder';
       if (applyFilters) {
         apiUrl += `?date=${filterDate}`;
       }

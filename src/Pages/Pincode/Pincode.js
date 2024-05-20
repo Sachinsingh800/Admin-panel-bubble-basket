@@ -30,7 +30,7 @@ function Pincode() {
 
   const handlegetAllpincode = async () => {
     try {
-      const response = await axios.get(`https://zuluresh.onrender.com/admin/pincodeLocation/getAllPincode`);
+      const response = await axios.get(`https://www.backend.luxurybubblebasket.com/admin/pincodeLocation/getAllPincode`);
       setPincode(response?.data?.data.map((item) => ({ ...item, id: item._id }))); // Add id property
     } catch (error) {
       console.error('Error getting services:', error.message);
