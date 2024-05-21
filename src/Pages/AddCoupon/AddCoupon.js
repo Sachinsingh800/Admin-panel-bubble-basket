@@ -9,36 +9,32 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { AddShippingButton,  CreateCouponsButton,  UpdateCouponsButton } from "../../Component/CreateButton/CreateButton";
 import Header from "../../Component/Header/Header";
-import { DeleteCoupon, DeleteShipping } from "../../Api/Api";
+import { DeleteCoupon, DeleteShipping, getAllCoupon } from "../../Api/Api";
 
 function AddCoupon() {
   const [shippingData, setShippingData] = useState([]);
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const authToken = JSON.parse(localStorage.getItem("token"));
 
-  console.log(shippingData, "data");
-  useEffect(() => {
-    // Redirect to login if authToken is not available
-    if (!authToken) {
-      window.location.href = "/";
-    } else {
-      handleGetAllShipping();
-    }
-  }, [authToken]);
+
+  // useEffect(() => {
+  //   if (!authToken) {
+  //     window.location.href = "/";
+  //   } else {
+  //     handleGetAllShipping();
+  //   }
+  // }, [authToken]);
+  useEffect(()=>{
+    handleGetAllShipping()
+  },[])
 
   const handleGetAllShipping = async () => {
     setIsLoading(true);
     try {
-      const headers = {
-        "x-admin-token": authToken,
-      };
-      const response = await axios.get(
-        "https://www.backend.luxurybubblebasket.com/admin/coupon/getAll",
-        { headers }
-      );
-      if (response.data.status) {
+      const response = await getAllCoupon()
+      if (response.status) {
         // Map over the data and add an 'id' property to each object
-        const formattedData = response.data.data.map((item) => ({
+        const formattedData = response.data.map((item) => ({
           ...item,
           id: item._id,
         }));
@@ -104,7 +100,7 @@ function AddCoupon() {
       <div className={style.body}>
         <Header />
         <div className={style.header}>
-          <h2>All Shipping</h2>
+          <h2>All Coupons</h2>
           <div>
             <CreateCouponsButton />
           </div>

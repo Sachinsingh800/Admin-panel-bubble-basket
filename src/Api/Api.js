@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 
-const BASE_URL = 'https://www.backend.luxurybubblebasket.com';
+const BASE_URL = 'https://wine-rnlq.onrender.com';
 const authToken = JSON.parse(localStorage.getItem("token"));
 
 
@@ -166,6 +166,28 @@ export const getAllProduct = async () => {
 };
 
 
+
+export const getAllProvidedAccess = async () => {
+
+
+  try {
+    const headers = {
+      "x-auth-token": authToken, // Pass the token in the header
+      "Content-Type": "application/json", // Set content type to JSON
+    };
+    const response = await axios.get(`${BASE_URL}/admin/adminAuth/getAllProvidedAccess`, {
+      headers,
+    });
+    console.log(response, "Response from axios");
+
+    // Directly return the data from axios response
+    return response.data;
+  } catch (error) {
+    console.error("Error in function:", error);
+  }
+};
+
+
 // getAllBlog
 
 export const getAllBlog= async () => {
@@ -225,32 +247,29 @@ export const getSingleBlog= async (id) => {
 };
 
 
-// getAllCategory 
+
+
+// getAllCategory
 
 export const getAllCategory = async () => {
-  const headers = {
-    "x-admin-token": authToken, // Ensure authToken is defined
-    'Content-Type': 'multipart/form-data',// Set content type to JSON
-  };
   try {
-    const response = await axios.get(`${BASE_URL}/admin/category/getAll`,{headers});
-    const { status, message, data } = response.data;
-    return { status, message, data };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      // Axios error (HTTP error)
-      const { response } = error;
-      // Set the error message
-      const errorMessage = response.data.message
+    const headers = {
+      "x-auth-token": authToken, // Pass the token in the header
+      "Content-Type": "application/json", // Set content type to JSON
+    };
+    const response = await axios.get(`${BASE_URL}/admin/category/getAll`, {
+      headers,
+    });
+    console.log(response, "Response from axios");
 
-         alert(errorMessage)
-      // Log the error message as a string
-    } else {
-      // Network error (e.g., no internet connection)
-      alert("Something went wrong");
-    }
+    // Directly return the data from axios response
+    return response.data;
+  } catch (error) {
+    console.error("Error in getAllCategory function:", error);
   }
 };
+
+
 
 
 // getAllSubCategory 
@@ -421,6 +440,25 @@ export const DeleteCoupon = async (id) => {
       // Network error (e.g., no internet connection)
       alert("Something went wrong");
     }
+  }
+};
+
+
+export const getAllCoupon = async () => {
+  try {
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      'Content-Type': 'multipart/form-data',// Set content type to JSON
+    };
+    const response = await axios.get(`${BASE_URL}/admin/coupon/getAll`, {
+      headers,
+    });
+    console.log(response, "Response from axios");
+
+    // Directly return the data from axios response
+    return response.data;
+  } catch (error) {
+    console.error("Error in getAllCategory function:", error);
   }
 };
 
@@ -835,32 +873,62 @@ export const getSingleProduct = async (id) => {
 };
 
 
-export const getAllOrders = async () => {
-  const headers = {
-    "x-auth-token": authToken, // Ensure authToken is defined
-    'Content-Type': 'multipart/form-data',// Set content type to JSON
-  };
+export const getAllOrders= async (filterDate) => {
   try {
-    const response = await axios.get(`${BASE_URL}/admin/order/getAllOrders`,{headers});
-   console.log(response,"response")
-    const { status, message, data } = response.data;
-
-    return { status, message, data };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      // Axios error (HTTP error)
-      const { response } = error;
-      // Set the error message
-      const errorMessage = response.data.message
-
-         alert(errorMessage)
-      // Log the error message as a string
-    } else {
-      // Network error (e.g., no internet connection)
-      alert("Something went wrong");
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      'Content-Type': 'multipart/form-data',// Set content type to JSON
+    };
+    let url = `${BASE_URL}/admin/order/dateWiseOrder`;
+    if (filterDate) {
+      url += `?date=${filterDate}`;
     }
+   const response = await axios.get(url,{headers});
+    console.log(response, "Response from axios");
+
+    // Directly return the data from axios response
+    return response.data;
+  } catch (error) {
+    console.error("Error in filterDate function:", error);
   }
 };
+
+export const getAllShipping= async () => {
+  try {
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      'Content-Type': 'multipart/form-data',// Set content type to JSON
+    };
+
+   const response = await axios.get(`${BASE_URL}/admin/shipping/get`,{headers});
+    console.log(response, "Response from axios");
+
+    // Directly return the data from axios response
+    return response.data;
+  } catch (error) {
+    console.error("Error in filterDate function:", error);
+  }
+};
+
+
+export const getAllTax= async () => {
+  try {
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      'Content-Type': 'multipart/form-data',// Set content type to JSON
+    };
+
+   const response = await axios.get(`${BASE_URL}/admin/tax/get`,{headers});
+    console.log(response, "Response from axios");
+
+    // Directly return the data from axios response
+    return response.data;
+  } catch (error) {
+    console.error("Error in filterDate function:", error);
+  }
+};
+
+
 
 
 export const getParticularOrders = async (id) => {

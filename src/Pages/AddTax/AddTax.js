@@ -9,7 +9,7 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { AddShippingButton, UpdateShippingButton, UpdateTaxButton } from "../../Component/CreateButton/CreateButton";
 import Header from "../../Component/Header/Header";
-import { DeleteShipping, DeleteTax } from "../../Api/Api";
+import { DeleteShipping, DeleteTax, getAllTax } from "../../Api/Api";
 
 function AddTax() {
   const [shippingData, setShippingData] = useState([]);
@@ -22,22 +22,16 @@ function AddTax() {
     if (!authToken) {
       window.location.href = "/";
     } else {
-      handleGetAllShipping();
+      handleGetAllTax();
     }
   }, [authToken]);
 
-  const handleGetAllShipping = async () => {
+  const handleGetAllTax= async () => {
     setIsLoading(true);
     try {
-      const headers = {
-        "x-admin-token": authToken,
-      };
-      const response = await axios.get(
-        "https://www.backend.luxurybubblebasket.com/admin/tax/get",
-        { headers }
-      );
-      if (response.data.status) {
-        setShippingData([response.data.data].map((item) => ({ ...item, id: item._id })));
+      const response = await getAllTax()
+      if (response.status) {
+        setShippingData([response.data].map((item) => ({ ...item, id: item._id })));
       } else {
         console.error("Error fetching shipping:", response.data.message);
       }
@@ -53,7 +47,7 @@ function AddTax() {
     try {
       await DeleteTax(id);
       // Refresh the shipping after successful deletion
-      handleGetAllShipping();
+      handleGetAllTax();
       alert("Shipping deleted successfully");
     } catch (error) {
       console.error("Error deleting shipping:", error.message);

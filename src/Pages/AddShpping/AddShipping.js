@@ -9,7 +9,7 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { AddShippingButton, UpdateShippingButton } from "../../Component/CreateButton/CreateButton";
 import Header from "../../Component/Header/Header";
-import { DeleteShipping } from "../../Api/Api";
+import { DeleteShipping, getAllShipping } from "../../Api/Api";
 
 function AddShipping() {
   const [shippingData, setShippingData] = useState([]);
@@ -32,12 +32,9 @@ function AddShipping() {
       const headers = {
         "x-admin-token": authToken,
       };
-      const response = await axios.get(
-        "https://www.backend.luxurybubblebasket.com/admin/shipping/get",
-        { headers }
-      );
-      if (response.data.status) {
-        setShippingData([response.data.data].map((item) => ({ ...item, id: item._id })));
+      const response = await getAllShipping()
+      if (response.status) {
+        setShippingData([response.data].map((item) => ({ ...item, id: item._id })));
       } else {
         console.error("Error fetching shipping:", response.data.message);
       }

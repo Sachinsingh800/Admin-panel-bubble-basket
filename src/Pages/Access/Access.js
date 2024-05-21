@@ -10,6 +10,7 @@ import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 import axios from "axios";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
+import { getAllProvidedAccess } from "../../Api/Api";
 
 function Access() {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
@@ -33,31 +34,13 @@ function Access() {
 
   const handlegetAllAccess = async () => {
     setIsLoading(true);
-    const headers = {
-      "x-admin-token": authToken, // Ensure authToken is defined
-      "Content-Type": "application/json", // Set content type to JSON
-    };
     try {
-      const response = await axios.get(
-        `https://www.backend.luxurybubblebasket.com/admin/adminAuth/getAllProvidedAccess`,
-        { headers }
-      );
+      const response = await  getAllProvidedAccess()
       setAccess(
         response?.data?.data.map((item) => ({ ...item, id: item._id }))
       ); // Add id property
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Axios error (HTTP error)
-        const { response } = error;
-        // Set the error message
-        const errorMessage = response.data.message
-  
-           alert(errorMessage)
-        // Log the error message as a string
-      } else {
-        // Network error (e.g., no internet connection)
-        alert("Something went wrong");
-      }
+
     } finally {
       setIsLoading(false);
     }

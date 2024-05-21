@@ -7,7 +7,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Header from "../../Component/Header/Header";
 import OptionBar from "../../Component/OptionBar/OptionBar";
 import NavBar from "../../Component/NavBar/NavBar";
-import { getAllProduct, deleteProduct } from "../../Api/Api";
+import { getAllProduct, deleteProduct, getAllCategory } from "../../Api/Api";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -90,10 +90,9 @@ function Product() {
   const handleGetAllCategory = async () => {
     SetIsloading(true);
     try {
-      const response = await axios.get(
-        `https://www.backend.luxurybubblebasket.com/admin/category/getAll`
-      );
-      setCategory(response.data.data);
+      const response = await getAllCategory()
+      setCategory(response.data);
+      console.log(response,"aa toh raha hai")
     } catch (error) {
       console.error("Error getting categories:", error.message);
     } finally {

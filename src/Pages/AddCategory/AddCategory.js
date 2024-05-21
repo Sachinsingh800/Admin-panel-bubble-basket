@@ -9,7 +9,7 @@ import axios from "axios";
 import { DataGrid } from '@mui/x-data-grid';
 import { AddCategoryButton, UpdateCategory } from "../../Component/CreateButton/CreateButton";
 import Header from "../../Component/Header/Header";
-import { DeleteCategory } from "../../Api/Api";
+import { DeleteCategory, getAllCategory } from "../../Api/Api";
 
 function AddCategory() {
   const [category, setCategory] = useState([]);
@@ -29,8 +29,9 @@ function AddCategory() {
   const handleGetAllCategory = async () => {
     SetIsloading(true);
     try {
-      const response = await axios.get(`https://www.backend.luxurybubblebasket.com/admin/category/getAll`);
-      setCategory(response?.data?.data.map(item => ({...item, id: item._id})));
+      const response = await getAllCategory();
+      console.log(response,"ye bhio aarkjhakjsd")
+      setCategory(response?.data?.map(item => ({...item, id: item._id})));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         // Axios error (HTTP error)

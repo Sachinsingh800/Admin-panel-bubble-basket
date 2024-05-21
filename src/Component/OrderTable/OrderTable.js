@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './OrderTable.module.css'; // Import module-level CSS
-import { getParticularOrders } from '../../Api/Api';
+import { getAllOrders, getParticularOrders } from '../../Api/Api';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { filterOrder, loadingStatus, applyFilter } from '../../Recoil';
 import axios from 'axios';
@@ -48,33 +48,15 @@ const OrderTable = () => {
 
 
   useEffect(() => {
-    getAlldata();
+    handleAlldata();
   }, [filterDate, applyFilters]);
 
-  const getAlldata = async () => {
-    const headers = {
-      "x-admin-token": authToken, // Ensure authToken is defined
-      "Content-Type": "application/json", // Set content type to JSON
-    };
+  const handleAlldata = async () => {
     setIsLoading(true);
     try {
-      let apiUrl = 'https://www.backend.luxurybubblebasket.com/admin/order/dateWiseOrder';
-      if (applyFilters) {
-        apiUrl += `?date=${filterDate}`;
-      }
-      const response = await axios.get(apiUrl, { headers });
-      setOrders(response.data.data);
+      const response = await getAllOrders();
+      setOrders(response.data);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Axios error (HTTP error)
-        const { response } = error;
-        // Set the error message
-        const errorMessage = response.data.message;
-        alert(errorMessage);
-      } else {
-        // Network error (e.g., no internet connection)
-        alert("Something went wrong");
-      }
     } finally {
       setIsLoading(false);
     }
