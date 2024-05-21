@@ -355,6 +355,125 @@ export const AddNotificationButton = () => {
   );
 };
 
+export const UpdateCategory = ({ id }) => {
+  const authToken = JSON.parse(localStorage.getItem("token"));
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+  const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
+  const [categoryName, setCategoryName] = useState("");
+  const [categoryImg, setCategoryImg] = useState([]);
+
+  useEffect(() => {
+    handlegetSingleDataAccess();
+  }, [open]);
+
+  const handlegetSingleDataAccess = async () => {
+    SetIsloading(true);
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      "Content-Type": "application/json", // Set content type to JSON
+    };
+    try {
+      const response = await axios.get(
+        `https://wine-rnlq.onrender.com/admin/category/getSingle/${id}`,
+        { headers }
+      );
+      setCategoryName(response.data.data.categoryName);
+    } catch (error) {
+      console.error("Error getting services:", error.message);
+    } finally {
+      SetIsloading(false);
+    }
+  };
+
+  const handleUpdateAccessData = async () => {
+    SetIsloading(true);
+    setOpen(false);
+
+    const headers = {
+      "x-admin-token": authToken, // Ensure authToken is defined
+      "Content-Type": "multipart/form-data", // Set content type to JSON
+    };
+    try {
+      const formData = new FormData();
+      formData.append("categoryName", categoryName);
+      categoryImg.forEach((file) => {
+        formData.append("categoryImg", file);
+      });
+      const response = await axios.put(
+        `https://wine-rnlq.onrender.com/admin/category/update/${id}`,
+        formData,
+        { headers }
+      );
+      const { status, message, data, token } = response.data;
+      if (status) {
+        alert("Data update successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error getting services:", error.message);
+    } finally {
+      SetIsloading(false);
+    }
+  };
+  return (
+    <div>
+      <button className={styles.btn} onClick={handleOpen}>
+        update
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Update Category
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label>
+              Category Name:
+              <input
+                type="text"
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              Category Image:
+              <input
+                onChange={(e) => setCategoryImg(Array.from(e.target.files))}
+                type="file"
+                accept=".pdf, .png, .jpg, .jpeg"
+                multiple
+              />
+            </label>
+            <br />
+            <button className={styles.btn} onClick={handleUpdateAccessData}>
+              Update
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
 
 export const AddShippingButton = () => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
