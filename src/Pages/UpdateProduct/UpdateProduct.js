@@ -2,116 +2,86 @@ import React, { useEffect, useState } from "react";
 import style from "./UpdateProduct.module.css"; // Replace with your actual styles
 import NavBar from "../../Component/NavBar/NavBar";
 import OptionBar from "../../Component/OptionBar/OptionBar";
-import {
-  addProduct,
-  getAllCategory,
-  getAllSubCategory,
-  updateProduct,
-} from "../../Api/Api";
-import { useNavigate } from "react-router-dom";
+import { getAllCategory, updateProduct } from "../../Api/Api";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { loadingStatus } from "../../Recoil";
 import { useRecoilState } from "recoil";
-import { AddCategoryButton, AddSubCategoryButton } from "../../Component/CreateButton/CreateButton";
+import { AddCategoryButton } from "../../Component/CreateButton/CreateButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
-import { useParams } from "react-router-dom";
 
 function UpdateProduct() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [productImgs, setProductImgs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
+  const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const { id } = useParams();
-  const [subcategories, setSubCategories] = useState([]);
+  const [productImage, setProductImage] = useState([]);
   const [categoriesId, setCategoriesId] = useState("");
   const [singleProduct, setSingleProduct] = useState({
     title: "",
-    MRP: "",
     Stock: "",
     measureUnit: "",
     category: "",
     unit: "",
     price: "",
-    sub_category: "",
     description: "",
-    setAs: "",
+    sku: "",
+    productStatus: "",
+    tag: "",
+    dimension: "",
+    intro: "",
+    detailedOverview: "",
+    experienceOfTesting: "",
+    comparison: "",
   });
 
-  const authToken = JSON.parse(localStorage.getItem("token"));
-
-  useEffect(()=>{
-    getUpdatedProduct()
-  },[])
+  useEffect(() => {
+    getUpdatedProduct();
+    handleAllCategory();
+  }, []);
 
   const getUpdatedProduct = async () => {
     try {
       const response = await axios.get(
-        `https://www.backend.luxurybubblebasket.com/admin/product/getSingle/${id}`
+        `https://wine-rnlq.onrender.com/admin/product/getSingle/${id}`
       );
-      setSingleProduct(response.data.data); // Set the product data received from the API
+      const productData = response.data.data;
+      setSingleProduct({
+        ...productData,
+        ...productData.productBlog,
+      });
+      setCategoriesId(productData.category);
+      setProductImage(productData.productImg);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Axios error (HTTP error)
-        const { response } = error;
-        // Set the error message
-        const errorMessage = response.data.message
-  
-           alert(errorMessage)
-        // Log the error message as a string
-      } else {
-        // Network error (e.g., no internet connection)
-        alert("Something went wrong");
-      }
+      console.error("Error fetching product data:", error.message);
     }
   };
 
-//   useEffect(()=>{
-// if(!authToken){
-//  window.location.href="/"
-// }
-//   },[])
-
-  useEffect(() => {
-    handleAllCategory();
-  }, []);
-
   const handleAllCategory = async () => {
-    SetIsloading(true);
+    setIsLoading(true);
     try {
       const response = await getAllCategory();
-      setCategories(response.data); // Set the categories data
+      setCategories(response.data);
     } catch (error) {
-      console.error("Error getting products:", error.message);
+      console.error("Error getting categories:", error.message);
     } finally {
-      SetIsloading(false);
+      setIsLoading(false);
     }
   };
 
   const handleSelectCategory = (e) => {
     setCategoriesId(e.target.value);
-    handleAllSubCategory(e.target.value);
-  };
-
-  const handleAllSubCategory = async (categoryId) => {
-    SetIsloading(true);
-    try {
-      const response = await getAllSubCategory(categoryId);
-      setSubCategories(response.data);
-    } catch (error) {
-      console.error("Error getting products:", error.message);
-    } finally {
-      SetIsloading(false);
-    }
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setSingleProduct((prevBlog) => ({
-      ...prevBlog,
+    setSingleProduct((prevProduct) => ({
+      ...prevProduct,
       [name]: value,
     }));
   };
@@ -128,240 +98,263 @@ function UpdateProduct() {
   };
 
   const handleUpdateClick = async () => {
-    const formdata = new FormData();
-    formdata.append("title", singleProduct.title);
-    formdata.append("Stock", singleProduct.Stock);
-    formdata.append("measureUnit", singleProduct.measureUnit);
-  
-    // Get the category name based on the selected ID
-    const selectedCategory = categories.find(
-      (category) => category._id === categoriesId
-    );
-    if (selectedCategory) {
-      formdata.append("category", selectedCategory.categoryName);
-    } else {
-      console.error("Selected category not found.");
-      return;
-    }
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("title", singleProduct.title);
+    formData.append("Stock", singleProduct.Stock);
+    formData.append("measureUnit", singleProduct.measureUnit);
+    formData.append("category", categoriesId);
+    formData.append("unit", singleProduct.unit);
+    formData.append("price", singleProduct.price);
+    formData.append("description", singleProduct.description);
+    formData.append("sku", singleProduct.sku);
+    formData.append("productStatus", singleProduct.productStatus);
+    formData.append("tag", singleProduct.tag);
+    formData.append("dimension", singleProduct.dimension);
+    formData.append("intro", singleProduct.intro);
+    formData.append("detailedOverview", singleProduct.detailedOverview);
+    formData.append("experienceOfTesting", singleProduct.experienceOfTesting);
+    formData.append("comparison", singleProduct.comparison);
 
-    formdata.append("unit", singleProduct.unit);
-    formdata.append("price", singleProduct.price);
-    formdata.append("description", singleProduct.description);
-    formdata.append("sku", singleProduct.sku);
-    formdata.append("productStatus", singleProduct.productStatus);
-    formdata.append("tag", singleProduct.tag);
-    formdata.append("dimension", singleProduct.dimension);
-    // Append each image with the key "productImgs[]"
-    productImgs.forEach((img, index) => {
-      formdata.append(`productImg`, img);
+    productImgs.forEach((img) => {
+      formData.append("productImg", img);
     });
 
-  
     try {
-      const response = await updateProduct(id,formdata);
-      const { status, message } = response;
+      const response = await updateProduct(id, formData);
+      const { status, message } = response.data;
       if (status) {
-        console.log(message);
+        setIsLoading(false)
         alert("Updated successfully");
+        
         navigate("/Product");
       } else {
         console.error(response);
-        // Handle update error
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Axios error (HTTP error)
-        const { response } = error;
-        // Set the error message
-        const errorMessage = response?.data?.message;
+        const errorMessage = error.response?.data?.message || "An error occurred";
         setErrorMessage(errorMessage);
-        // Log the error message as a string
-        console.log("Error Message:", errorMessage);
+        console.error("Error Message:", errorMessage);
       } else {
-        // Network error (e.g., no internet connection)
         const errorMessage = error.message;
         setErrorMessage(errorMessage);
-        console.log("Network Error:", errorMessage);
+        console.error("Network Error:", errorMessage);
         alert("Something went wrong");
       }
     }
   };
-  
 
   return (
     <div className={style.main}>
-    <NavBar />
-    <OptionBar />
-    {isLoading && <LoadingScreen />}
-    <div className={style.body}>
-      {productImgs.length > 0 ? (
-        <div className={style.imgbox}>
-          {productImgs.map((img, index) => (
-            <div key={index} className={style.imageContainer}>
-              <button
-                className={style.deleteButton}
-                onClick={() => handleDeleteImage(index)}
-              >
-                <DeleteIcon style={{ fontSize: 14 }} />
-              </button>
-              <img
-                src={URL.createObjectURL(img)}
-                alt={`Product ${index}`}
-                className={style.image}
+      <NavBar />
+      <OptionBar />
+      {isLoading && <LoadingScreen />}
+      <div className={style.body}>
+        {productImgs.length > 0 ? (
+          <div className={style.imgbox}>
+            {productImgs.map((img, index) => (
+              <div key={index} className={style.imageContainer}>
+                <button
+                  className={style.deleteButton}
+                  onClick={() => handleDeleteImage(index)}
+                >
+                  <DeleteIcon style={{ fontSize: 14 }} />
+                </button>
+                <img
+                  src={URL.createObjectURL(img)}
+                  alt={`Product ${index}`}
+                  className={style.image}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={style.product_image}>
+            <img src={productImage[0]?.url} alt="product" />
+          </div>
+        )}
+
+        <br />
+        <input
+          type="file"
+          multiple
+          onChange={handleAddImage}
+          accept="image/*"
+        />
+        <ul className={style.list}>
+          <li>
+            <span>Title:</span>
+            <input
+              type="text"
+              name="title"
+              value={singleProduct.title}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Introduction:</span>
+            <textarea
+              type="text"
+              name="intro"
+              value={singleProduct.intro}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Detailed Overview:</span>
+            <textarea
+              type="text"
+              name="detailedOverview"
+              value={singleProduct.detailedOverview}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Experience Of Testing:</span>
+            <textarea
+              type="text"
+              name="experienceOfTesting"
+              value={singleProduct.experienceOfTesting}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Comparison:</span>
+            <textarea
+              type="text"
+              name="comparison"
+              value={singleProduct.comparison}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Description:</span>
+            <div className={style.quillContainer}>
+              <ReactQuill
+                theme="snow"
+                value={singleProduct.description}
+                onChange={(value) =>
+                  setSingleProduct((prev) => ({
+                    ...prev,
+                    description: value,
+                  }))
+                }
               />
             </div>
-          ))}
-        </div>
-      ) : (
-        <p>Please Choose Images</p>
-      )}
-
-      <br />
-      <input
-        type="file"
-        multiple
-        onChange={handleAddImage}
-        accept="image/*"
-      />
-      <ul className={style.list}>
-        <li>
-          <span>Title:</span>
-          <input
-            type="text"
-            name="title"
-            value={singleProduct.title}
-            onChange={handleInputChange}
-          />
-        </li>
-        <li>
-          <span>Description:</span>
-          <div className={style.quillContainer}>
-            <ReactQuill
-              theme="snow"
-              value={singleProduct.description}
-              onChange={(value) =>
-                setSingleProduct((prev) => ({
-                  ...prev,
-                  description: value,
-                }))
-              }
+          </li>
+          <br />
+          <br />
+          <li>
+            <span>Category:</span>
+            <div className={style.categoryBox}>
+              <select
+                className={style.category}
+                name="category"
+                value={categoriesId}
+                onChange={handleSelectCategory}
+              >
+                <option value="">Select category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.categoryName}
+                  </option>
+                ))}
+              </select>
+              <AddCategoryButton />
+            </div>
+          </li>
+          <li>
+            <span>Price:</span>
+            <input
+              type="text"
+              name="price"
+              value={singleProduct.price}
+              onChange={handleInputChange}
             />
-          </div>
-        </li>
-        <br />
-        <br />
-        <li>
-          <span>Category:</span>
-          <div className={style.categoryBox}>
+          </li>
+          <li>
+            <span>Stock:</span>
+            <input
+              type="text"
+              name="Stock"
+              value={singleProduct.Stock}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Unit:</span>
+            <input
+              type="text"
+              name="unit"
+              value={singleProduct.unit}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>SKU:</span>
+            <input
+              type="text"
+              name="sku"
+              value={singleProduct.sku}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Tag:</span>
+            <input
+              type="text"
+              name="tag"
+              value={singleProduct.tag}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Dimension:</span>
+            <input
+              type="text"
+              name="dimension"
+              value={singleProduct.dimension}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span htmlFor="measureUnit">Select a Measurement Unit:</span>
             <select
-              className={style.category}
-              name="category"
-              value={categoriesId}
-              onChange={handleSelectCategory}
+              id="measureUnit"
+              name="measureUnit"
+              value={singleProduct.measureUnit}
+              onChange={handleInputChange}
             >
-              <option value="">Select category</option>
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.categoryName}
-                </option>
-              ))}
+              <option value="">Select...</option>
+              <option value="L">Liter (L)</option>
+              <option value="mL">Milliliter (mL)</option>
+              <option value="g">Gram (g)</option>
+              <option value="kg">Kilogram (kg)</option>
+              <option value="lb">Pound (lb)</option>
+              <option value="oz">Ounce (oz)</option>
+              <option value="t">Metric Ton (t)</option>
+              <option value="ct">Carat (ct)</option>
+              <option value="pts">Pieces (pts)</option>
             </select>
-            <AddCategoryButton />
-          </div>
-        </li>
-        <li>
-          <span>Price:</span>
-          <input
-            type="text"
-            name="price"
-            value={singleProduct.price}
-            onChange={handleInputChange}
-          />
-        </li>
-        <li>
-          <span>Stock:</span>
-          <input
-            type="text"
-            name="Stock"
-            value={singleProduct.Stock}
-            onChange={handleInputChange}
-          />
-        </li>
-        <li>
-          <span>Unit:</span>
-          <input
-            type="text"
-            name="unit"
-            value={singleProduct.unit}
-            onChange={handleInputChange}
-          />
-        </li>
-        <li>
-          <span>sku:</span>
-          <input
-            type="sku"
-            name="sku"
-            value={singleProduct.sku}
-            onChange={handleInputChange}
-          />
-        </li>
-        <li>
-          <span>Tag:</span>
-          <input
-            type="tag"
-            name="tag"
-            value={singleProduct.tag}
-            onChange={handleInputChange}
-          />
-        </li>
-        <li>
-          <span>Dimension:</span>
-          <input
-            type="dimension"
-            name="dimension"
-            value={singleProduct.dimension}
-            onChange={handleInputChange}
-          />
-        </li>
-        <li>
-          <span htmlFor="measureUnit">Select a Measurement Unit:</span>
-          <select
-            id="measureUnit"
-            name="measureUnit"
-            type="text"
-            value={singleProduct.measureUnit}
-            onChange={handleInputChange}
-          >
-            <option value="">Select...</option>
-            <option value="L">Liter (L)</option>
-            <option value="mL">Milliliter (mL)</option>
-            <option value="g">Gram (g)</option>
-            <option value="kg">Kilogram (kg)</option>
-            <option value="lb">Pound (lb)</option>
-            <option value="oz">Ounce (oz)</option>
-            <option value="t">Metric Ton (t)</option>
-            <option value="ct">Carat (ct)</option>
-            <option value="pts">Pieces (pts)</option>
-          </select>
-        </li>
-        <li>
-          <span htmlFor="productStatus">product Status:</span>
-          <select
-            id="productStatus"
-            name="productStatust"
-            type="text"
-            value={singleProduct.productStatus}
-            onChange={handleInputChange}
-          >
-            <option value="">Select...</option>
-            <option value="Available">Available</option>
-            <option value="Not Available">Not Available</option>
-          </select>
-        </li>
-      </ul>
-      <button onClick={handleUpdateClick}>Update Product</button>
+          </li>
+          <li>
+            <span htmlFor="productStatus">Product Status:</span>
+            <select
+              id="productStatus"
+              name="productStatus"
+              value={singleProduct.productStatus}
+              onChange={handleInputChange}
+            >
+              <option value="">Select...</option>
+              <option value="Available">Available</option>
+              <option value="Not Available">Not Available</option>
+            </select>
+          </li>
+        </ul>
+        <button onClick={handleUpdateClick}>{isLoading ? "loading..." : "Update Product" }</button>
+      </div>
     </div>
-  </div>
   );
 }
 

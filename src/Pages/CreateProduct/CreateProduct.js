@@ -19,7 +19,7 @@ function CreateProduct() {
   const navigate = useNavigate();
   const [productImgs, setProductImgs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
+  const [isLoading, SetIsloading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
   const [categoriesId, setCategoriesId] = useState("");
@@ -90,6 +90,7 @@ function CreateProduct() {
   };
 
   const handleUpdateClick = async () => {
+    SetIsloading(true)
     const formdata = new FormData();
     formdata.append("title", singleProduct.title);
     formdata.append("Stock", singleProduct.Stock);
@@ -124,7 +125,7 @@ function CreateProduct() {
       const response = await addProduct(formdata);
       const { status, message } = response;
       if (status) {
-        console.log(message);
+        SetIsloading(false)
         alert("create successfully");
         navigate("/Product");
       } else {
@@ -358,7 +359,7 @@ function CreateProduct() {
             </select>
           </li>
         </ul>
-        <button onClick={handleUpdateClick}>Add Product</button>
+        <button onClick={handleUpdateClick}>{isLoading ? "loading..." : "Add Product"}</button>
       </div>
     </div>
   );
