@@ -36,6 +36,10 @@ function CreateProduct() {
     productStatus: "",
     tag: "",
     dimension: "",
+    intro:"",
+    detailedOverview:"",
+    experienceOfTesting:"",
+    comparison:""
   });
 
   const authToken = JSON.parse(localStorage.getItem("token"));
@@ -108,7 +112,10 @@ function CreateProduct() {
     formdata.append("productStatus", singleProduct.productStatus);
     formdata.append("tag", singleProduct.tag);
     formdata.append("dimension", singleProduct.dimension);
-    // Append each image with the key "productImgs[]"
+    formdata.append("intro", singleProduct.intro);
+    formdata.append("detailedOverview", singleProduct.detailedOverview);
+    formdata.append("experienceOfTesting", singleProduct.experienceOfTesting);
+    formdata.append("comparison", singleProduct.comparison);
     productImgs.forEach((img, index) => {
       formdata.append(`productImg`, img);
     });
@@ -185,6 +192,43 @@ function CreateProduct() {
               type="text"
               name="title"
               value={singleProduct.title}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Introduction:</span>
+            <input
+              type="text"
+              name="intro"
+              value={singleProduct.intro}
+              onChange={handleInputChange}
+            />
+          </li>
+
+          <li>
+            <span>Detailed Overview:</span>
+            <input
+              type="text"
+              name="detailedOverview"
+              value={singleProduct.detailedOverview}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span> Experience Of Testing:</span>
+            <input
+              type="text"
+              name="experienceOfTesting"
+              value={singleProduct.experienceOfTesting}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span> Comparison:</span>
+            <input
+              type="text"
+              name="comparison"
+              value={singleProduct.comparison}
               onChange={handleInputChange}
             />
           </li>

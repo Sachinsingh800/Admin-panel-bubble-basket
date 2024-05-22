@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loadingStatus } from '../../Recoil';
+import { getAllOrders } from '../../Api/Api';
 
 
 
@@ -32,27 +33,11 @@ React.useEffect(()=>{
 },[])
 
 const getAlldata = async () => {
-  const headers = {
-    "x-admin-token": authToken, // Ensure authToken is defined
-    "Content-Type": "application/json", // Set content type to JSON
-  };
   setIsLoading(true);
   try {
-    const response = await axios.get("https://www.backend.luxurybubblebasket.com/admin/order/dateWiseOrder",{headers});
-    setOrders(response?.data?.data);
+    const response = await getAllOrders();
+    setOrders(response?.data);
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      // Axios error (HTTP error)
-      const { response } = error;
-      // Set the error message
-      const errorMessage = response.data.message
-
-         alert(errorMessage)
-      // Log the error message as a string
-    } else {
-      // Network error (e.g., no internet connection)
-      alert("Something went wrong");
-    }
   } finally {
     setIsLoading(false);
   }
@@ -60,26 +45,10 @@ const getAlldata = async () => {
 
 const getAllProduct = async () => {
   setIsLoading(true);
-  const headers = {
-    "x-admin-token": authToken, // Ensure authToken is defined
-    "Content-Type": "application/json", // Set content type to JSON
-  };
   try {
-    const response = await axios.get("https://www.backend.luxurybubblebasket.com/admin/product/getAll",{headers});
-    setProducts(response?.data?.data);
+    const response = await getAllProduct();
+    setProducts(response?.data);
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      // Axios error (HTTP error)
-      const { response } = error;
-      // Set the error message
-      const errorMessage = response.data.message
-
-         alert(errorMessage)
-      // Log the error message as a string
-    } else {
-      // Network error (e.g., no internet connection)
-      alert("Something went wrong");
-    }
   }finally{
     setIsLoading(false);
   }
