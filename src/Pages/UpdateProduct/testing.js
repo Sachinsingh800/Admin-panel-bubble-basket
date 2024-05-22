@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
-import style from "./UpdateProduct.module.css"; // Replace with your actual styles
+import style from "./CreateProduct.module.css"; // Replace with your actual styles
 import NavBar from "../../Component/NavBar/NavBar";
 import OptionBar from "../../Component/OptionBar/OptionBar";
-import { getAllCategory, updateProduct } from "../../Api/Api";
-import { useNavigate, useParams } from "react-router-dom";
+import { addProduct, getAllCategory, getAllSubCategory } from "../../Api/Api";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { loadingStatus } from "../../Recoil";
 import { useRecoilState } from "recoil";
-import { AddCategoryButton } from "../../Component/CreateButton/CreateButton";
+import {
+  AddCategoryButton,
+} from "../../Component/CreateButton/CreateButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 
-function UpdateProduct() {
+function CreateProduct() {
   const navigate = useNavigate();
-  const { id } = useParams();
   const [productImgs, setProductImgs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, SetIsloading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [productImage, setProductImage] = useState([]);
+  const [subcategories, setSubCategories] = useState([]);
   const [categoriesId, setCategoriesId] = useState("");
   const [singleProduct, setSingleProduct] = useState({
     title: "",
@@ -29,15 +30,16 @@ function UpdateProduct() {
     category: "",
     unit: "",
     price: "",
+    sub_category: "",
     description: "",
     sku: "",
     productStatus: "",
     tag: "",
     dimension: "",
-    intro: "",
-    detailedOverview: "",
-    experienceOfTesting: "",
-    comparison: "",
+    intro:"",
+    detailedOverview:"",
+    experienceOfTesting:"",
+    comparison:"",
     winery:"",
     country:"",
     region:"",
@@ -47,43 +49,22 @@ function UpdateProduct() {
     aBV:"",
     wineStyle:"",
     brand:"",
+    
   });
 
   useEffect(() => {
-    getUpdatedProduct();
     handleAllCategory();
   }, []);
 
-  const getUpdatedProduct = async () => {
-    try {
-      const response = await axios.get(
-        `https://wine-rnlq.onrender.com/admin/product/getSingle/${id}`
-      );
-      const productData = response.data.data;
-      setSingleProduct({
-        ...productData,
-        ...productData.productExtra,
-        ...productData.productBlog,
-     
-      });
-      setCategoriesId(productData.category);
-      setProductImage(productData.productImg);
-    } catch (error) {
-      console.error("Error fetching product data:", error.message);
-    }
-  };
-
   const handleAllCategory = async () => {
-    setIsLoading(true);
+    SetIsloading(true);
     try {
       const response = await getAllCategory();
-      setCategories(response.data);
-      setIsLoading(false);
+      setCategories(response.data); // Set the categories data
     } catch (error) {
-      console.error("Error getting categories:", error.message);
-      setIsLoading(false);
+      console.error("Error getting products:", error.message);
     } finally {
-      setIsLoading(false);
+      SetIsloading(false);
     }
   };
 
@@ -93,8 +74,8 @@ function UpdateProduct() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setSingleProduct((prevProduct) => ({
-      ...prevProduct,
+    setSingleProduct((prevBlog) => ({
+      ...prevBlog,
       [name]: value,
     }));
   };
@@ -111,65 +92,63 @@ function UpdateProduct() {
   };
 
   const handleUpdateClick = async () => {
-    setIsLoading(true);
-    const formData = new FormData();
-    formData.append("title", singleProduct.title);
-    formData.append("Stock", singleProduct.Stock);
-    formData.append("measureUnit", singleProduct.measureUnit);
-    formData.append("unit", singleProduct.unit);
-    formData.append("price", singleProduct.price);
-    formData.append("description", singleProduct.description);
-    formData.append("sku", singleProduct.sku);
-    formData.append("productStatus", singleProduct.productStatus);
-    formData.append("tag", singleProduct.tag);
-    formData.append("dimension", singleProduct.dimension);
-    formData.append("intro", singleProduct.intro);
-    formData.append("detailedOverview", singleProduct.detailedOverview);
-    formData.append("experienceOfTesting", singleProduct.experienceOfTesting);
-    formData.append("comparison", singleProduct.comparison);
-    formData.append("winery", singleProduct.winery);
-    formData.append("country", singleProduct.country);
-    formData.append("region", singleProduct.region);
-    formData.append("year", singleProduct.year);
-    formData.append("grapeVarietal", singleProduct.grapeVarietal);
-    formData.append("size", singleProduct.size);
-    formData.append("aBV", singleProduct.aBV);
-    formData.append("wineStyle", singleProduct.wineStyle);
-    formData.append("brand", singleProduct.brand);
+    SetIsloading(true)
+    const formdata = new FormData();
+    formdata.append("title", singleProduct.title);
+    formdata.append("Stock", singleProduct.Stock);
+    formdata.append("measureUnit", singleProduct.measureUnit);
+
     // Get the category name based on the selected ID
     const selectedCategory = categories.find(
       (category) => category._id === categoriesId
     );
     if (selectedCategory) {
-      formData.append("category", selectedCategory.categoryName);
+      formdata.append("category", selectedCategory.categoryName);
     } else {
-      setIsLoading(false)
       console.error("Selected category not found.");
-      alert("Selected category not found.")
       return;
     }
-
-    productImgs.forEach((img) => {
-      formData.append("productImg", img);
+    formdata.append("unit", singleProduct.unit);
+    formdata.append("price", singleProduct.price);
+    formdata.append("description", singleProduct.description);
+    formdata.append("sku", singleProduct.sku);
+    formdata.append("productStatus", singleProduct.productStatus);
+    formdata.append("tag", singleProduct.tag);
+    formdata.append("dimension", singleProduct.dimension);
+    formdata.append("intro", singleProduct.intro);
+    formdata.append("detailedOverview", singleProduct.detailedOverview);
+    formdata.append("experienceOfTesting", singleProduct.experienceOfTesting);
+    formdata.append("comparison", singleProduct.comparison);
+    productImgs.forEach((img, index) => {
+      formdata.append(`productImg`, img);
     });
 
     try {
-      const response = await updateProduct(id, formData);
-      const { status, message } = response.data;
-        setIsLoading(false)
-        alert("Updated successfully");
+      const response = await addProduct(formdata);
+      const { status, message } = response;
+      if (status) {
+        SetIsloading(false)
+        alert("create successfully");
+        navigate("/Product");
+      } else {
+        console.error(response);
+        // Handle update error
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorMessage = error.response?.data?.message || "An error occurred";
+        // Axios error (HTTP error)
+        const { response } = error;
+        // Set the error message
+        const errorMessage = response?.data?.message;
         setErrorMessage(errorMessage);
-        console.error("Error Message:", errorMessage);
-        setIsLoading(false);
+        // Log the error message as a string
+        console.log("Error Message:", errorMessage);
       } else {
+        // Network error (e.g., no internet connection)
         const errorMessage = error.message;
         setErrorMessage(errorMessage);
-        console.error("Network Error:", errorMessage);
+        console.log("Network Error:", errorMessage);
         alert("Something went wrong");
-        setIsLoading(false);
       }
     }
   };
@@ -199,9 +178,7 @@ function UpdateProduct() {
             ))}
           </div>
         ) : (
-          <div className={style.product_image}>
-            <img src={productImage[0]?.url} alt="product" />
-          </div>
+          <p>Please Choose Images</p>
         )}
 
         <br />
@@ -222,87 +199,6 @@ function UpdateProduct() {
             />
           </li>
           <li>
-            <span>Winery:</span>
-            <input
-              type="text"
-              name="winery"
-              value={singleProduct.winery}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
-            <span>Country:</span>
-            <input
-              type="text"
-              name="country"
-              value={singleProduct.country}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
-            <span>Region:</span>
-            <input
-              type="text"
-              name="region"
-              value={singleProduct.region}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
-            <span>Year:</span>
-            <input
-              type="text"
-              name="year"
-              value={singleProduct.year}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
-            <span>Grape Varietal:</span>
-            <input
-              type="text"
-              name="grapeVarietal"
-              value={singleProduct.grapeVarietal}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
-            <span>Size:</span>
-            <input
-              type="text"
-              name="size"
-              value={singleProduct.size}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
-            <span>ABV:</span>
-            <input
-              type="text"
-              name="aBV"
-              value={singleProduct.aBV}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
-            <span>Wine Style:</span>
-            <input
-              type="text"
-              name="wineStyle"
-              value={singleProduct.wineStyle}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
-            <span>Brand:</span>
-            <input
-              type="text"
-              name="brand"
-              value={singleProduct.brand}
-              onChange={handleInputChange}
-            />
-          </li>
-          <li>
             <span>Introduction:</span>
             <textarea
               type="text"
@@ -311,6 +207,7 @@ function UpdateProduct() {
               onChange={handleInputChange}
             />
           </li>
+
           <li>
             <span>Detailed Overview:</span>
             <textarea
@@ -321,7 +218,7 @@ function UpdateProduct() {
             />
           </li>
           <li>
-            <span>Experience Of Testing:</span>
+            <span> Experience Of Testing:</span>
             <textarea
               type="text"
               name="experienceOfTesting"
@@ -330,7 +227,7 @@ function UpdateProduct() {
             />
           </li>
           <li>
-            <span>Comparison:</span>
+            <span> Comparison:</span>
             <textarea
               type="text"
               name="comparison"
@@ -402,9 +299,9 @@ function UpdateProduct() {
             />
           </li>
           <li>
-            <span>SKU:</span>
+            <span>sku:</span>
             <input
-              type="text"
+              type="sku"
               name="sku"
               value={singleProduct.sku}
               onChange={handleInputChange}
@@ -413,7 +310,7 @@ function UpdateProduct() {
           <li>
             <span>Tag:</span>
             <input
-              type="text"
+              type="tag"
               name="tag"
               value={singleProduct.tag}
               onChange={handleInputChange}
@@ -422,7 +319,7 @@ function UpdateProduct() {
           <li>
             <span>Dimension:</span>
             <input
-              type="text"
+              type="dimension"
               name="dimension"
               value={singleProduct.dimension}
               onChange={handleInputChange}
@@ -433,6 +330,7 @@ function UpdateProduct() {
             <select
               id="measureUnit"
               name="measureUnit"
+              type="text"
               value={singleProduct.measureUnit}
               onChange={handleInputChange}
             >
@@ -449,10 +347,11 @@ function UpdateProduct() {
             </select>
           </li>
           <li>
-            <span htmlFor="productStatus">Product Status:</span>
+            <span htmlFor="productStatus">product Status:</span>
             <select
               id="productStatus"
-              name="productStatus"
+              name="productStatust"
+              type="text"
               value={singleProduct.productStatus}
               onChange={handleInputChange}
             >
@@ -462,10 +361,10 @@ function UpdateProduct() {
             </select>
           </li>
         </ul>
-        <button onClick={handleUpdateClick}>{isLoading ? "loading..." : "Update Product" }</button>
+        <button onClick={handleUpdateClick}>{isLoading ? "loading..." : "Add Product"}</button>
       </div>
     </div>
   );
 }
 
-export default UpdateProduct;
+export default CreateProduct;
