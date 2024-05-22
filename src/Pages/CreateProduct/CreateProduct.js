@@ -39,16 +39,18 @@ function CreateProduct() {
     intro:"",
     detailedOverview:"",
     experienceOfTesting:"",
-    comparison:""
+    comparison:"",
+    winery:"",
+    country:"",
+    region:"",
+    year:"",
+    grapeVarietal:"",
+    size:"",
+    aBV:"",
+    wineStyle:"",
+    brand:"",
+    
   });
-
-  const authToken = JSON.parse(localStorage.getItem("token"));
-
-  //   useEffect(()=>{
-  // if(!authToken){
-  //  window.location.href="/"
-  // }
-  //   },[])
 
   useEffect(() => {
     handleAllCategory();
@@ -59,7 +61,9 @@ function CreateProduct() {
     try {
       const response = await getAllCategory();
       setCategories(response.data); // Set the categories data
+      SetIsloading(false);
     } catch (error) {
+      SetIsloading(false);
       console.error("Error getting products:", error.message);
     } finally {
       SetIsloading(false);
@@ -90,7 +94,7 @@ function CreateProduct() {
   };
 
   const handleUpdateClick = async () => {
-    SetIsloading(true)
+    SetIsloading(true);
     const formdata = new FormData();
     formdata.append("title", singleProduct.title);
     formdata.append("Stock", singleProduct.Stock);
@@ -117,6 +121,16 @@ function CreateProduct() {
     formdata.append("detailedOverview", singleProduct.detailedOverview);
     formdata.append("experienceOfTesting", singleProduct.experienceOfTesting);
     formdata.append("comparison", singleProduct.comparison);
+    formdata.append("winery", singleProduct.winery);
+    formdata.append("country", singleProduct.country);
+    formdata.append("region", singleProduct.region);
+    formdata.append("year", singleProduct.year);
+    formdata.append("grapeVarietal", singleProduct.grapeVarietal);
+    formdata.append("size", singleProduct.size);
+    formdata.append("aBV", singleProduct.aBV);
+    formdata.append("wineStyle", singleProduct.wineStyle);
+    formdata.append("brand", singleProduct.brand);
+
     productImgs.forEach((img, index) => {
       formdata.append(`productImg`, img);
     });
@@ -125,28 +139,26 @@ function CreateProduct() {
       const response = await addProduct(formdata);
       const { status, message } = response;
       if (status) {
-        SetIsloading(false)
-        alert("create successfully");
+        SetIsloading(false);
+        alert("Product created successfully");
         navigate("/Product");
       } else {
         console.error(response);
-        // Handle update error
+        SetIsloading(false);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Axios error (HTTP error)
         const { response } = error;
-        // Set the error message
         const errorMessage = response?.data?.message;
         setErrorMessage(errorMessage);
-        // Log the error message as a string
         console.log("Error Message:", errorMessage);
+        SetIsloading(false);
       } else {
-        // Network error (e.g., no internet connection)
         const errorMessage = error.message;
         setErrorMessage(errorMessage);
         console.log("Network Error:", errorMessage);
         alert("Something went wrong");
+        SetIsloading(false);
       }
     }
   };
@@ -193,6 +205,87 @@ function CreateProduct() {
               type="text"
               name="title"
               value={singleProduct.title}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Winery:</span>
+            <input
+              type="text"
+              name="winery"
+              value={singleProduct.winery}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Country:</span>
+            <input
+              type="text"
+              name="country"
+              value={singleProduct.country}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Region:</span>
+            <input
+              type="text"
+              name="region"
+              value={singleProduct.region}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Year:</span>
+            <input
+              type="text"
+              name="year"
+              value={singleProduct.year}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Grape Varietal:</span>
+            <input
+              type="text"
+              name="grapeVarietal"
+              value={singleProduct.grapeVarietal}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Size:</span>
+            <input
+              type="text"
+              name="size"
+              value={singleProduct.size}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>ABV:</span>
+            <input
+              type="text"
+              name="aBV"
+              value={singleProduct.aBV}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Wine Style:</span>
+            <input
+              type="text"
+              name="wineStyle"
+              value={singleProduct.wineStyle}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Brand:</span>
+            <input
+              type="text"
+              name="brand"
+              value={singleProduct.brand}
               onChange={handleInputChange}
             />
           </li>
