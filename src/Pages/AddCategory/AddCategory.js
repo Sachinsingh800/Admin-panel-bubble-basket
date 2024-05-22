@@ -30,7 +30,6 @@ function AddCategory() {
     SetIsloading(true);
     try {
       const response = await getAllCategory();
-      console.log(response,"ye bhio aarkjhakjsd")
       setCategory(response?.data?.map(item => ({...item, id: item._id})));
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -59,7 +58,7 @@ function AddCategory() {
       console.log(response.data, "response");
       // Refresh the products after successful deletion
       handleGetAllCategory();
-      alert("Pincode deleted successfully");
+      alert("Category deleted successfully");
     } catch (error) {
       console.error("Error deleting product:", error.message);
     } finally {

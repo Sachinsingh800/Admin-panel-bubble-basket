@@ -364,6 +364,7 @@ export const UpdateCategory = ({ id }) => {
   const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
   const [categoryName, setCategoryName] = useState("");
   const [categoryImg, setCategoryImg] = useState([]);
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     handlegetSingleDataAccess();
@@ -399,6 +400,7 @@ export const UpdateCategory = ({ id }) => {
     try {
       const formData = new FormData();
       formData.append("categoryName", categoryName);
+      formData.append("content", content);
       categoryImg.forEach((file) => {
         formData.append("categoryImg", file);
       });
@@ -452,6 +454,15 @@ export const UpdateCategory = ({ id }) => {
                 type="text"
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+               Content:
+              <input
+                type="text"
+                value={content}
+                onChange={(e) =>setContent(e.target.value)}
               />
             </label>
             <br />
@@ -1414,6 +1425,7 @@ export const AddCategoryButton = () => {
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const [open, setOpen] = useState(false);
   const [categoryName, setCategoryName] = useState("");
+  const [content, setContent] = useState("");
   const [categoryImg, setCategoryImg] = useState([]);
 
   const handleOpen = () => setOpen(true);
@@ -1426,6 +1438,7 @@ export const AddCategoryButton = () => {
     try {
       const formData = new FormData();
       formData.append("categoryName", categoryName);
+      formData.append("content", content);
       categoryImg.forEach((file) => {
         formData.append("categoryImg", file);
       });
@@ -1484,6 +1497,18 @@ export const AddCategoryButton = () => {
                 type="text"
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
+              />
+            </label>
+            <br/>
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+       
+            <label className={styles.teaxtArea}>
+              Content:
+              <textarea
+                type="text"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               />
             </label>
           </Typography>

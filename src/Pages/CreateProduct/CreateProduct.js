@@ -125,7 +125,7 @@ function CreateProduct() {
       const { status, message } = response;
       if (status) {
         console.log(message);
-        alert("Updated successfully");
+        alert("create successfully");
         navigate("/Product");
       } else {
         console.error(response);
