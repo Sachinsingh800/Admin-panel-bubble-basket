@@ -197,7 +197,7 @@ function CreateProduct() {
           </li>
           <li>
             <span>Introduction:</span>
-            <input
+            <textarea
               type="text"
               name="intro"
               value={singleProduct.intro}
@@ -207,7 +207,7 @@ function CreateProduct() {
 
           <li>
             <span>Detailed Overview:</span>
-            <input
+            <textarea
               type="text"
               name="detailedOverview"
               value={singleProduct.detailedOverview}
@@ -216,7 +216,7 @@ function CreateProduct() {
           </li>
           <li>
             <span> Experience Of Testing:</span>
-            <input
+            <textarea
               type="text"
               name="experienceOfTesting"
               value={singleProduct.experienceOfTesting}
@@ -225,7 +225,7 @@ function CreateProduct() {
           </li>
           <li>
             <span> Comparison:</span>
-            <input
+            <textarea
               type="text"
               name="comparison"
               value={singleProduct.comparison}
