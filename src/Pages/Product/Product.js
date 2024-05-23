@@ -113,6 +113,7 @@ function Product() {
       <div className={style.body}>
         <Header />
         <div className={style.header}>
+          <h4>Total Products ({originalProducts.length})</h4>
           <div className={style.input_conatiner}>
           <input
             value={input}
