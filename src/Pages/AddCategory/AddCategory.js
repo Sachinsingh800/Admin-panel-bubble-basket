@@ -72,6 +72,9 @@ function AddCategory() {
       <img src={params.value.url} alt={params.row.categoryName} style={{ width: '50px', height: "50px" }} />
     )},
     { field: 'categoryName', headerName: 'Category', width: 150 },
+    { field: 'content', headerName: 'Content', width: 150 },
+    { field: 'catTypeUp', headerName: 'Cat Type Up', width: 150 },
+    { field: 'catTypeDown', headerName: 'Cat Type Down', width: 150 },
     { field: '_id', headerName: 'Action', width: 150, renderCell: (params) => (
       <button className={style.btn} onClick={() => handleDeleteCategory(params.value)}>Delete</button>
     )},

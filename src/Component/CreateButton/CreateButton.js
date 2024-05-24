@@ -365,6 +365,8 @@ export const UpdateCategory = ({ id }) => {
   const [categoryName, setCategoryName] = useState("");
   const [categoryImg, setCategoryImg] = useState([]);
   const [content, setContent] = useState("");
+  const [catTypeUp, setCatTypeUp] = useState("");
+  const [catTypeDown, setCatTypeDown] = useState("");
 
   useEffect(() => {
     handlegetSingleDataAccess();
@@ -401,6 +403,8 @@ export const UpdateCategory = ({ id }) => {
       const formData = new FormData();
       formData.append("categoryName", categoryName);
       formData.append("content", content);
+      formData.append("catTypeUp", catTypeUp);
+      formData.append("catTypeDown", catTypeDown);
       categoryImg.forEach((file) => {
         formData.append("categoryImg", file);
       });
@@ -448,7 +452,7 @@ export const UpdateCategory = ({ id }) => {
             Update Category
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <label>
+            <label className={styles.label}>
               Category Name:
               <input
                 type="text"
@@ -456,17 +460,39 @@ export const UpdateCategory = ({ id }) => {
                 onChange={(e) => setCategoryName(e.target.value)}
               />
             </label>
-            <br />
-            <label>
-               Content:
-              <input
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label className={styles.label_textArea}>
+              Content:
+              <textarea
                 type="text"
                 value={content}
-                onChange={(e) =>setContent(e.target.value)}
+                onChange={(e) => setContent(e.target.value)}
               />
             </label>
-            <br />
-            <label>
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label className={styles.label}>
+              catTypeUp:
+              <input
+                type="text"
+                value={catTypeUp}
+                onChange={(e) => setCatTypeUp(e.target.value)}
+              />
+            </label>
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label className={styles.label}>
+              catTypeDown:
+              <input
+                type="text"
+                value={catTypeDown}
+                onChange={(e) => setCatTypeDown(e.target.value)}
+              />
+            </label>
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <label className={styles.label}>
               Category Image:
               <input
                 onChange={(e) => setCategoryImg(Array.from(e.target.files))}
@@ -475,7 +501,8 @@ export const UpdateCategory = ({ id }) => {
                 multiple
               />
             </label>
-            <br />
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <button className={styles.btn} onClick={handleUpdateAccessData}>
               Update
             </button>
@@ -1499,10 +1526,9 @@ export const AddCategoryButton = () => {
                 onChange={(e) => setCategoryName(e.target.value)}
               />
             </label>
-            <br/>
+            <br />
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-       
             <label className={styles.teaxtArea}>
               Content:
               <textarea
@@ -1526,11 +1552,10 @@ export const AddCategoryButton = () => {
 
             <br />
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <Button className={styles.btn} onClick={handleCreateClick}>
-              Create
-            </Button>
+              <Button className={styles.btn} onClick={handleCreateClick}>
+                Create
+              </Button>
             </Typography>
-      
           </Typography>
         </Box>
       </Modal>

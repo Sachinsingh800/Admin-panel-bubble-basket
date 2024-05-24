@@ -187,6 +187,10 @@ function Product() {
                   {item.title}
                 </li>
                 <li>
+                  <span>Model no:</span>
+                  {item.sku}
+                </li>
+                <li>
                   <span>Price:</span>
                   {item.price}
                 </li>
@@ -210,6 +214,7 @@ function Product() {
                   <span>Pieces:</span>
                   {item.unit}
                 </li>
+         
                 <li>
                   <span>Set As:</span>
                   {item.setAs}

@@ -158,6 +158,7 @@ function UpdateProduct() {
       const { status, message } = response.data;
         setIsLoading(false)
         alert("Updated successfully");
+        window.location.href="/Product"
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage = error.response?.data?.message || "An error occurred";
