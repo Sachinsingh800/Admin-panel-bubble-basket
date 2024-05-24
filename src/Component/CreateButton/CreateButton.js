@@ -360,7 +360,6 @@ export const UpdateCategory = ({ id }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const navigate = useNavigate();
   const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
   const [categoryName, setCategoryName] = useState("");
   const [categoryImg, setCategoryImg] = useState([]);
@@ -383,7 +382,10 @@ export const UpdateCategory = ({ id }) => {
         `https://wine-rnlq.onrender.com/admin/category/getSingle/${id}`,
         { headers }
       );
-      setCategoryName(response.data.data.categoryName);
+      setCategoryName(response?.data?.data?.categoryName);
+      setContent(response?.data?.data?.content);
+      setCatTypeUp(response?.data?.data?.catTypeUp);
+      setCatTypeDown(response?.data?.data?.catTypeDown);
     } catch (error) {
       console.error("Error getting services:", error.message);
     } finally {
