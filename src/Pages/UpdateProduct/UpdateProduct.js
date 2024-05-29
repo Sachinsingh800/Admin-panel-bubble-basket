@@ -5,7 +5,6 @@ import OptionBar from "../../Component/OptionBar/OptionBar";
 import { getAllCategory, updateProduct } from "../../Api/Api";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { loadingStatus } from "../../Recoil";
 import { useRecoilState } from "recoil";
 import { AddCategoryButton } from "../../Component/CreateButton/CreateButton";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -21,7 +20,6 @@ function UpdateProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [productImage, setProductImage] = useState([]);
-  const [categoriesId, setCategoriesId] = useState("");
   const [singleProduct, setSingleProduct] = useState({
     title: "",
     Stock: "",
@@ -38,16 +36,18 @@ function UpdateProduct() {
     detailedOverview: "",
     experienceOfTesting: "",
     comparison: "",
-    winery:"",
-    country:"",
-    region:"",
-    year:"",
-    grapeVarietal:"",
-    size:"",
-    aBV:"",
-    wineStyle:"",
-    brand:"",
+    winery: "",
+    country: "",
+    region: "",
+    year: "",
+    grapeVarietal: "",
+    size: "",
+    aBV: "",
+    wineStyle: "",
+    brand: "",
   });
+
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     getUpdatedProduct();
@@ -64,9 +64,8 @@ function UpdateProduct() {
         ...productData,
         ...productData.productExtra,
         ...productData.productBlog,
-     
       });
-      setCategoriesId(productData.category);
+      setSelectedCategory(productData.category);
       setProductImage(productData.productImg);
     } catch (error) {
       console.error("Error fetching product data:", error.message);
@@ -82,13 +81,11 @@ function UpdateProduct() {
     } catch (error) {
       console.error("Error getting categories:", error.message);
       setIsLoading(false);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const handleSelectCategory = (e) => {
-    setCategoriesId(e.target.value);
+    setSelectedCategory(e.target.value);
   };
 
   const handleInputChange = (event) => {
@@ -136,32 +133,20 @@ function UpdateProduct() {
     formData.append("aBV", singleProduct.aBV);
     formData.append("wineStyle", singleProduct.wineStyle);
     formData.append("brand", singleProduct.brand);
-    // Get the category name based on the selected ID
-    const selectedCategory = categories.find(
-      (category) => category._id === categoriesId
-    );
-    if (selectedCategory) {
-      formData.append("category", selectedCategory.categoryName);
-    } else {
-      setIsLoading(false)
-      console.error("Selected category not found.");
-      alert("Selected category not found.")
-      return;
-    }
-
+    formData.append("category", selectedCategory);
     productImgs.forEach((img) => {
       formData.append("productImg", img);
     });
 
     try {
       const response = await updateProduct(id, formData);
-      const { status, message } = response.data;
-        setIsLoading(false)
-        alert("Updated successfully");
-        window.location.href="/Product"
+      setIsLoading(false);
+      alert("Updated successfully");
+      window.location.href = "/Product";
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorMessage = error.response?.data?.message || "An error occurred";
+        const errorMessage =
+          error.response?.data?.message || "An error occurred";
         setErrorMessage(errorMessage);
         console.error("Error Message:", errorMessage);
         setIsLoading(false);
@@ -362,12 +347,12 @@ function UpdateProduct() {
               <select
                 className={style.category}
                 name="category"
-                value={categoriesId}
+                value={selectedCategory}
                 onChange={handleSelectCategory}
               >
                 <option value="">Select category</option>
                 {categories.map((category) => (
-                  <option key={category._id} value={category._id}>
+                  <option key={category._id} value={category.categoryName}>
                     {category.categoryName}
                   </option>
                 ))}
@@ -463,7 +448,9 @@ function UpdateProduct() {
             </select>
           </li>
         </ul>
-        <button onClick={handleUpdateClick}>{isLoading ? "loading..." : "Update Product" }</button>
+        <button onClick={handleUpdateClick}>
+          {isLoading ? "loading..." : "Update Product"}
+        </button>
       </div>
     </div>
   );
