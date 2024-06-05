@@ -35,7 +35,7 @@ function Approval() {
             "x-admin-token": authToken, // Ensure authToken is defined
             "Content-Type": "multipart/form-data", // Set content type to JSON
           };
-      const response = await axios.get(`https://wine-rnlq.onrender.com/admin/reviews/getAll/${id}?adminApproval=false`,{headers });
+      const response = await axios.get(`https://bubblebasketbackendapp.onrender.com/admin/reviews/getAll/${id}?adminApproval=false`,{headers });
       setCategory(response?.data?.reviews.map(item => ({...item, id: item._id})));
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -64,7 +64,7 @@ function Approval() {
             "x-admin-token": authToken, // Ensure authToken is defined
             "Content-Type": "application/json",
           };
-          const response = await axios.put(`https://wine-rnlq.onrender.com/admin/reviews/approve/${ID}`, {}, { headers });
+          const response = await axios.put(`https://bubblebasketbackendapp.onrender.com/admin/reviews/approve/${ID}`, {}, { headers });
       console.log(response)
     } catch (error) {
       if (axios.isAxiosError(error)) {

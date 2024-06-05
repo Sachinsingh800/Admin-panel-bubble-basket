@@ -64,7 +64,7 @@ function CreateBlog() {
         "Content-Type": "multipart/form-data",
       };
       const response = await axios.post(
-        "https://wine-rnlq.onrender.com/admin/blog/create",
+        "https://bubblebasketbackendapp.onrender.com/admin/blog/create",
         formData,
         { headers }
       );

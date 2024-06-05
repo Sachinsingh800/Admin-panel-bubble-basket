@@ -57,7 +57,7 @@ function UpdateProduct() {
   const getUpdatedProduct = async () => {
     try {
       const response = await axios.get(
-        `https://wine-rnlq.onrender.com/admin/product/getSingle/${id}`
+        `https://bubblebasketbackendapp.onrender.com/admin/product/getSingle/${id}`
       );
       const productData = response.data.data;
       setSingleProduct({

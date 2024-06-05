@@ -379,7 +379,7 @@ export const UpdateCategory = ({ id }) => {
     };
     try {
       const response = await axios.get(
-        `https://wine-rnlq.onrender.com/admin/category/getSingle/${id}`,
+        `https://bubblebasketbackendapp.onrender.com/admin/category/getSingle/${id}`,
         { headers }
       );
       setCategoryName(response?.data?.data?.categoryName);
@@ -411,7 +411,7 @@ export const UpdateCategory = ({ id }) => {
         formData.append("categoryImg", file);
       });
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/category/update/${id}`,
+        `https://bubblebasketbackendapp.onrender.com/admin/category/update/${id}`,
         formData,
         { headers }
       );
@@ -628,7 +628,7 @@ export const UpdateShippingButton = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/shipping/update/${id}`,
+        `https://bubblebasketbackendapp.onrender.com/admin/shipping/update/${id}`,
         {
           shippingCharge: shippingCharge,
           freeShipingLimit: freeShippingLimit,
@@ -723,7 +723,7 @@ export const UpdateCouponsButton = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/coupon/update/${id}`,
+        `https://bubblebasketbackendapp.onrender.com/admin/coupon/update/${id}`,
         {
           promoCode,
           discount,
@@ -827,7 +827,7 @@ export const CreateCouponsButton = ({ id }) => {
     };
     try {
       const response = await axios.post(
-        `https://wine-rnlq.onrender.com/admin/coupon/create`,
+        `https://bubblebasketbackendapp.onrender.com/admin/coupon/create`,
         {
           promoCode,
           discount,
@@ -929,7 +929,7 @@ export const UpdateTaxButton = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/tax/update/${id}`,
+        `https://bubblebasketbackendapp.onrender.com/admin/tax/update/${id}`,
         {
           taxPercent: shippingCharge,
         },
@@ -1165,7 +1165,7 @@ export const UpdateSubCategoryButton = ({ id }) => {
         formData.append("subCategoryImg", file);
       });
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/categoryAndSubCategory/updateSubCategory/${selectedCategory}/${id}`,
+        `https://bubblebasketbackendapp.onrender.com/admin/categoryAndSubCategory/updateSubCategory/${selectedCategory}/${id}`,
         formData,
         { headers }
       );
@@ -1363,7 +1363,7 @@ export const UpdateAccess = ({ id }) => {
     };
     try {
       const response = await axios.get(
-        `https://wine-rnlq.onrender.com/admin/adminAuth/getSingle/${id}`,
+        `https://bubblebasketbackendapp.onrender.com/admin/adminAuth/getSingle/${id}`,
         { headers }
       );
       setEmail(response.data.data.grantAccessEmail);
@@ -1385,7 +1385,7 @@ export const UpdateAccess = ({ id }) => {
     };
     try {
       const response = await axios.put(
-        `https://wine-rnlq.onrender.com/admin/adminAuth/updateSingle/${id}`,
+        `https://bubblebasketbackendapp.onrender.com/admin/adminAuth/updateSingle/${id}`,
         {
           grantAccessEmail: email,
           password: password,
