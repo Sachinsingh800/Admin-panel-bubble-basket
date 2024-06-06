@@ -248,7 +248,7 @@ function Product() {
                   <li>
                     <span>Description:</span>
                   </li>
-                  <li>{convertToJSX(item.description)}</li>
+                  <li>{convertToJSX(item?.productBlog?.intro)}</li>
                 </ul>
               </div>
             ))}
