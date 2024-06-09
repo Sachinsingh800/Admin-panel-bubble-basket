@@ -95,7 +95,7 @@ function UpdateBlog() {
         "Content-Type": "multipart/form-data",
       };
       const response = await axios.put(
-        `https://bubblebasketbackendapp.onrender.com/admin/blog/update/${id}`,
+        `https://www.backend.luxurybubblebasket.com/admin/blog/update/${id}`,
         formData,
         { headers }
       );
