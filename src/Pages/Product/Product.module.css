@@ -44,7 +44,6 @@ display: flex;
     margin-bottom: 1rem;
 }
 .imgbox{
-    height: 15rem;
     width: 100%;
     overflow: hidden;
 }

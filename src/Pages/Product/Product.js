@@ -127,7 +127,7 @@ function Product() {
       <div className={style.body}>
         <Header />
         <div className={style.header}>
-          <h4>Total Products ({originalProducts.length})</h4>
+          <p>Total Products ({originalProducts.length})</p>
           <div className={style.input_conatiner}>
             <input
               value={input}
