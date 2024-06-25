@@ -82,7 +82,18 @@ function CreateBlog() {
         setBlogImage([]);
       }
     } catch (error) {
-      console.error("Error:", error);
+      if (axios.isAxiosError(error)) {
+        // Axios error (HTTP error)
+        const { response } = error;
+        // Set the error message
+        const errorMessage = response.data.message
+  
+           alert(errorMessage)
+        // Log the error message as a string
+      } else {
+        // Network error (e.g., no internet connection)
+        alert("Something went wrong");
+      }
     }
   };
 
