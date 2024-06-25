@@ -87,11 +87,12 @@ function CreateBlog() {
       if (axios.isAxiosError(error)) {
         // Axios error (HTTP error)
         const { response } = error;
-        // Set the error message
-        const errorMessage = response.data.message
-  
-        alert(errorMessage)
-        // Log the error message as a string
+        if (response?.status === 413) {
+          alert("Request Entity Too Large: The data you're trying to upload is too large.");
+        } else {
+          const errorMessage = response?.data?.message || "Failed to create blog. Please try again.";
+          alert(errorMessage);
+        }
       } else {
         // Network error (e.g., no internet connection)
         alert("Something went wrong");
