@@ -21,6 +21,7 @@ function CreateBlog() {
   const [description, setDescription] = useRecoilState(blogDescription);
   const [authorDescription, setAuthorDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const authToken = JSON.parse(localStorage.getItem("token"));
 
   const handleAuthorImageChange = (e) => {
@@ -40,6 +41,7 @@ function CreateBlog() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading state to true
     const formData = new FormData();
     formData.append("authorName", authorName);
     formData.append("authorTitle", authorTitle);
@@ -88,12 +90,14 @@ function CreateBlog() {
         // Set the error message
         const errorMessage = response.data.message
   
-           alert(errorMessage)
+        alert(errorMessage)
         // Log the error message as a string
       } else {
         // Network error (e.g., no internet connection)
         alert("Something went wrong");
       }
+    } finally {
+      setIsLoading(false); // Set loading state to false
     }
   };
 
@@ -209,8 +213,8 @@ function CreateBlog() {
                 description={description}
               />
 
-              <button className={style.btn} type="submit">
-                Submit
+              <button className={style.btn} type="submit" disabled={isLoading}>
+                {isLoading ? "Submitting..." : "Submit"}
               </button>
             </div>
           </form>
