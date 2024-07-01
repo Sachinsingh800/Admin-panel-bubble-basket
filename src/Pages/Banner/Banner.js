@@ -1,9 +1,9 @@
+// src/pages/Banner/Banner.js
 import React, { useEffect, useState } from "react";
 import style from "./Banner.module.css";
 import Header from "../../Component/Header/Header";
 import DataGridDemo from "../../Component/DataGrid/DataGrid";
-import { AiOutlineCloudUpload } from "react-icons/ai";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineCloudUpload, AiOutlinePlus } from "react-icons/ai";
 import NavBar from "../../Component/NavBar/NavBar";
 import OptionBar from "../../Component/OptionBar/OptionBar";
 import { DeleteBanner, addBanner, getAllBanner } from "../../Api/Api";
@@ -15,25 +15,20 @@ import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 function Banner() {
   const [bannerImg, setBannerImg] = useState([]);
   const [allBanner, setAllBanner] = useState([]);
-  const [isLoading, SetIsloading] = useRecoilState(loadingStatus);
+  const [category, setCategory] = useState("");
+  const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const authToken = JSON.parse(localStorage.getItem("token"));
 
-//   useEffect(()=>{
-// if(!authToken){
-//  window.location.href="/"
-// }
-//   },[])
-
   const handleAddBanner = async () => {
-    SetIsloading(true);
-    const formdata = new FormData();
-
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("setFor", category);
     for (let i = 0; i < bannerImg.length; i++) {
-      formdata.append("bannerImg", bannerImg[i]);
+      formData.append("bannerImg", bannerImg[i]);
     }
 
     try {
-      const response = await addBanner(formdata);
+      const response = await addBanner(formData);
       const { status, message } = response;
       if (status) {
         console.log(message);
@@ -41,13 +36,11 @@ function Banner() {
         handleGetAllBanner();
       } else {
         console.error(message);
-        // Handle update error
       }
     } catch (error) {
       console.error("Error updating product:", error.message);
-      // Handle update error
     } finally {
-      SetIsloading(false);
+      setIsLoading(false);
     }
   };
 
@@ -56,7 +49,7 @@ function Banner() {
   }, []);
 
   const handleGetAllBanner = async () => {
-    SetIsloading(true);
+    setIsLoading(true);
     try {
       const response = await getAllBanner();
       console.log(response.data, "response");
@@ -64,23 +57,24 @@ function Banner() {
     } catch (error) {
       console.error("Error getting products:", error.message);
     } finally {
-      SetIsloading(false);
+      setIsLoading(false);
     }
   };
 
   const handleDeleteBanner = async (id) => {
-    SetIsloading(true);
+    setIsLoading(true);
     try {
       const response = await DeleteBanner(id);
       console.log(response.data, "response");
       alert("Delete successfully");
       handleGetAllBanner();
     } catch (error) {
-      console.error("Error getting products:", error.message);
+      console.error("Error deleting banner:", error.message);
     } finally {
-      SetIsloading(false);
+      setIsLoading(false);
     }
   };
+
   return (
     <div className={style.main}>
       {isLoading && <LoadingScreen />}
@@ -91,7 +85,7 @@ function Banner() {
         <br />
         <div></div>
         <div className={style.infobox}>
-          <h1>Add Banner </h1>
+          <h1>Add Banner</h1>
           <br />
           <div className={style.imgbox}>
             {bannerImg.length > 0 ? (
@@ -113,14 +107,24 @@ function Banner() {
               onChange={(e) => setBannerImg(e.target.files)}
               accept="image/*"
             />
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className={style.categorySelect}
+            >
+              <option value="">Select Category</option>
+              <option value="Desktop">Desktop</option>
+              <option value="Phone">Phone</option>
+              <option value="None">None</option>
+            </select>
             <button onClick={handleAddBanner}>Add Banner</button>
           </div>
 
-          <h1> All bannner </h1>
+          <h1>All Banners</h1>
           <br />
           <div className={style.bannerContainer}>
             {allBanner.map((banner) => (
-              <div className={style.bannerImgBox}>
+              <div className={style.bannerImgBox} key={banner._id}>
                 <p
                   className={style.DeleteBanner}
                   onClick={() => handleDeleteBanner(banner._id)}
