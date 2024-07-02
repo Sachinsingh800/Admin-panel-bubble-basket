@@ -6,7 +6,7 @@ import DataGridDemo from "../../Component/DataGrid/DataGrid";
 import { AiOutlineCloudUpload, AiOutlinePlus } from "react-icons/ai";
 import NavBar from "../../Component/NavBar/NavBar";
 import OptionBar from "../../Component/OptionBar/OptionBar";
-import { DeleteBanner, addBanner, getAllBanner } from "../../Api/Api";
+import { DeleteBanner, addBanner, getAllBanner, getAllCategory } from "../../Api/Api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useRecoilState } from "recoil";
 import { loadingStatus } from "../../Recoil";
@@ -15,14 +15,19 @@ import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
 function Banner() {
   const [bannerImg, setBannerImg] = useState([]);
   const [allBanner, setAllBanner] = useState([]);
-  const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [type, setType] = useState("");
   const [isLoading, setIsLoading] = useRecoilState(loadingStatus);
   const authToken = JSON.parse(localStorage.getItem("token"));
+
+  console.log(categories, "categories");
 
   const handleAddBanner = async () => {
     setIsLoading(true);
     const formData = new FormData();
-    formData.append("setFor", category);
+    formData.append("setFor", type);
+    formData.append("category", selectedCategory);
     for (let i = 0; i < bannerImg.length; i++) {
       formData.append("bannerImg", bannerImg[i]);
     }
@@ -46,7 +51,17 @@ function Banner() {
 
   useEffect(() => {
     handleGetAllBanner();
+    handleAllCategories();
   }, []);
+
+  const handleAllCategories = async () => {
+    try {
+      const response = await getAllCategory();
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleGetAllBanner = async () => {
     setIsLoading(true);
@@ -108,11 +123,23 @@ function Banner() {
               accept="image/*"
             />
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
               className={style.categorySelect}
             >
               <option value="">Select Category</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category.categoryName}>
+                  {category.categoryName}
+                </option>
+              ))}
+            </select>
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              className={style.categorySelect}
+            >
+              <option value="">Select Type</option>
               <option value="Desktop">Desktop</option>
               <option value="Phone">Phone</option>
               <option value="None">None</option>
