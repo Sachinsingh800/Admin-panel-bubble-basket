@@ -76,13 +76,6 @@ function Orders() {
         <br />
         <div>
           <div className={style.header}>
-            <div className={style.innerbox}>
-              <div className={style.label}>
-                <h6>Choose Date:</h6> 
-                <input type='date' onChange={handleDateChange} />
-              </div>
-              <button className={style.btn} onClick={handleFilterData}>{filter ? "Clear" : "Apply Filter"}</button>
-            </div>
             <div>
               <button onClick={downloadExcel}><AiOutlineCloudUpload />Export</button>
             </div>
