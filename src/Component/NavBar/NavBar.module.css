@@ -16,6 +16,9 @@
     align-items: center;
     gap: 1rem;
 }
+.header div h4{
+    cursor: pointer;
+}
 .icon{
     display: flex;
     align-items: center;

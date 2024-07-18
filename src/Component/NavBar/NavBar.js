@@ -9,6 +9,10 @@ import logo from "../Images/logo.jpg"
 function NavBar() {
     const navigate=useNavigate()
     const userData= JSON.parse(localStorage.getItem("userData"))
+    const handleLogout=()=>{
+      localStorage.clear()
+      navigate("/")
+    }
 
   return (
       <div className={style.header}>
@@ -21,6 +25,7 @@ function NavBar() {
           </div>
         <div>
           <h4 className={style.icon}><AccountCircleIcon/>{userData?.email}</h4>
+          <h4 className={style.icon} onClick={handleLogout}><ExitToAppIcon/>Logout</h4>
 
         </div>
        </div> 
