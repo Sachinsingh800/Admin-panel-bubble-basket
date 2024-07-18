@@ -1,9 +1,9 @@
 .orderDetails {
-    font-family: Arial, sans-serif;
     padding: 20px;
     max-width: 800px;
     margin: auto;
     align-items: center;
+
   }
   .inner_container{
     display: grid;
