@@ -41,9 +41,9 @@ export default function BasicPopover() {
         }}
       >
         <div style={{padding:"20px" , display:"flex",flexDirection:"column",gap:"10px"}}>
-        <span ><a style={{textDecoration:"none"}} href='/Profile'>Profile</a></span>
-        <span ><a style={{textDecoration:"none"}} href='/RegisterPage'>Register</a></span>
-        <span ><p onClick={handleLogout}>Logout </p></span>
+        <span ><a style={{textDecoration:"none",color:"black",cursor:"pointer"}} href='/Profile'>Profile</a></span>
+        <span ><a style={{textDecoration:"none",color:"black",cursor:"pointer"}} href='/RegisterPage'>Register</a></span>
+        <span ><p onClick={handleLogout} style={{color:"black",cursor:"pointer"}}>Logout </p></span>
         </div>
         
       </Popover>

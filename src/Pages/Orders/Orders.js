@@ -48,11 +48,8 @@ function Orders() {
       "x-admin-token": authToken, // Ensure authToken is defined
       'Content-Type': 'application/json', // Corrected content type to JSON
     };
-    const formData = {
-      "date": filterDate
-    };
     try {
-      const response = await axios.post(`https://www.backend.luxurybubblebasket.com/admin/order/excel`, formData, {
+      const response = await axios.get(`https://www.backend.luxurybubblebasket.com/admin/order/excel`,{
         responseType: 'blob',
         headers: headers // Corrected placement of headers
       });

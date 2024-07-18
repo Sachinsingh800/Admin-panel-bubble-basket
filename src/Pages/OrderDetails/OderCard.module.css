@@ -1,0 +1,27 @@
+.orderDetails {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    align-items: center;
+  }
+  .inner_container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  h1, h2 {
+    color: #333;
+  }
+  
+  .product {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .productImg {
+    max-width: 100px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  

@@ -126,8 +126,8 @@ function Product() {
       {isLoading && <LoadingScreen />}
       <div className={style.body}>
         <Header />
+        <p>Total Products ({originalProducts.length})</p>
         <div className={style.header}>
-          <p>Total Products ({originalProducts.length})</p>
           <div className={style.input_conatiner}>
             <input
               value={input}

@@ -51,16 +51,19 @@ const OrderTable = () => {
     { field: "trackingDate", headerName: "Tracking Date", width: 150 },
     { field: "trackingID", headerName: "Tracking ID", width: 150 },
     {
+      field: "view",
+      headerName: "View",
+      width: 150,
+      renderCell: (params) => (
+           <a href={`/OrderDetails/${params?.id}`}><button>View</button></a>  
+      ),
+    },
+    {
       field: "_id",
       headerName: "INVOICE",
       width: 150,
       renderCell: (params) => (
-        <p
-          style={{ color: "blue", cursor: "pointer" }}
-          onClick={() => handleParticularData(params.id)}
-        >
-          View Invoice
-        </p>
+        <a href={`/Invoice/${params?.id}`}><button>View Invoice</button></a>  
       ),
     },
   ];
@@ -261,7 +264,9 @@ const OrderTable = () => {
                 order?.trackingDetails[0]?.trackingDate
               ).toLocaleDateString(),
               trackingID: order?.trackingDetails[0]?._id,
+              view:order?._id,
             }))}
+            
             columns={columns}
             pageSize={5}
             checkboxSelection

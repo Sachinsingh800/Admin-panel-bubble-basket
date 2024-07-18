@@ -1,14 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Invoice.module.css";
 import { invoiceData } from "./data.js";
 import barCode from "./barCode.png";
 import qrCode from "./qr code.png";
+import { getParticularOrders } from "../../Api/Api.js";
+import { useParams } from "react-router-dom";
 
 const Testing = () => {
   const [printed, setPrinted] = useState(false);
-  const order = JSON.parse(localStorage.getItem("orderInfo"));
-  console.log(order, "order");
-  console.log(order.orderDate, "testing");
+  const { id } = useParams();
+  const [order, setOrders] = useState([]);
+  const [loading, setIsLoading] = useState(false);
+console.log(order,"oreders")
+  useEffect(() => {
+    handleParticularData(id);
+  }, [id]);
+
+  const handleParticularData = async (orderId) => {
+    setIsLoading(true);
+    try {
+      const response = await getParticularOrders(orderId);
+      setOrders(response.data);
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -55,7 +77,7 @@ const Testing = () => {
 
           <div className={style.address}>
             <strong>SHIPPING & BILLING ADDRESS:</strong>
-            <p style={{ fontWeight: 700 }}>{order.shippingInfo.firstName}</p>
+            <p style={{ fontWeight: 700 }}>{order?.shippingInfo?.firstName}</p>
 
             <p>
               {order?.shippingInfo?.streetAddress?.apartment}{" "}
@@ -243,67 +265,67 @@ const Testing = () => {
                     width="100"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="left">{item.description}</p>
+                    <p align="left">{item?.description}</p>
                   </td>
                   <td
                     width="50"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.price}</p>
+                    <p align="center">{item?.price}</p>
                   </td>
                   <td
                     width="50"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.quantity}</p>
+                    <p align="center">{item?.quantity}</p>
                   </td>
                   <td
                     width="50"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.discount}</p>
+                    <p align="center">{item?.discount}</p>
                   </td>
                   <td
                     width="25"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.cgstRate}</p>
+                    <p align="center">{item?.cgstRate}</p>
                   </td>
                   <td
                     width="25"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.cgstAmount}</p>
+                    <p align="center">{item?.cgstAmount}</p>
                   </td>
                   <td
                     width="25"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.sgstRate}</p>
+                    <p align="center">{item?.sgstRate}</p>
                   </td>
                   <td
                     width="25"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.sgstAmount}</p>
+                    <p align="center">{item?.sgstAmount}</p>
                   </td>
                   <td
                     width="25"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.igstRate}</p>
+                    <p align="center">{item?.igstRate}</p>
                   </td>
                   <td
                     width="25"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.igstAmount}</p>
+                    <p align="center">{item?.igstAmount}</p>
                   </td>
                   <td
                     width="60"
                     style={{ border: "1px solid #000000", padding: "0.1cm" }}
                   >
-                    <p align="center">{item.netAmount}</p>
+                    <p align="center">{item?.netAmount}</p>
                   </td>
                 </tr>
               ))}

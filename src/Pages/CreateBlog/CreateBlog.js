@@ -50,13 +50,13 @@ function CreateBlog() {
     formData.append("shortDescription", shortDescription);
     formData.append("authorDescription", authorDescription);
     formData.append("isPublic", true);
-    authorImage.forEach((img, index) => {
+    authorImage.forEach((img) => {
       formData.append(`authorImage`, img);
     });
-    posterImage.forEach((img, index) => {
+    posterImage.forEach((img) => {
       formData.append(`posterImage`, img);
     });
-    blogImage.forEach((img, index) => {
+    blogImage.forEach((img) => {
       formData.append(`blogImage`, img);
     });
 
@@ -111,7 +111,7 @@ function CreateBlog() {
         <br />
 
         <div className={style.infobox}>
-          <form onSubmit={(e)=>handleSubmit(e)} className={style.form}>
+          <form onSubmit={handleSubmit} className={style.form}>
             <div className={style.input_box}>
               <label htmlFor="BlogTitle">Blog Title:</label>
               <input

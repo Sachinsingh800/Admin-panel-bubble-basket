@@ -934,30 +934,16 @@ export const getAllTax= async () => {
 
 export const getParticularOrders = async (id) => {
   const headers = {
-    "x-admin-token": authToken, // Ensure authToken is defined
-    'Content-Type': 'multipart/form-data',// Set content type to JSON
+    "x-admin-token": authToken,
+    'Content-Type': 'application/json', // Set content type to JSON
   };
-  try {
-    const response = await axios.get(`${BASE_URL}/admin/order/singleOrder/${id}`,{headers});
- 
-    const { status, message, data } = response.data;
-    if(status){
-      localStorage.setItem("orderInfo",JSON.stringify(data))
-      window.location.href = "/Invoice";
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      // Axios error (HTTP error)
-      const { response } = error;
-      // Set the error message
-      const errorMessage = response.data.message
 
-         alert(errorMessage)
-      // Log the error message as a string
-    } else {
-      // Network error (e.g., no internet connection)
-      alert("Something went wrong");
-    }
+  try {
+    const response = await axios.get(`${BASE_URL}/admin/order/singleOrder/${id}`, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching order details:", error);
+    throw error; // Rethrow the error or handle it accordingly
   }
 };
 

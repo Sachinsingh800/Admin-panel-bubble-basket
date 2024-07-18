@@ -40,6 +40,7 @@ import Blog from './Pages/Blog/Blog';
 import CreateBlog from './Pages/CreateBlog/CreateBlog';
 import FullBlog from './Pages/FullBlog/FullBlog';
 import UpdateBlog from './Pages/UpdateBlog/UpdateBlog';
+import OrderDetails from './Pages/OrderDetails/OrderDetails';
 
 
 
@@ -115,7 +116,7 @@ const router = createBrowserRouter([
     element: <AddSubCategory />,
   },
   {
-    path: "/Invoice", // Corrected path with parameter
+    path: "/Invoice/:id", // Corrected path with parameter
     element: <Invoice />,
   },
   {
@@ -157,6 +158,10 @@ const router = createBrowserRouter([
   {
     path: "/UpdateBlog/:id", // Corrected path with parameter
     element: <UpdateBlog />,
+  },
+  {
+    path: "/OrderDetails/:id", // Corrected path with parameter
+    element: <OrderDetails />,
   },
 ]);
 root.render(
