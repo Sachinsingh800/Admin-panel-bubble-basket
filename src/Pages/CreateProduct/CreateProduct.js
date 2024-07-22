@@ -49,6 +49,8 @@ function CreateProduct() {
     aBV:"",
     wineStyle:"",
     brand:"",
+    Meta_Title:"",
+    Meta_Description:""
     
   });
 
@@ -130,6 +132,8 @@ function CreateProduct() {
     formdata.append("aBV", singleProduct.aBV);
     formdata.append("wineStyle", singleProduct.wineStyle);
     formdata.append("brand", singleProduct.brand);
+    formdata.append("Meta_Title", singleProduct.Meta_Title);
+    formdata.append("Meta_Description", singleProduct.Meta_Description);
 
     productImgs.forEach((img, index) => {
       formdata.append(`productImg`, img);
@@ -436,6 +440,24 @@ function CreateProduct() {
               <option value="ct">Carat (ct)</option>
               <option value="pts">Pieces (pts)</option>
             </select>
+          </li>
+          <li>
+            <span>Meta Title:</span>
+            <input
+              type="Meta_Title"
+              name="Meta_Title"
+              value={singleProduct.Meta_Title}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Meta Description:</span>
+            <input
+              type="Meta_Description"
+              name="Meta_Description"
+              value={singleProduct.Meta_Description}
+              onChange={handleInputChange}
+            />
           </li>
           <li>
             <span htmlFor="productStatus">product Status:</span>

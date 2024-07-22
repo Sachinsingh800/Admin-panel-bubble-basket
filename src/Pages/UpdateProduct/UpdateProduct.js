@@ -45,6 +45,8 @@ function UpdateProduct() {
     aBV: "",
     wineStyle: "",
     brand: "",
+    Meta_Title: "",
+    Meta_Description: "",
   });
 
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -134,6 +136,9 @@ function UpdateProduct() {
     formData.append("wineStyle", singleProduct.wineStyle);
     formData.append("brand", singleProduct.brand);
     formData.append("category", selectedCategory);
+    formData.append("Meta_Title", singleProduct.Meta_Title);
+    formData.append("Meta_Description", singleProduct.Meta_Description);
+
     productImgs.forEach((img) => {
       formData.append("productImg", img);
     });
@@ -433,6 +438,24 @@ function UpdateProduct() {
               <option value="ct">Carat (ct)</option>
               <option value="pts">Pieces (pts)</option>
             </select>
+          </li>
+          <li>
+            <span>Meta Title:</span>
+            <input
+              type="Meta_Title"
+              name="Meta_Title"
+              value={singleProduct.Meta_Title}
+              onChange={handleInputChange}
+            />
+          </li>
+          <li>
+            <span>Meta Description:</span>
+            <input
+              type="Meta_Description"
+              name="Meta_Description"
+              value={singleProduct.Meta_Description}
+              onChange={handleInputChange}
+            />
           </li>
           <li>
             <span htmlFor="productStatus">Product Status:</span>
