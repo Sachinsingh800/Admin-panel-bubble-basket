@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import style from "./Product.module.css";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { AiFillEdit } from "react-icons/ai";
-import { AiOutlineCloudUpload } from "react-icons/ai";
 import { AiOutlinePlus } from "react-icons/ai";
 import Header from "../../Component/Header/Header";
 import OptionBar from "../../Component/OptionBar/OptionBar";
@@ -13,7 +12,6 @@ import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loadingStatus } from "../../Recoil";
 import LoadingScreen from "../../Component/LoadingScreen/LoadingScreen";
-import Tooltip from "@mui/material/Tooltip";
 
 function Product() {
   const [originalProducts, setOriginalProducts] = useState([]);
@@ -56,7 +54,7 @@ function Product() {
   const DeleteProduct = async (productId) => {
     SetIsloading(true);
     try {
-      const response = await deleteProduct(productId);
+      await deleteProduct(productId);
       // Refresh the products after successful deletion
       FetchProduct();
       alert("Product deleted successfully");
@@ -75,7 +73,7 @@ function Product() {
   const handleFilterData = (e) => {
     const filterType = e.target.name;
     const filterValue = e.target.value;
-    
+
     if (filterType === "category") {
       if (filterValue === "") {
         setFilteredProducts(originalProducts);
@@ -133,7 +131,7 @@ function Product() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               className={style.input}
-              placeholder="Search"
+              placeholder="Search by name or SKU"
             />
             <select
               className={style.category}
@@ -177,7 +175,11 @@ function Product() {
           <br />
           {filteredProducts
             .filter((elem) => {
-              return elem.title.toLowerCase().includes(input.toLowerCase());
+              const searchText = input.toLowerCase();
+              return (
+                elem.title.toLowerCase().includes(searchText) ||
+                elem.sku.toLowerCase().includes(searchText)
+              );
             })
             .map((item, id) => (
               <div key={id} className={style.container}>
