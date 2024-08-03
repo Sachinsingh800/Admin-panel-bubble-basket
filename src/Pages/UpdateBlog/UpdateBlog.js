@@ -16,6 +16,8 @@ function UpdateBlog() {
   const [authorName, setAuthorName] = useState("");
   const [authorTitle, setAuthorTitle] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
+  const [metatitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
   const ReactQuillRef = useRef(null);
   const [authorImage, setAuthorImage] = useState([]);
   const [posterImage, setPosterImage] = useState([]);
@@ -37,15 +39,16 @@ function UpdateBlog() {
     setIsLoading(true);
     try {
       const response = await getSingleBlog(id);
-      console.log(response.data, "response");
       const data = response.data;
       setSingleBlog(data);
-      setAuthorName(data.authorName);
-      setAuthorTitle(data.authorTitle);
-      setBlogTitle(data.blogTitle);
-      setDescription(data.description);
-      setShortDescription(data.shortDescription);
-      setAuthorDescription(data.authorDescription);
+      setAuthorName(data?.authorName);
+      setAuthorTitle(data?.authorTitle);
+      setBlogTitle(data?.blogTitle);
+      setDescription(data?.description);
+      setShortDescription(data?.shortDescription);
+      setAuthorDescription(data?.authorDescription);
+      setMetaTitle(data?.Meta_Title)
+      setMetaDescription(data?.Meta_Description)
     } catch (error) {
       console.error("Error getting products:", error.message);
     } finally {
@@ -73,6 +76,8 @@ function UpdateBlog() {
     e.stopPropagation()
     const formData = new FormData();
     formData.append("authorName", authorName);
+    formData.append("Meta_Title", metatitle);
+    formData.append("Meta_Description", metaDescription);
     formData.append("authorTitle", authorTitle);
     formData.append("description", description);
     formData.append("blogTitle", blogTitle);
@@ -124,6 +129,26 @@ function UpdateBlog() {
                 id="BlogTitle"
                 value={blogTitle}
                 onChange={(e) => setBlogTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="MetaTitle">Meta Title:</label>
+              <input
+                type="text"
+                id="MetaTitle"
+                value={metatitle}
+                onChange={(e) => setMetaTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="MetaDescription">Meta Description:</label>
+              <input
+                type="text"
+                id="MetaDescription"
+                value={metaDescription}
+                onChange={(e) => setMetaDescription(e.target.value)}
                 required
               />
             </div>

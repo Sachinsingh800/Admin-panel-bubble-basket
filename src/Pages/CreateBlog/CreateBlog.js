@@ -14,6 +14,8 @@ function CreateBlog() {
   const [authorName, setAuthorName] = useState("");
   const [authorTitle, setAuthorTitle] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
+  const [metatitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
   const ReactQuillRef = useRef(null); // Initialize with null
   const [authorImage, setAuthorImage] = useState([]);
   const [posterImage, setPosterImage] = useState([]);
@@ -44,6 +46,8 @@ function CreateBlog() {
     setIsLoading(true); // Set loading state to true
     const formData = new FormData();
     formData.append("authorName", authorName);
+    formData.append("Meta_Title", metatitle);
+    formData.append("Meta_Description", metaDescription);
     formData.append("authorTitle", authorTitle);
     formData.append("description", description);
     formData.append("blogTitle", blogTitle);
@@ -119,6 +123,26 @@ function CreateBlog() {
                 id="BlogTitle"
                 value={blogTitle}
                 onChange={(e) => setBlogTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="MetaTitle">Meta Title:</label>
+              <input
+                type="text"
+                id="MetaTitle"
+                value={metatitle}
+                onChange={(e) => setMetaTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.input_box}>
+              <label htmlFor="MetaDescription">Meta Description:</label>
+              <input
+                type="text"
+                id="MetaDescription"
+                value={metaDescription}
+                onChange={(e) => setMetaDescription(e.target.value)}
                 required
               />
             </div>
