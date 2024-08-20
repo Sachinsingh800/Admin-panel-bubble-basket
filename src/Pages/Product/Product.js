@@ -31,7 +31,6 @@ function Product() {
     "Moet & Chandon",
     "Billecart Salmon Brut Champagne",
   ]);
-
   const authToken = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
@@ -55,7 +54,6 @@ function Product() {
     SetIsloading(true);
     try {
       await deleteProduct(productId);
-      // Refresh the products after successful deletion
       FetchProduct();
       alert("Product deleted successfully");
     } catch (error) {
@@ -66,7 +64,6 @@ function Product() {
   };
 
   const handleReverse = () => {
-    // Reverse the order of the filtered products array
     setFilteredProducts([...filteredProducts].reverse());
   };
 
@@ -116,6 +113,19 @@ function Product() {
       dangerouslySetInnerHTML: { __html: htmlString },
     });
   }
+
+  // Image navigation state and functions
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleNextImage = (imagesLength) => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imagesLength);
+  };
+
+  const handlePrevImage = (imagesLength) => {
+    setCurrentImageIndex(
+      (prevIndex) => (prevIndex - 1 + imagesLength) % imagesLength
+    );
+  };
 
   return (
     <div className={style.main}>
@@ -198,13 +208,34 @@ function Product() {
                 </div>
                 <div className={style.imgbox}>
                   {item.productImg && item.productImg.length > 0 && (
-                    <img
-                      className={style.img}
-                      src={item.productImg[0].url}
-                      alt="product"
-                    />
+                    <>
+                      <img
+                        className={style.img}
+                        src={item.productImg[currentImageIndex].url}
+                        alt="product"
+                      />
+                      {item.productImg.length > 1 && (
+                        <div className={style.imageNavigation}>
+                          <button
+                            onClick={() =>
+                              handlePrevImage(item.productImg.length)
+                            }
+                            className={style.navButton}
+                          >
+                            Previous
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleNextImage(item.productImg.length)
+                            }
+                            className={style.navButton}
+                          >
+                            Next
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
-                  <p>next</p>
                 </div>
                 <ul className={style.list}>
                   <li>

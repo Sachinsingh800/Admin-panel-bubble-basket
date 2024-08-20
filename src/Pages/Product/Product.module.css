@@ -117,6 +117,13 @@ display: flex;
     padding: 2rem ;
     padding-top: 5rem; 
 }
+.imageNavigation{
+    display: flex;
+    justify-content: space-between;
+}
+.imageNavigation button{
+   padding: 0rem .5rem;
+}
 @media (max-width:500px){
     .container{
         width: 20rem;
