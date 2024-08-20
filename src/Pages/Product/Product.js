@@ -44,6 +44,12 @@ function Product() {
       const response = await getAllProduct();
       setOriginalProducts(response.data);
       setFilteredProducts(response.data);
+      // Initialize the currentImageIndex state
+      const initialIndices = response.data.reduce((acc, item) => {
+        acc[item._id] = 0; // Start with the first image for each product
+        return acc;
+      }, {});
+      setCurrentImageIndex(initialIndices);
     } catch (error) {
       console.error("Error getting products:", error.message);
     } finally {
@@ -196,8 +202,8 @@ function Product() {
                 elem.sku.toLowerCase().includes(searchText)
               );
             })
-            .map((item, id) => (
-              <div key={id} className={style.container}>
+            .map((item) => (
+              <div key={item._id} className={style.container}>
                 <div className={style.btnbox}>
                   <Link to={`/UpdateProduct/${item._id}`}>
                     <button>
@@ -216,14 +222,18 @@ function Product() {
                     <>
                       <img
                         className={style.img}
-                        src={item?.productImg[currentImageIndex[item._id] || 0]?.url}
+                        src={
+                          item.productImg[
+                            currentImageIndex[item._id] || 0
+                          ]?.url
+                        }
                         alt="product"
                       />
                       {item?.productImg?.length > 1 && (
                         <div className={style.imageNavigation}>
                           <button
                             onClick={() =>
-                              handlePrevImage(item._id, item?.productImg?.length)
+                              handlePrevImage(item._id, item.productImg.length)
                             }
                             className={style.navButton}
                           >
@@ -231,7 +241,7 @@ function Product() {
                           </button>
                           <button
                             onClick={() =>
-                              handleNextImage(item._id, item?.productImg?.length)
+                              handleNextImage(item._id, item.productImg.length)
                             }
                             className={style.navButton}
                           >
