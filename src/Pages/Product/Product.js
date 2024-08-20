@@ -207,18 +207,18 @@ function Product() {
                   </button>
                 </div>
                 <div className={style.imgbox}>
-                  {item.productImg && item.productImg.length > 0 && (
+                  {item?.productImg && item?.productImg?.length > 0 && (
                     <>
                       <img
                         className={style.img}
-                        src={item.productImg[currentImageIndex].url}
+                        src={item?.productImg[currentImageIndex]?.url}
                         alt="product"
                       />
-                      {item.productImg.length > 1 && (
+                      {item?.productImg?.length > 1 && (
                         <div className={style.imageNavigation}>
                           <button
                             onClick={() =>
-                              handlePrevImage(item.productImg.length)
+                              handlePrevImage(item?.productImg?.length)
                             }
                             className={style.navButton}
                           >
@@ -226,7 +226,7 @@ function Product() {
                           </button>
                           <button
                             onClick={() =>
-                              handleNextImage(item.productImg.length)
+                              handleNextImage(item?.productImg?.length)
                             }
                             className={style.navButton}
                           >
