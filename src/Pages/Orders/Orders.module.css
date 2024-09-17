@@ -63,12 +63,20 @@
 }
 /* mobile view */
 @media (max-width:500px){
+    .main{
+        display: flex;
+    }
+    .infobox{
+        width: 100%;
+    }
     .body{
         flex-direction: column;
+        padding: 0;
     }
     .header{
         flex-direction: column;
         gap: 2rem;
+        margin-top: 2rem;
     }
     .innerbox{
         display: grid!important;

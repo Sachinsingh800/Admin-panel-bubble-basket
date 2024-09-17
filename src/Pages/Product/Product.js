@@ -183,7 +183,7 @@ function Product() {
             </button>
           </div>
           <div>
-            <Link to="/CreateProduct">
+            <Link to="/CreateProduct" className={style.create_btn}>
               <button style={{ backgroundColor: "blue", color: "white" }}>
                 <AiOutlinePlus />
                 Create
@@ -293,10 +293,6 @@ function Product() {
                     <span>Set As:</span>
                     {item.setAs}
                   </li>
-                  <li>
-                    <span>Description:</span>
-                  </li>
-                  <li>{convertToJSX(item?.productBlog?.intro)}</li>
                 </ul>
               </div>
             ))}

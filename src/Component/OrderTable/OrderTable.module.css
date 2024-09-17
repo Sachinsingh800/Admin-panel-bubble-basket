@@ -1,0 +1,22 @@
+.orderTable {
+    padding: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    .orderTable {
+      padding: 10px;
+    }
+  
+    .MuiTextField-root {
+      margin-bottom: 10px;
+    }
+  
+    .MuiButton-root {
+      margin-top: 10px;
+    }
+  
+    .MuiDataGrid-root {
+      font-size: 0.8rem;
+    }
+  }
+  

@@ -13,6 +13,9 @@
     color: white;
 
 }
+.icon_btn{
+  color: black!important;
+}
 .closeButton{
     background: transparent;
     border: none;

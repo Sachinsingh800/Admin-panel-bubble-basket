@@ -55,7 +55,7 @@ const OrderTable = () => {
       headerName: "View",
       width: 150,
       renderCell: (params) => (
-           <a href={`/OrderDetails/${params?.id}`}><button>View</button></a>  
+        <a href={`/OrderDetails/${params?.id}`}><button>View</button></a>  
       ),
     },
     {
@@ -124,7 +124,8 @@ const OrderTable = () => {
       );
     }
     if (filter.customer) {
-      filteredOrders = filteredOrders.filter((order) =>order?.shippingInfo?.email
+      filteredOrders = filteredOrders.filter((order) =>
+        order?.shippingInfo?.email
           .toLowerCase()
           .includes(filter?.customer?.toLowerCase())
       );
@@ -171,13 +172,14 @@ const OrderTable = () => {
   return (
     <div className={styles.orderTable}>
       <Box sx={{ padding: 2 }}>
-        <Box component="form" display="flex" flexDirection="column" width={500} mb={2}>
+        <Box component="form" display="flex" flexDirection="column" width="100%" mb={2}>
           <TextField
             label="Order ID"
             name="orderId"
             value={filter.orderId}
             onChange={handleFilterChange}
             margin="normal"
+            fullWidth
           />
           <TextField
             label="Customer Email"
@@ -185,8 +187,9 @@ const OrderTable = () => {
             value={filter.customer}
             onChange={handleFilterChange}
             margin="normal"
+            fullWidth
           />
-          <FormControl margin="normal">
+          <FormControl margin="normal" fullWidth>
             <InputLabel>Order Status</InputLabel>
             <Select
               label="Order Status"
@@ -209,21 +212,20 @@ const OrderTable = () => {
             value={filter.total}
             onChange={handleFilterChange}
             margin="normal"
+            fullWidth
           />
-          <br/>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Date Added"
               value={filter.dateAdded}
               onChange={(date) => handleDateChange('dateAdded', date)}
-              renderInput={(params) => <TextField {...params} margin="normal" />}
+              renderInput={(params) => <TextField {...params} margin="normal" fullWidth />}
             />
-            <br/>
             <DatePicker
               label="Date Modified"
               value={filter.dateModified}
               onChange={(date) => handleDateChange('dateModified', date)}
-              renderInput={(params) => <TextField {...params} margin="normal" />}
+              renderInput={(params) => <TextField {...params} margin="normal" fullWidth />}
             />
           </LocalizationProvider>
           <TextField
@@ -232,12 +234,13 @@ const OrderTable = () => {
             value={filter.trackingNumber}
             onChange={handleFilterChange}
             margin="normal"
+            fullWidth
           />
           <Button
             variant="contained"
             color="primary"
             onClick={handleFilterSubmit}
-            sx={{ marginTop: 2 }}
+            sx={{ marginTop: 2, width: '100%' }}
           >
             Filter
           </Button>
@@ -256,21 +259,23 @@ const OrderTable = () => {
               phone: order.shippingInfo.phone,
               country: order.shippingInfo.country,
               townCity: order.shippingInfo.townCity,
-              stateCounty: order?.shippingInfo?.stateCounty,
-              postcodeZIP: order?.shippingInfo?.postcodeZIP,
-              orderNotes: order?.shippingInfo?.orderNotes,
-              trackingStatus: order?.trackingDetails[0]?.trackingStatus,
-              trackingDate: new Date(
-                order?.trackingDetails[0]?.trackingDate
-              ).toLocaleDateString(),
-              trackingID: order?.trackingDetails[0]?._id,
-              view:order?._id,
+              stateCounty: order.shippingInfo.stateCounty,
+              postcodeZIP: order.shippingInfo.postcodeZIP,
+              orderNotes: order.orderNotes,
+              trackingStatus: order.trackingDetails[0]?.trackingStatus,
+              trackingDate: new Date(order.trackingDetails[0]?.trackingDate).toLocaleDateString(),
+              trackingID: order.trackingDetails[0]?._id,
             }))}
-            
             columns={columns}
-            pageSize={5}
+            pageSize={10}
+            rowsPerPageOptions={[10, 25, 50]}
             checkboxSelection
             disableSelectionOnClick
+            sx={{
+              '@media (max-width: 600px)': {
+                fontSize: '0.8rem',
+              },
+            }}
           />
         </Box>
       </Box>
