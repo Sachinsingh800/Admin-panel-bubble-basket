@@ -49,6 +49,19 @@ function OderCard() {
           <p>Email: {order.shippingInfo.email || "N/A"}</p>
         </div>
         <div>
+          <h2>Billing Information</h2>
+          <p>First Name: {order.shippingInfo.firstName || "N/A"}</p>
+          <p>Last Name: {order.shippingInfo.lastName || "N/A"}</p>
+          <p>Country: {order.shippingInfo.country || "N/A"}</p>
+          <p>Town/City: {order.shippingInfo.townCity || "N/A"}</p>
+          <p>State/County: {order.shippingInfo.stateCounty || "N/A"}</p>
+          <p>Postcode/ZIP: {order.shippingInfo.postcodeZIP || "N/A"}</p>
+          <p>Phone: {order.shippingInfo.phone || "N/A"}</p>
+          <p>Email: {order.shippingInfo.email || "N/A"}</p>
+        </div>
+      </div>
+      <div className={styles.inner_container}>
+        <div>
           <h2>Payment Method</h2>
           <p>Online: {order.paymentMethod.online ? "Yes" : "No"}</p>
           <p>COD: {order.paymentMethod.cod ? "Yes" : "No"}</p>
